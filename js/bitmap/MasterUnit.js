@@ -1,4 +1,4 @@
-class MasterUnit: extends Unit {
+class MasterUnit extends Unit {
   constructor(id, name, difficulty, explanation) {
     super(id, name)
 

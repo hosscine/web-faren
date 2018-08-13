@@ -1,4 +1,4 @@
-class SelectCharacterStage: extends createjs.Stage {
+class SelectCharacterStage extends createjs.Stage {
   constructor(canvas, masters) {
     super(canvas)
 
