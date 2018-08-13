@@ -1,0 +1,23 @@
+{
+  "name": "web-faren",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "browser-sync start --server --files='./*.html, ./*.css, ./*.js'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hosscine/web-faren.git"
+  },
+  "author": "hosscine",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hosscine/web-faren/issues"
+  },
+  "homepage": "https://github.com/hosscine/web-faren#readme",
+  "dependencies": {
+    "browser-sync": "^2.24.6"
+  }
+}
