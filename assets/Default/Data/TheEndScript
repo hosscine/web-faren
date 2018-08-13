@@ -1,0 +1,15 @@
+Print 0 ファーレントゥーガ 0 0 118
+Wait 800
+Print 1 Ver　1.40 50 30 210
+Print 2 Phoenix　Saga　　第６編 0 -30 12
+Wait 5000
+PrintOff 2
+PrintOff 1
+PrintOff 0
+Wait 1500
+Print 0 Thank　you　for　your　play!! 0 0 212
+Wait 4000
+PrintOff 0
+Wait 2000
+Bitmap TheEnd 0 0 
+End

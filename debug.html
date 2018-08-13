@@ -4,11 +4,13 @@
 <head>
   <title>ファーレントゥーガ</title>
   <script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
-  <script src="js/TaggedTextReader.js"></script>
+  <script src="js/reader/TaggedTextReader.js"></script>
+  <script src="js/reader/TaggedScenarioReader.js"></script>
 
   <script>
     function init(){
-      ttr = new TaggedTextReader("assets/data/Senario1")
+      ttr = new TaggedTextReader("assets/data/Scenario1")
+      tsr = new TaggedScenarioReader("assets/data/Scenario1")
     }
   </script>
 </head>

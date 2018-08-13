@@ -1,0 +1,3651 @@
+//Check
+//No.1 エンディング
+//ゴートⅧ世のエンディング
+if (Flag[401])
+{
+	AreaFocus BaseArea[1]
+	Set a,0
+	if (HeroKuni[%フィーザレス]==1)
+	{
+		Set a,%フィーザレス
+	}
+	if (HeroKuni[%イオナ]==1)
+	{
+		Set a,%イオナ
+	}
+	if (HeroKuni[%ドルス]==1)
+	{
+		Set a,%ドルス
+	}
+	if (a>0)
+	{
+	    Music 勝利！
+		Window 0
+		Conversation a
+		Print おめでとうございます。
+		if (a!=%イオナ)
+		{
+			Print ついに念願の大陸制覇を成し遂げましたな。
+		}
+		if (a==%イオナ)
+		{
+			Print ついに念願の大陸制覇を成し遂げましたね。
+		}
+		WindowOn 4000
+		Window 1
+		Conversation 1
+		Print ああ、これも
+		Print お前達がよく働いてくれたからだ。
+		WindowOn 4000
+		Window 0
+		Conversation a
+		Print そんなことはありません。
+		Print 何よりも働いていたのは、
+		Print あなた様ではありませんか？
+		WindowOn 4000
+		Window 1
+		Conversation 1
+		Print いや、それは違うぞ。
+		Print この大業は、私一人では
+		Print できなかったことだ。
+		WindowOn 4000
+		Clear
+		Print お前達がいてくれたこそ、
+		Print できたことなのだ。
+		WindowOn 4000
+		Window 0
+		Conversation a
+		Print 王子は大陸を制覇した今、
+		Print リオームの王となります。
+		WindowOn 4000
+		Clear
+		Print 父君、トライトⅤ世様のように
+		Print 名君になってくださいませ。
+		WindowOn 4000
+        Window 1
+		Conversation 1
+		Print ああ、そうだな。
+		Print 今までも大変だったが、
+		Print 今からも大変なんだな。
+		WindowOn 6000
+		WindowOff
+	}
+    Music 感動？
+	Window 0
+	Size 356,96
+	Print ゴートⅧ世は、大陸を制覇した。
+	Print 真の支配者になったのである。
+	WindowOn 4000
+	Clear
+	Print ゴートⅧ世はリオーム王家
+	Print 第２７代の王となった。
+	WindowOn 4000
+	Clear
+	Print 彼は、国家を人間を主とする国としながらも、
+	Print 他の民族を尊重した。
+	Print もちろん人間界に残った悪魔達も。
+	WindowOn 4000
+	Clear
+	Print 彼が生きている間、人々は、
+	Print 平和と繁栄を楽しんだ。
+	WindowOn 4000
+	Clear
+	Print そして、後世に語り継がれるほどの
+	Print 名君となったのであった。
+	WindowOn 6000
+	WindowOff
+	Set Flag[0],true
+}
+//アルテナのエンディング
+//ゴートⅧ世が生きているバージョン
+if (Flag[402] && KuniFlag[1])
+{
+	AreaFocus BaseArea[2]
+	if (HeroFlag[%スヴェステェン]>0)
+	{
+	    Music 勝利！
+		Window 0
+		Conversation %スヴェステェン
+		Print アルテナ様、
+		Print ついに平和の時代がやってきましたね。
+		WindowOn 4000
+		Window 1
+		Conversation 2
+		Print そうね、ここまで来るのに、
+		Print 多くの血が流れてしまったけどね。
+		WindowOn 4000
+		Window 0
+		Conversation %スヴェステェン
+		Print そうですね。
+		Print しかし、それも仕方ありません。
+		WindowOn 4000
+		Clear	
+		Print みんな、この日のために、
+		Print 戦ってきたのですから・・・。
+		WindowOn 4000
+		Window 1
+		Conversation 2
+		Print そうかしら・・・。
+		Print でも、それにしても
+		Print 犠牲が大きすぎたわ。
+		WindowOn 4000
+		Window 0
+		Conversation %スヴェステェン
+		Print アルテナ様・・・。
+		Print 確かに、
+		Print 犠牲は大きすぎました。
+		WindowOn 4000
+		Clear
+		Print しかし、過去のことを
+		Print 悔やんでも何もはじまりません。
+	 	WindowOn 4000
+		Clear
+		Print 今は、未来のことを
+		Print 考えるべきです。
+		WindowOn 4000
+		Window 1
+		Conversation 2
+		Print そうね。
+		Print そのとおりだわ。
+		WindowOn 4000
+		Clear
+		Print このような戦いを
+		Print やってきたゴートⅧ世様は
+		Print きっと良い名君となるでしょうね。 
+		WindowOn 4000
+		Clear
+		Print みんな、平和のために
+		Print 戦ってくれたんだから・・・。
+		WindowOn 6000
+		WindowOff
+	}
+    Music 感動？
+	Window 0
+	Size 356,96
+	Print アルテナ達は大陸を制覇した。
+	Print 平和の時代がおとずれたのである。
+	WindowOn 4000
+	Clear
+	Print ゴートⅧ世による政治は
+	Print うまく行われ、
+	WindowOn 4000
+	Clear
+	Print 長い間、平和の時代が
+	Print 続いたという・・・。
+	WindowOn 6000
+	WindowOff		 
+	Set Flag[0],true
+	Set Flag[402],false
+}
+//アルテナのエンディング
+//ラムソンとの共同制覇
+if (Flag[402] && KuniFlag[5])
+{
+	AreaFocus BaseArea[2]
+	if (HeroFlag[%スヴェステェン]>0)
+	{
+	    Music 勝利！
+		Window 0
+		Conversation %スヴェステェン
+		Print アルテナ様、
+		Print ついに大陸を制覇しましたね。
+		WindowOn 4000
+		Window 1
+		Conversation 2
+		Print そうね、ここまで来るのに、
+		Print 多くの血が流れてしまったけどね。
+		WindowOn 4000
+		Window 0
+		Conversation %スヴェステェン
+		Print そうですね。
+		Print しかし、それも仕方ありません。
+		WindowOn 4000
+		Clear	
+		Print みんな、この日のために、
+		Print 戦ってきたのですから・・・。
+		WindowOn 4000
+		Window 1
+		Conversation 2
+		Print そうかしら・・・。
+		Print でも、それにしても
+		Print 犠牲が大きすぎたわ。
+		WindowOn 4000
+		Window 0
+		Conversation %スヴェステェン
+		Print アルテナ様・・・。
+		Print 確かに、
+		Print 犠牲は大きすぎました。
+		WindowOn 4000
+		Clear
+		Print しかし、過去のことを
+		Print 悔やんでも何もはじまりません。
+	 	WindowOn 4000
+		Clear
+		Print 今は、未来のことを
+		Print 考えるべきです。
+		WindowOn 4000
+		Window 1
+		Conversation 2
+		Print そうね。
+		Print そのとおりだわ。
+		WindowOn 4000
+		Clear
+		Print しかし、
+		Print 過去のことは忘れてはいけないわ。  
+		WindowOn 4000
+		Clear
+		Print みんな私達のために
+		Print 戦ってくれたんだから・・・。
+		WindowOn 6000
+		WindowOff
+	}
+    Music 感動？
+	Window 0
+	Size 356,96
+	Print アルテナとラムソンは大陸を制覇した。
+	WindowOn 4000
+	Clear
+	Print アルテナは、滅びたリオーム王家に
+	Print 代わって、新しい王朝をひらいた。
+	WindowOn 4000
+	Clear
+	Print ラムソンは、その新しい王朝の
+	Print 騎士団として支えつづけた。
+	WindowOn 4000
+	Clear
+	Print アルテナとラムソンの大事は
+	Print 今から始まる・・・。
+	WindowOn 4000
+	Clear
+	Print そう、
+	Print 大陸の平和と発展を目指して・・・。
+	WindowOn 6000
+	WindowOff		 
+	Set Flag[0],true
+	Set Flag[402],false
+}
+//アルテナのエンディング
+//単独制覇
+if (Flag[402])
+{
+	AreaFocus BaseArea[2]
+	if (HeroFlag[%スヴェステェン]>0)
+	{
+	    Music 勝利！
+		Window 0
+		Conversation %スヴェステェン
+		Print アルテナ様、
+		Print ついに大陸を制覇しましたね。
+		WindowOn 4000
+		Window 1
+		Conversation 2
+		Print そうね、ここまで来るのに、
+		Print 多くの血が流れてしまったけどね。
+		WindowOn 4000
+		Window 0
+		Conversation %スヴェステェン
+		Print そうですね。
+		Print しかし、それも仕方ありません。
+		WindowOn 4000
+		Clear	
+		Print みんな、この日のために、
+		Print 戦ってきたのですから・・・。
+		WindowOn 4000
+		Window 1
+		Conversation 2
+		Print そうかしら・・・。
+		Print でも、それにしても
+		Print 犠牲が大きすぎたわ。
+		WindowOn 4000
+		Window 0
+		Conversation %スヴェステェン
+		Print アルテナ様・・・。
+		Print 確かに、
+		Print 犠牲は大きすぎました。
+		WindowOn 4000
+		Clear
+		Print しかし、過去のことを
+		Print 悔やんでも何もはじまりません。
+	 	WindowOn 4000
+		Clear
+		Print 今は、未来のことを
+		Print 考えるべきです。
+		WindowOn 4000
+		Window 1
+		Conversation 2
+		Print そうね。
+		Print そのとおりだわ。
+		WindowOn 4000
+		Clear
+		Print しかし、
+		Print 過去のことは忘れてはいけないわ。  
+		WindowOn 4000
+		Clear
+		Print みんな私達のために
+		Print 戦ってくれたんだから・・・。
+		WindowOn 6000
+		WindowOff
+	}
+    Music 感動？
+	Window 0
+	Size 356,96
+	Print アルテナは大陸を制覇した。
+	Print 真の支配者となったのである。
+	WindowOn 4000
+	Clear
+	Print アルテナは、滅びたリオーム王家に
+	Print 代わって、新しい王朝をひらいた。
+	WindowOn 4000
+	Clear
+	Print アルテナの大事は
+	Print 今から始まる・・・。
+	WindowOn 4000
+	Clear
+	Print そう、
+	Print 大陸の平和と発展を目指して・・・。
+	WindowOn 6000
+	WindowOff		 
+	Set Flag[0],true
+}
+//ムクガイヤのエンディング
+if (Flag[403])
+{
+	AreaFocus BaseArea[3]
+	if (HeroFlag[%サルステーネ]>0)
+	{
+	    Music 勝利！
+		Window 0
+		Conversation %サルステーネ
+		Print 陛下、これで真の王となられましたな。
+		WindowOn 4000
+		Window 1
+		Conversation 3
+		Print はっはっはっ。
+		Print もう、これで私に逆らうものはおるまい。
+		WindowOn 4000
+		Window 0
+		Conversation %サルステーネ
+		Print そのとおりです。 
+		Print 逆らえるものなど、いないでしょう。
+		Window 1
+		Conversation 3
+		Print これで、私の望みもかなったわけだ。
+		Print これほどの幸せは他にないぞ。
+		WindowOn 4000
+		Clear
+		Print 私に敵対するものは死に絶え、
+		Print 欲しいものは手に入る。
+		WindowOn 4000
+		Clear
+		Print 天下は私のものだ！！
+		WindowOn 6000
+		WindowOff
+	}
+    Music 感動？
+	Window 0
+	Size 356,96
+	Print 敵対するものをすべて倒したムクガイヤは
+	Print 真の大陸の支配者となった。
+	WindowOn 4000
+	Clear
+	Print 民衆の期待はすべて打ち砕かれ、
+	Print 夢も希望もない恐怖政治がおとずれた。
+	WindowOn 4000
+	Clear
+	Print 恐怖政治に対抗しようとしたものは
+	Print 数多くいたが、
+	Print まったくと言っていいほど、歯が立たなかった。
+	WindowOn 4000
+	Clear
+	Print このムクガイヤが理想としてきた、
+	Print 恐怖政治は、
+	WindowOn 4000
+	Clear
+	Print 彼の死まで、続くことになる・・・。
+	WindowOn 6000
+	WindowOff	
+	Set Flag[0],true
+}
+//ルーゼルのエンディング
+if (Flag[404])
+{
+	AreaFocus BaseArea[4]
+	if (HeroFlag[%フーリン]>0)
+	{
+	    Music 勝利！
+		Window 0
+		Conversation %フーリン
+		Print ルーゼル様、ルーゼル様、
+		Print ついにやったね。
+		WindowOn 4000
+		Window 1
+		Conversation 4
+		Print ああ、そうだな。
+		Print お前らもよくがんばったな。
+		WindowOn 4000
+		Window 0
+		Conversation %フーリン
+		Print でも、一番がんばってたのは、
+		Print ルーゼル様じゃありませんか？
+		WindowOn 4000
+		Window 1
+		Conversation 4
+		Print まぁ、そういうな。
+		Print しかし、まだこれからがあるぞ。
+		WindowOn 4000
+		Window 0
+		Conversation %フーリン
+		Print これから？
+		Print まだ何かあるんですか？
+		WindowOn 4000
+		Window 1
+		Conversation 4
+		Print あるんだ。
+		Print この大陸は、人間界の一部でしかない。
+		WindowOn 4000
+		Window 0
+		Conversation %フーリン 	
+		Print そうでしたね。
+		Print 人間界征服が目的でしたね。
+		WindowOn 4000
+		Window 1
+		Conversation 4
+		Print そうだ。
+		Print 人間界を征服するまでは、
+		Print 魔界には帰れないぞ。
+		WindowOn 4000
+		Window 0
+		Conversation %フーリン
+		Print （それもつらいな・・・。）
+		WindowOn 6000
+		WindowOff
+	}
+    Music 感動？
+	Window 0
+	Size 356,96
+	Print ルーゼルは苦戦をしながらも、
+	Print どうにか、この大陸を制覇することができた。
+	WindowOn 4000
+	Clear
+	Print しかし、ルーゼルはこの大陸だけでは、
+	Print 満足しなかった。
+	WindowOn 4000
+	Clear
+	Print ルーゼル率いる悪魔族は、
+	Print 他の大陸へと飛び立っていった。
+	WindowOn 4000
+	Clear
+	Print さらなる、戦いの場を求めて・・・。
+	WindowOn 6000
+	WindowOff
+	Set Flag[0],true
+}
+//ラムソンのエンディング
+//ゴートⅧ世が生きているバージョン
+if (KuniFlag[1] && Flag[405])
+{
+	AreaFocus BaseArea[5]
+    Music 感動？
+	Window 0
+	Size 356,96
+	Print ラムソン達は、大陸を制覇した・・・。
+	WindowOn 4000
+	Clear
+	Print 後に名君といわれるゴートⅧ世による
+	Print 統治が行われ、
+	WindowOn 4000
+	Clear
+	Print ラムソン自身は、その騎士団としての
+	Print 立場を守りつづけた。
+	WindowOn 4000
+	Clear
+	Print これより長い間、
+	Print 平和の時代がおとずれる事となる。
+	WindowOn 6000
+	WindowOff
+	Set Flag[0],true
+	Set Flag[405],false
+}
+//ラムソンのエンディング
+//アルテナとの共同制覇
+if (Flag[405] && KuniFlag[2])
+{
+	AreaFocus BaseArea[5]
+	Music 感動？
+	Window 0
+	Size 356,96
+	Print アルテナとラムソンは大陸を制覇した。
+	WindowOn 4000
+	Clear
+	Print アルテナは、滅びたリオーム王家に
+	Print 代わって、新しい王朝をひらいた。
+	WindowOn 4000
+	Clear
+	Print ラムソンは、その新しい王朝の
+	Print 騎士団として支えつづけた。
+	WindowOn 4000
+	Clear
+	Print アルテナとラムソンの大事は
+	Print 今から始まる・・・。
+	WindowOn 4000
+	Clear
+	Print そう、
+	Print 大陸の平和と発展を目指して・・・。
+	WindowOn 6000
+	WindowOff		 
+	Set Flag[0],true
+	Set Flag[405],false
+}
+//ラムソンのエンディング
+if (Flag[405])
+{
+	AreaFocus BaseArea[5]
+    Music 感動？
+	Window 0
+	Size 356,96
+	Print ラムソンは、大陸を制覇した・・・。
+	WindowOn 4000
+	Clear
+	Print 騎士団による統治が
+	Print 始まったわけではあるが、
+	WindowOn 4000
+	Print ラムソン自身は、大陸を統治することを拒んだ。
+	WindowOn 4000
+	Clear
+	Print 彼は、リオーム王家に政権を戻そうと、
+	Print 努力していくが、彼の家臣に邪魔される。
+	WindowOn 4000
+	Clear
+	Print そんな時、一人の騎士が立ち上がり、
+	Print 騎士団の統治を徹底を訴えた。
+	WindowOn 4000
+	Clear
+	Print 騎士団の騎士達は彼に賛同し、
+	Print ラムソンの権力は失墜した。
+	WindowOn 4000
+	Clear
+	Print ついに、ラムソンは
+	Print 騎士団を追放されたのであった。
+	WindowOn 6000
+	WindowOff
+	Set Flag[0],true
+}
+//ゲルニードのエンディング
+if (Flag[406])
+{
+	AreaFocus BaseArea[6]
+    Music 感動？
+	Window 0
+	Size 356,96
+	Print ゲルニードは大陸を制覇した。
+	Print 真の支配者になったのである。
+	WindowOn 4000
+	Clear
+	Print ゲルニードは、リザードマンによる
+	Print 政治をしようとした。
+	WindowOn 4000
+	Clear
+	Print 今まで敵対してきた人間達を、
+	Print すべて、奴隷の身分に落とし、
+	WindowOn 4000
+	Clear
+	Print まさに、リザードマンのための
+	Print 政治を行っていったのである。
+	WindowOn 4000
+	Clear
+	Print 人間達の夢や希望は、すべて打ち砕かれた。
+	WindowOn 2000
+	Print 暗黒の時代がおとずれたのであった。
+	WindowOn 6000
+	WindowOff
+	Set Flag[0],true
+}
+//バルバッタのエンディング
+if (Flag[407])
+{
+	AreaFocus BaseArea[7]
+    Music 感動？
+	Window 0
+	Size 356,96
+	Print バルバッタは大陸を制覇した。
+	Print 真の支配者になったのである。
+	WindowOn 4000
+	Clear
+	Print しかし、バルバッタの政治は
+	Print うまくいかなかった。
+	WindowOn 4000
+	Clear
+	Print というよりも、バルバッタ自身が
+	Print 政治というものを知らなかったのである。
+	WindowOn 4000
+	Clear
+	Print バルバッタの支配が始まって
+	Print からというからは、
+	WindowOn 4000
+	Clear
+	Print 人間達は、他の大陸に
+	Print 避難し始めた。
+	WindowOn 4000
+	Clear
+	Print なぜならば、
+	Print 大陸が食糧難になったからである。
+	WindowOn 4000
+	Clear
+	Print ゴブリン達は、大量繁殖していた。
+	Print それも、限りなく・・・。
+	WindowOn 4000
+	Clear
+	Print ゴブリン達が、政治というものを
+	Print 考えるようになるのは、
+	Print いつになるだろうか・・・。
+	WindowOn 6000
+	WindowOff	
+	Set Flag[0],true
+}
+//エルフォードのエンディング
+if (Flag[408])
+{
+	AreaFocus BaseArea[8]
+    Music 感動？
+	Window 0
+	Size 356,96
+	Print エルフォードは大陸を制覇した。
+	WindowOn 2000
+	Print エルフ達の時代が訪れたのだ。
+	WindowOn 4000
+	Clear
+	Print エルフ達は、大陸を制覇したといっても、
+	Print 王都ルートガルトに居続けることはしなく、
+	Print パーサの森にひきかえした。
+	WindowOn 4000
+	Clear
+	Print そして、それぞれの種族を尊重し、
+	Print それぞれの自治を認めたのだ。
+	WindowOn 4000
+	Clear
+	Print だが、何か争い事があると、
+	Print エルフ達が出向き、
+	Print 争い事を解決していった。
+	WindowOn 4000
+	Clear
+	Print そのおかげで、大陸は
+	Print 平和と安泰の時代を迎えた・・・。
+	WindowOn 6000
+	WindowOff
+	Set Flag[0],true
+}
+//ウォーラックのエンディング
+if (Flag[409])
+{
+	AreaFocus BaseArea[9]
+    Music 感動？
+	Window 0
+	Size 356,96
+	Print ウォーラック、すなわち
+	Print ドワーフ達の時代が来た。
+	WindowOn 4000
+	Clear
+	Print それは
+	Print 人間達にとっては
+	Print 恐怖の時代の幕開けだった。
+	WindowOn 4000
+	Clear
+	Print ウォーラックは
+	Print 王都ルートガルトにて、
+	Print 自ら皇帝と称し、
+	WindowOn 4000
+	Clear
+	Print ドワーフ以外の種族を
+	Print すべて奴隷扱いした。
+	WindowOn 4000
+	Clear
+	Print そして、反逆するものは
+	Print すべて殺された・・・。
+	WindowOn 4000
+	Clear
+	Print このドワーフ達の天下は
+	Print 長く続くことになる・・・。
+	WindowOn 6000
+	WindowOff
+	Set Flag[0],true
+}
+//ピヨンのエンディング
+if (Flag[410])
+{
+	AreaFocus BaseArea[10]
+    Music 感動？
+	Window 0
+	Size 356,96
+	Print どこからともなくやってきた、
+	Print アイスマン達は、多くの人々を殺してきた。
+	WindowOn 4000
+	Clear
+	Print そして、今
+	Print 敵対する相手をすべて殺した。
+	WindowOn 4000
+	Clear
+	Print 何を目的にこんなことをしているのか？
+	WindowOn 2000
+	Print それは誰も知らない・・・。
+	WindowOn 4000
+	Clear
+	Print そして、さらに
+	Print 不可思議なことには、
+	WindowOn 4000
+	Clear
+	Print すべての敵を倒した後、
+	Print アイスマン達は、崖から飛び降りて
+	Print みんな自殺してしまったことだ。
+	WindowOn 4000
+	Clear
+	Print 人間達は、ただ、ぼう然と
+	Print その光景を眺めていたという。
+	WindowOn 4000
+	Clear
+	Print 今、人間達は研究をはじめた。
+	WindowOn 2000
+	Print アイスマンとは
+	Print いったい、何だったのかと・・・。
+	WindowOn 6000
+	WindowOff
+	Set Flag[0],true
+}
+//ブレッドのエンディング
+if (Flag[411])
+{
+	AreaFocus BaseArea[11]
+	if (HeroFlag[%アルティマイト]!=0)
+	{
+		Music 終わりだよーん
+		Window 1
+		Conversation 11
+		Print やったぞ、この大陸は
+		Print 俺のものだ。
+		WindowOn 4000
+		Window 0
+		Conversation %アルティマイト
+		Print 大陸を制覇したのも、
+		Print 私のおかげだろう？
+		WindowOn 4000
+		Window 1
+		Conversation 11
+		Print そうだな。
+		Print お前のおかげだ。
+		WindowOn 4000
+		Clear
+		Print 何か褒美をやろう。
+		Print お前の欲しいものは何だ？
+		WindowOn 4000
+		Window 0
+		Conversation %アルティマイト
+		Print 貴様の命と、
+		Print この世界だ！
+		WindowOn 4000
+		Window 1
+		Conversation 11
+		Print なにっ！？
+		WindowOn 6000
+		WindowOff
+		Window 0
+		Print このあと、
+		Print ブレッドは殺された・・・。
+		WindowOn 4000
+		Clear
+		Print アルティマイトは、
+		Print その後、自分に反逆するものを
+		Print 次々に殺し始めた。
+		WindowOn 4000
+		Clear
+		Print 一匹の、最強のモンスター
+		Print アルティマイトによって、
+		Print 世界は暗黒に包まれた・・・。
+		WindowOn 6000
+		WindowOff
+	}
+	if (HeroFlag[%アルティマイト]==0 || HeroFlag[%アルティマイト]>62)
+	{
+		if (HeroFlag[%ラクタイナ]!=0)
+		{
+		    Music 勝利！
+			Window 1
+			Conversation 11
+			Print やったぞ、
+			Print この大陸は俺のものだ！！
+			WindowOn 4000
+			Window 0
+			Conversation %ラクタイナ
+			Print おめでとう。
+			Print これでお前は
+			Print この大陸の支配者になったわけだ。
+			WindowOn 4000
+			Window 1
+			Conversation 11
+			Print そうだ。
+			Print これもお前のおかげだ。
+			WindowOn 4000
+			Window 0
+			Conversation %ラクタイナ
+			Print しかし、
+			Print これからどうするつもりだ？
+			Print もう戦う相手はいないぞ。
+			WindowOn 4000
+			Window 1
+			Conversation 11
+			Print ああ、そうだな。
+			Print この大陸を治めるなんて、
+			Print 俺には似合わない。
+			WindowOn 4000
+			Clear
+			Print だが、世界は広い。
+			Print まだまだ、戦う相手と
+			Print お宝には不自由しないはずだ。
+			WindowOn 6000
+			WindowOff	
+		}
+	    Music 感動？
+		Window 0
+		Size 356,96
+		Print ブレッドは、大陸を制覇した。
+		WindowOn 2000
+		Print しかし、大陸の統治が彼の目的ではない。
+		WindowOn 4000
+		Clear
+		Print 彼は、２ヶ月もしないうちに
+		Print 新たな大陸へと旅立った。
+		WindowOn 4000
+		Clear
+		Print 新たなる敵と宝を求めて・・・。
+		WindowOn 6000
+		WindowOff
+	}
+	Set Flag[0],true
+}
+//ナルディアのエンディング
+if (Flag[412])
+{
+	AreaFocus BaseArea[12]
+	if (HeroFlag[%フォルゴット]!=0)
+	{
+	    Music 勝利！
+		Window 0
+		Conversation %フォルゴット
+		Print おめでとうございます、
+		Print ナルディア様。
+		WindowOn 4000
+		Window 1
+		Conversation 12
+		Print ありがとう、
+		Print この大業が成し得たのも、
+		Print おまえたちのおかけだ。
+		WindowOn 4000
+		Window 0
+		Conversation %フォルゴット
+		Print いえ、違います。
+		Print ナルディア様の努力と執念のおかげです。
+		WindowOn 4000
+		Window 1
+		Conversation 12
+		Print まあ、そういうな。
+		Print まだまだお前達には
+		Print 働いてもらわないといけない。
+		WindowOn 4000
+		Clear
+		Print 私達、砂漠の民が平地に出てから
+		Print まだ、日が浅い。
+		WindowOn 4000
+		Clear
+		Print そして、平地の人間は
+		Print まだ私達の支配になれていない。
+		WindowOn 4000
+		Window 0
+		Conversation %フォルゴット
+		Print そうですな。
+		Print 今からも、大変ですな。
+		WindowOn 4000
+		Window 1
+		Conversation 12
+		Print そういう事になるな・・・。
+		WindowOn 4000
+		Clear
+		Print しかし、我らの天下がきたことは確かだ。
+		Print 今はこれを素直に喜ぼうぞ。
+		WindowOn 6000
+		WindowOff
+	}
+    Music 感動？
+	Window 0
+	Size 356,96
+	Print ナルディアは大陸を制覇した。
+	Print 真の支配者になったのである。
+	WindowOn 4000
+	Clear
+	Print ナルディアは王都ルートガルトを
+	Print 占拠し、新しい王朝を開いた。
+	WindowOn 4000
+	Clear
+	Print そして、砂漠の民を中心とする、
+	Print 厳しい身分制度がしかれた。
+	WindowOn 4000
+	Clear
+	Print ナルディアが生きている間、
+	Print 反乱など一つも起きなかった。
+	WindowOn 4000
+	Clear
+	Print これは、彼女の政治が
+	Print うまくいっていた証である・・・。
+	WindowOn 6000
+	WindowOff
+	Set Flag[0],true
+}
+//ホルスのエンディング
+if (Flag[413])
+{
+	AreaFocus BaseArea[13]
+    if (HeroFlag[%イオナ]!=0)
+	{
+		Music 勝利！
+		Window 0
+		Conversation %イオナ
+		Print ついにムクガイヤを倒しましたね、
+		Print ホルス様。
+		WindowOn 4000
+		Window 1
+		Conversation 13
+		Print ああ、やったぞ。
+		Print ついに決着がついたわけだ。
+		WindowOn 4000
+		Window 0
+		Conversation %イオナ
+		Print これで、ゴートⅧ世様の
+		Print 努力も報われるわけですね。
+		WindowOn 4000
+		Window 1
+		Conversation 13
+		Print そうだな・・・。
+		Print （これで、イオナの悲しみが
+		Print  消えるとは思えないが・・・。）
+		WindowOn 6000
+		WindowOff
+		Window 0
+		Size 356,96
+		Print このあと、イオナは
+		Print 旅に出ることになる。
+		WindowOn 4000
+		Clear
+		Print そして、
+		Print イオナは、オルジンに出会う。
+		WindowOn 4000
+		Clear
+		Print しかし、
+		Print それはＰｈｏｅｎｉｘ　Ｓａｇａ　第７編での
+		Print 話である・・・。
+		WindowOn 6000
+		WindowOff
+	}
+	Music 感動？
+	Window 0
+	Size 356,96
+	Print ホルスはムクガイヤを倒した。
+	WindowOn 2000
+	Print ゴートⅧ世の敵を討つことができたのだ。
+	WindowOn 4000
+	Clear
+	Print ムクガイヤは
+	Print ホルスによって、封印された。
+	WindowOn 4000
+	Clear
+	Print 決して死ぬような体ではないからだ。
+	WindowOn 4000
+	Clear
+	Print ムクガイヤの遺体は、王都ルートガルトの
+	Print 地下おく深くに封印された。
+	WindowOn 4000
+	Clear
+	Print ムクガイヤは長い眠りについたのである。
+	Print 封印が解けるまでの１０００年間・・・。
+	WindowOn 6000
+	WindowOff
+	Set Flag[0],true
+}
+
+//リッチームクガイヤのエンディング
+if (Flag[414])
+{
+	AreaFocus BaseArea[14]
+    Music 感動？
+	Window 0
+	Size 356,96
+	Print 敵対するものをすべて倒したムクガイヤは
+	Print 真の大陸の支配者となった。
+	WindowOn 4000
+	Clear
+	Print 民衆の期待はすべて打ち砕かれ、
+	Print 夢も希望もない恐怖政治がおとずれた。
+	WindowOn 4000
+	Clear
+	Print 恐怖政治に対抗しようとしたものは
+	Print 数多くいたが、
+	Print まったくと言っていいほど、歯が立たなかった。
+	WindowOn 4000
+	Clear
+	Print このムクガイヤが理想としてきた、
+	Print 恐怖政治は、
+	WindowOn 4000
+	Clear
+	Print 死ぬことのないムクガイヤによって
+	Print 永遠と続けられるだろう・・・。
+	WindowOn 6000
+	WindowOff	
+	Set Flag[0],true
+}
+
+//エンディング（すべて）
+if (Flag[0])
+{
+  	//ヒーロー紹介
+    Window 1
+    Size 356,96
+	Print Phoenix　Saga　第６編
+	Print 　ファーレントゥーガ
+	Print 　　　　　　　　　　　Ver　1.40
+	WindowOn 4000
+	Clear
+	Print 　
+	Print 製作者：あとあと
+	WindowOn 4000
+	WindowOff
+	Window 0
+	Size 356,96
+    Print 　
+    Print 活躍した英雄達
+    WindowOn 4000
+    Set a,0
+    Start
+    Set b,MostWin[a]
+    Set d,false
+    if (b>0)
+    {
+  		Set c,WinKz[b]
+        if (c>0)
+        {
+          	Set d,true
+            Window 1
+			Conversation b
+            Print 撃破数
+            PrintKz c
+			if (HeroFlag[b]==0)
+			{
+				Print （死亡）
+			}
+            WindowOn 4000
+        }
+    }
+    Plus a,1
+	if (d && a<20)
+    {
+        GoTo
+	}
+	WindowOn 500
+	WindowOn 500
+	WindowOn 500
+	WindowOn 500
+	WindowOn 500
+	WindowOn 500
+	WindowOff
+	End
+}
+
+
+//No.2 ゲーム始め
+if (StartTurn==0 && Turn==1)
+{
+    //ゴートⅧ世
+    if (KuniPlayer[1])
+    {
+        AreaFocus BaseArea[1]
+		Window 0
+		Size 356,96
+        	Print ムクガイヤの策謀によって
+		Print 都を追われたゴートⅧ世は
+        WindowOn 4000
+        Clear
+		Print ムクガイヤの追撃を逃れながら
+		Print ルーニック島まで逃げてきていた。
+		WindowOn 4000
+		Clear
+		Print ムクガイヤの軍もさすがにここまでは
+		Print 追ってこれず、ここでやっと落ち着くことができた。
+		WindowOn 4000
+		WindowOff
+		Window 1
+		Conversation %フィーザレス
+		Print やっと、ここまで来ましたな。
+        Print ここまで来れば、ムクガイヤの軍も来ますまい。
+		WindowOn 4000
+        Window 0
+        Conversation 1
+        Print ああ、そうだな・・・
+        Print しかし、これからが問題だ。
+        WindowOn 4000
+        Window 1
+        Conversation %ドルス
+        Print そのとおりです。
+        Print いつ、ムクガイヤの軍が来るかもしれません。
+        WindowOn 4000
+        Clear
+        Print はやく、ムクガイヤに対する力を
+        Print つけなければなりません。
+        WindowOn 4000
+        Window 0
+        Conversation 1
+        Print 力をつけると言っても、どうするのだ？
+        WindowOn 4000
+        Window 1
+        Conversation %ドルス
+        Print ここから南のフェリル地方には、
+        Print いま、誰の統治下にもなく、
+        Print ゴブリン達がいるだけです。
+        WindowOn 4000
+        Clear
+        Print ここを支配下に治めれば、
+        Print ムクガイヤにも十分対抗しえるでしょう。
+        WindowOn 4000
+        Clear
+        Print そして、騎士団長のラムソンと
+        Print 竜騎士のアルテナと力を合わせて
+        Print ムクガイヤを倒すのです。
+        WindowOn 4000
+        Window 0
+        Conversation 1
+		Print そうだな、
+        Print それならいけそうだ。
+        WindowOn 4000
+        Clear
+        Print よし、まずは南に向かうぞ！
+        WindowOn 4000
+        WindowOff
+    }
+    //アルテナ
+    if (KuniPlayer[2])
+    {
+        AreaFocus BaseArea[2]
+    	Window 1
+        Conversation %スヴェステェン
+        Print アルテナ様、
+        WindowOn 4000
+        Clear
+        Print 聞くところによると
+        Print ムクガイヤが
+        Print 王都ルートガルトを占拠したとか･･･
+        WindowOn 4000
+    	Window 0
+    	Conversation 2
+        Print ええ、そうよ。
+        Print 大変なことになったわ。
+        WindowOn 4000
+        Clear
+        Print それに、問題なのは
+        Print ムクガイヤが呼び出した、
+        Print ルーゼルの方なの。
+        WindowOn 4000
+        Window 1
+        Conversation %スヴェステェン
+        Print ルーゼルが？
+        WindowOn 4000
+        Window 0
+        Conversation 2
+        Print そう、
+        Print ルーゼルの影響で、各地で
+        Print モンスターが増えているのよ。
+        WindowOn 4000
+        Clear
+        Print このリュッセルにも、
+        Print 被害が出ているのよ。
+        WindowOn 4000
+        Window 1
+        Conversation %スヴェステェン
+        Print じゃあ、
+        Print モンスター退治から始めないと
+        Print いけませんね。
+        WindowOn 4000
+        WindowOff
+    }
+    //ムクガイヤ
+    if (KuniPlayer[3])
+    {
+        AreaFocus BaseArea[3]
+    	Window 1
+		Size 356,96
+        Print 魔法ルーゼルを召還し
+        Print トライトⅤ世を殺させ
+        Print 王都ルートガルトを占拠した
+        Print ムクガイヤだが・・・
+        WindowOn 4000
+        Clear
+        Print ルートガルトの住民は
+        Print その支配に応じず
+        Print そのことに頭を痛ませていた。
+    	WindowOn 4000
+        Clear
+        Print そんなとき、
+        Print ゴートⅧ世討伐を命じていた
+        Print サルステーネが帰ってきた。
+        WindowOn 4000
+        WindowOff
+    	Window 0
+        Conversation %サルステーネ
+        Print 陛下、ゴートⅧ世を
+        Print とり逃してしまいました。
+        WindowOn 4000
+        Window 1
+		Conversation 3
+        Print そうか・・・
+        Print まあ、よい。
+        WindowOn 4000
+        Clear
+        Print あんな小ネズミ、
+        Print ほおっておいていいだろう。
+        WindowOn 4000
+        Clear
+        Print それよりも、
+        Print ルートガルトの街には
+        Print 野党が巣くっている。
+        WindowOn 4000
+        Clear
+        Print 先に、これをどうにかした方が
+        Print いいだろう。
+        WindowOn 4000
+        Window 0
+        Conversation %サルステーネ
+        Print はっ！！
+        Print わかりました。
+        Print さっそく、かたづけに行きます。
+        WindowOn 4000
+        WindowOff
+    }
+	if (KuniPlayer[4])
+	{
+        AreaFocus BaseArea[4]
+		Window 0
+		Size 356,96
+		Print ムクガイヤに召喚されたルーゼルは、
+		Print リオーム王家の王、トライトⅤ世と
+		Print 戦うはめになった。
+		WindowOn 4000
+		Clear
+		Print トライトⅤ世を倒したものの、
+		Print その傷は大きく、ルーゼルは
+		Print 力の半分を失った。
+		WindowOn 4000
+		Clear
+		Window 0
+		Conversation %フーリン
+		Print ルーゼル様、ルーゼル様。
+		WindowOn 4000
+		Window 1
+		Conversation 4
+		Print 何だ、フーリン。
+		WindowOn 4000
+		Window 0
+		Conversation %フーリン
+		Print ルーゼル様、
+		Print ムクガイヤが王に
+		Print なったそうですよ。
+		WindowOn 4000
+		Window 1
+		Conversation 4
+		Print なにっ。
+		Print あの野郎、ゆるせん。
+		Print 俺を罠にはめたうえに・・・。
+		WindowOn 4000
+		Clear
+		Print おい、フーリン。
+		Print あの野郎を殺してこい。
+		WindowOn 4000
+		Window 0
+		Conversation %パルスザン
+		Print 待ってください。
+		Print 今の我が軍はだいぶ
+		Print 傷ついています。
+		WindowOn 4000
+		Clear
+		Print 今、戦うのは危険です。
+		WindowOn 4000
+		Window 1
+		Conversation 4
+		Print そうか、
+		Print それじゃしかたないか・・・
+		WindowOn 4000
+		Window 0
+		Conversation %パルスザン
+		Print 先に、周辺の都市を攻め落とし、
+		Print まずは我が軍の力を回復しましょう。
+		WindowOn 4000
+		Window 1
+		Conversation 4
+		Print そうだな。
+		Print フーリン、パルスザン、出陣するぞ。
+		WindowOn 4000
+		WindowOff
+	}
+}
+//No.4 ゴートⅧ世･フェリル占領
+if (Flag[16]==false && Scenario==1 && Turn<30 && KuniPlayer[1] && AreaKuni[55]!=1 && AreaKuni[58]==1)
+{
+       AreaFocus 58
+	Music 勝利！
+	Set a,%ドルス
+	if (HeroKuni[%フィーザレス]==1)
+    {
+    	Set a,%フィーザレス
+    }
+	if (HeroKuni[%ドルス]==1)
+    {
+    	Set a,%ドルス
+    }
+    Window 1
+	Conversation a
+    Print 王子、
+    Print おめでとうございます。
+    Print ついにフェリルの地に足を踏み入れましたな。
+	WindowOn 4000
+    Window 0
+    Conversation 1
+    Print ああ、
+    Print これも、お前達のおかげだ。
+    WindowOn 4000
+    Window 1
+    Conversation a
+    Print これからは、本格的に
+    Print フェリル島の攻略を始めます。
+    WindowOn 4000
+    if (KuniFlag[7])
+    {
+    	Clear
+        Print ゴブリンのバルバッタには
+        Print くれぐれも気をつけてくださいませ。
+        WindowOn 4000
+        Clear
+        Print 恐らく、バルバッタも
+        Print このフェリル島の全土支配を
+        Print 目指しているでしょう。
+        WindowOn 4000
+    }
+    if (AreaKuni[60]!=1)
+    {
+    	Clear
+        Print ここから東のホアタ平原は、
+        Print とても豊かな土地です。
+        Print 必ず手に入れておきましょう。
+        WindowOn 4000
+	}
+    if (AreaKuni[59]!=1)
+    {
+    	Clear
+        Print ここから南には、
+        Print 遺跡があります。
+        WindowOn 4000
+        Clear
+        Print しかし、死霊が住みついていて、
+        Print 人間の住めるようなところではありません。
+        WindowOn 4000
+        Clear
+        Print 攻略の際には、王子が
+        Print 死霊成仏の魔法（レクイエム）を
+        Print 使ってください。
+        WindowOn 4000
+    }
+    WindowOff
+    Set Flag[16],true
+}
+//No.5 マクセンとテステヌ
+if (Scenario==1 && Flag[17]==false && AreaButaiKz[61]<=18)
+{
+    Set a,AreaKuni[61]
+    if (a>0 && BaseArea[a]==61 && a!=4)
+    {
+        Set b,true
+    	if (KuniPlayer[a])
+        {
+            AreaFocus 61
+        	Window 1
+            FaceOut a
+            WindowOn 100
+        	Window 0
+            Size 356,96
+            Print マクセンとテステヌというものが
+            Print 訪ねてまいりました。
+            WindowOn 4000
+            WindowOff
+            Window 0
+            Conversation %マクセン
+            Print あなたの武勇を聞いてまいりました。
+            Print 私は弓に自信がございます。
+            Print どうか仲間にしてください。
+            WindowOn 4000
+			Window 0
+            Conversation %テステヌ
+            Print 私は剣に自信があります。
+            Print 軍に加えていただけないでしょうか。
+            WindowOn 4000
+            Set b,YesNo(この者達を仲間にしますか？)
+            WindowOff
+		}
+        if (b)
+        {
+            CharSet 61,%マクセン
+            CharSet 61,%テステヌ
+        }
+        Set Flag[17],true
+    }
+}
+//No.6 バルバッタ死す（ゴートⅧ世）
+if (Scenario<=2 && Flag[18]==false && KuniPlayer[1] && KuniFlag[7]==false)
+{
+	Set Flag[18],true
+	if (AreaKuni[55]<2 && AreaKuni[56]<2 && AreaKuni[57]<2 && AreaKuni[58]<2 && AreaKuni[59]<2 && AreaKuni[60]<2 && AreaKuni[61]<2)
+	{
+		AreaFocus BaseArea[1]
+		Music 勝利！
+		Window 1
+		FaceOut 1
+		WindowOn 100
+		Window 0
+		Set a,%ドルス
+		if (HeroFlag[%フィーザレス]>0)
+	    {
+    		Set a,%フィーザレス
+	    }
+		if (HeroFlag[%ドルス]>0)
+	    {
+	    	Set a,%ドルス
+		}
+    	Conversation a
+		Print ついにバルバッタを倒しました。
+		WindowOn 4000
+		Window 1
+		Conversation 1
+		Print そうだな、
+		Print これで、フェリル全土が手にはいったも同然だな。
+		WindowOn 4000
+		Window 0
+		Conversation a
+		Print フェリル島を完全に占拠し、
+		Print しばらくは、内政に励みましょう。
+		WindowOn 4000
+		WindowOff
+	}
+}
+//No.7 フェリル統一
+if (Scenario<=2 && Flag[19]==false)
+{
+	Set a,AreaKuni[55];
+	if (a>0 && KuniPlayer[a])
+	{
+		if (AreaKuni[56]==a && AreaKuni[57]==a && AreaKuni[58]==a && AreaKuni[59]==a && AreaKuni[60]==a && AreaKuni[61]==a)
+		{	
+		       AreaFocus BaseArea[a]
+			Music 勝利！
+			Window 1
+			FaceOut a
+			WindowOn 100
+			Window 0
+			Size 356,96
+			Print フェリル島全土を支配しました。
+			WindowOn 4000
+			Clear
+			Print フェリル島の住民から
+			Print 200Leyの貢ぎ物がありました。
+			Plus Ley[a],200
+			WindowOn 4000
+			WindowOff 
+			Set Flag[19],true
+		}
+	}
+}  
+//No.8 ゴートⅧ世、フェリル城占領
+if (Scenario<=2 && KuniPlayer[1] && Flag[20]==false && AreaKuni[57]==1)
+{
+	AreaFocus 57
+	Set Flag[20],true
+	Set a,0
+	if (HeroKuni[%マクセン]==1)
+	{
+		Set a,%マクセン
+	}
+	if (HeroKuni[%テステヌ]==1)
+	{
+		Set a,%テステヌ
+	}
+	if (HeroKuni[%フィーザレス]==1)
+	{
+		Set a,%フィーザレス
+	}
+	if (HeroKuni[%ドルス]==1)
+	{
+		Set a,%ドルス
+	}
+	if (a>0 && AreaKuni[8]!=1 && AreaKuni[29]!=1)
+	{
+		Music 勝利！
+		Window 1
+		FaceOut 1
+		WindowOn 100
+		Window 0
+		Conversation a
+		Print やりましたな。
+		Print フェリル城を占領しました。
+		WindowOn 4000
+		Clear
+		Print フェリル城は、このフェリル島の
+		Print 中心にあたるところです。
+		WindowOn 4000
+		Clear
+		Print また、この城の防御力もなかなかの
+		Print ものがあり、本拠地としては
+		Print 最適でしょう。
+		WindowOn 4000
+		Window 1
+		Conversation 1
+		Print ああ、わかった。
+		Print そうしよう。
+		WindowOn 4000
+		WindowOff
+	}
+}
+//No.9 ゴートⅧ世、プレア占領
+if (Scenario<=3 && Flag[21]==false && KuniPlayer[1] && AreaKuni[8]==1)
+{
+	AreaFocus 8
+	Set Flag[21],true
+	Set a,0
+	if (HeroKuni[%フィーザレス]==1)
+	{
+		Set a,%フィーザレス
+	}
+	if (HeroKuni[%イオナ]==1)
+	{
+		Set a,%イオナ
+	}
+	if (HeroKuni[%ドルス]==1)
+	{
+		Set a,%ドルス
+	}
+	if (a>0 && AreaKuni[29]!=1)
+	{
+		Music 勝利！
+		Window 1
+		FaceOut 1
+		WindowOn 100
+		Window 0
+		Conversation a
+		if (a==%イオナ)
+		{
+			Print やっとプレアまで来ましたね。
+		}
+		if (a!=%イオナ)
+		{	
+			Print やっとプレアまで来ましたな。
+		}	
+		if (KuniFlag[3])
+		{
+			Print これでムクガイヤとも、まともに戦えるでしょう。
+		}
+		WindowOn 4000
+		Clear
+		Print この街は、ルートガルトに次ぐ、第２の都市です。
+		Print 大きな、収入が得られるはずです。
+		WindowOn 4000
+		Clear
+		Print ルートガルトに侵攻する前に
+		Print この街で軍備を整えるといいでしょう。
+		WindowOn 4000
+		WindowOff
+	}
+}
+//No.10 フェリルの戦士ダルカン
+if (Scenario<=2 && Flag[22]==false && AreaButaiKz[57]<20)
+{
+	Set a,AreaKuni[57]
+	if (a==1 || a==2 || a==3 || a==5 || a==11 || a==12 && BaseArea[a]==57)
+	{
+		Set b,true
+		if (KuniPlayer[a])
+		{
+	              AreaFocus 57
+			Window 1
+			FaceOut a
+			WindowOn 100
+			Window 0
+			Conversation %ダルカン
+			Print 私は、フェリルの戦士で
+			Print ダルカンと申す。
+			WindowOn 4000
+			Clear
+			Print 貴公は私の力を望むのか？
+			WindowOn 4000
+			Set b,YesNo(望みますか？)
+			Clear
+			if (b)
+			{	
+				Print されば、共に戦おう。		
+				WindowOn 4000
+			}
+			WindowOff
+		}
+		if (b)
+		{
+		    CharSet 57,%ダルカン
+        }
+		Set Flag[22],true	
+	}
+}
+//No11.沈黙の僧侶イオナ
+if (Turn>=30 && Scenario<=2 && Flag[23]==false && AreaButaiKz[54]<20 && Random(5)==0)
+{
+	Set a,AreaKuni[54]
+	if (a==1)
+	{
+		Set b,true
+		if (KuniPlayer[a])
+		{
+	              AreaFocus 54
+			Window 1
+			FaceOut a
+			WindowOn 100
+			Window 0
+			Size 356,96
+			Print この土地に、イオナという僧侶がいるそうです。
+			WindowOn 4000
+			Set b,YesNo(訪ねてみますか？)
+			if (b)
+			{
+				Window 0
+				Conversation %イオナ
+				Print 私がイオナです。
+				Print わざわざ訪ねてくださるとは光栄です。
+				WindowOn 4000
+				Clear
+				Print 今、大陸はおおきな災いに
+				Print 包まれています。
+				WindowOn 4000
+				Clear
+				Print あなたは、何を目的に戦っているのですか？
+				WindowOn 4000
+				Set c,YesNo(「権力を得るため」)
+				if (c)
+				{
+					Set b,false
+				}
+				if (b)
+				{
+					Set b,YesNo(「災いを取り除くため」)
+				}
+				Clear
+				Print そうですか・・・。
+				if (b)
+				{
+					Print それではお供をさせてください。
+				}
+				WindowOn 4000
+			}
+			WindowOff
+		}
+		if (b)
+		{
+			CharSet 54,%イオナ 
+		}
+		Set Flag[23],true
+	}
+}
+//No.12 水のラクタイナ
+if (Turn>=45 && Scenario<=2 && Flag[24]==false && Random(5)==0 && AreaButaiKz[50]<20 && AreaKuni[50]!=0 && AreaKuni[50]!=4)
+{
+	Set a,AreaKuni[50]
+	Set b,true
+	if (KuniPlayer[a])
+	{
+              AreaFocus 50
+		Window 1
+		FaceOut a
+		WindowOn 100
+		Window 0
+		Size 356,96
+		Print 四賢者の一人、水のラクタイナが
+		Print ナース火山にいることがわかりました。
+		WindowOn 4000
+		Set b,YesNo(訪ねてみますか？)
+		if (b)
+		{
+			Window 0
+			Conversation %ラクタイナ
+			Print わざわざ、こんなところに来るとは、
+			Print 私に戦わせようとするのか？
+			WindowOn 4000
+			Set b,YesNo(「そうだ」)
+			if (b)
+			{
+				Clear
+				Print はっはっはっ。
+				Print 正直なやつじゃ。
+				WindowOn 4000
+				Clear
+				Print 気にいった。
+				Print 戦ってやろうではないか。
+				WindowOn 4000
+			}
+			if (b==false)
+			{
+				Clear
+				Print それでは何のために
+				Print ここに来たのか？
+				WindowOn 4000
+				Set b,YesNo(「あなたに知恵をかして欲しいから」)
+				Clear
+				if (b)
+				{
+					Print ふむぅ。
+					Print わかった、ついていってあげよう。
+				}
+				if (b==false)
+				{
+					Print もう、帰っていいぞ。
+				}
+				WindowOn 4000
+			}
+			WindowOff
+		}
+	}
+	if (b)
+	{
+		CharSet 50,%ラクタイナ 
+	}
+	Set Flag[24],true
+}
+//No.13 火の賢者フォルゴット
+if (Turn>=40 && Scenario<=2 && Flag[25]==false && Random(8)==0 && AreaButaiKz[4]<20 && AreaKuni[4]!=0 && AreaKuni[4]!=4)
+{
+	Set a,AreaKuni[4]
+	Set b,true
+	if (KuniPlayer[a])
+	{
+	       AreaFocus 4
+		Window 1
+		FaceOut a
+		WindowOn 100
+		Window 0
+		Size 356,96
+		Print 四賢者の一人、火の賢者フォルゴットが
+		Print ホラガスに旅してきていることがわかりました。
+		WindowOn 4000
+		Set b,YesNo(訪ねてみますか？)
+		if (b)
+		{
+			Window 0
+			Conversation %フォルゴット
+			Print はっはっはっ
+			Print おぬしのようなものに
+			Print 捕まってしまうとは不覚じゃ。
+			WindowOn 4000
+			Set b,YesNo(仲間になってくれるよう頼む)
+			if (b)
+			{
+				Clear
+				Print これも天命かのう。
+				WindowOn 4000
+			}
+			WindowOff
+		}
+	}
+	if (b)
+	{
+		CharSet 4,%フォルゴット 
+	}
+	Set Flag[25],true
+}
+//No.14 土の賢者ワットサルト
+if (Turn>=45 && Scenario<=3 && Flag[26]==false && Random(6)==0 && AreaButaiKz[19]<20 && AreaKuni[19]!=9 && AreaKuni[19]!=0 && AreaKuni[19]]!=4)
+{
+	Set a,AreaKuni[19]
+	Set b,true
+	if (KuniPlayer[a])
+	{
+	       AreaFocus 19
+		Window 1
+		FaceOut a
+		WindowOn 100
+		Window 0
+		Size 356,96
+		Print 四賢者の一人、土の賢者ワットサルトが
+		Print ガルガンダ山に住んでいることがわかりました。
+		WindowOn 4000
+		Set b,YesNo(訪ねてみますか？)
+		if (b)
+		{
+			Window 0
+			Conversation %ワットサルト
+			Print おぬしは誰じゃ？
+			WindowOn 4000
+			Set c,YesNo(「世界を救うもの」)
+			Clear
+			if (c)
+			{
+				Print わしは正義感ぶったやつは
+				Print 嫌いじゃ。
+				WindowOn 4000
+				Set b,false
+			}
+			if (b)
+			{
+				Print では、誰なんじゃ？
+				WindowOn 4000
+				Set c,YesNo(「強いもの」)
+				Clear
+				if (c)
+				{
+					Print 強いなら、わしの力は
+					Print 必要なかろう。
+					WindowOn 4000
+					Set b,false
+				}
+				if (b)
+				{
+					Print わしの力が必要なのか・・・。
+					Print 力をかしてやろう。
+					WindowOn 4000
+				}
+			}
+			WindowOff
+		}
+	}
+	if (b)
+	{
+		CharSet 19,%ワットサルト 
+	}
+	Set Flag[26],true
+}
+//No.15 風の賢者ポートニック
+if (Turn>=50 && Scenario<=3 && Flag[27]==false && Random(4)==0 && AreaButaiKz[38]<20 && AreaKuni[38]!=3 && AreaKuni[38]!=0 && AreaKuni[38]!=4 && AreaKuni[38]!=14)
+{
+	Set a,AreaKuni[38]
+	Set b,true
+	if (KuniPlayer[a])
+	{
+	       AreaFocus 38
+		Window 1
+		FaceOut a
+		WindowOn 100
+		Window 0
+		Size 356,96
+		Print 四賢者の一人、風の賢者ポートニックが
+		Print ロイタスにいることがわかりました。
+		WindowOn 4000
+		Set b,YesNo(訪ねてみますか？)
+		if (b)
+		{
+			Window 0
+			Conversation %ポートニック
+			Print あたしを仲間にする気？
+			Print 仲間にする気なら２００Ley払って？
+			WindowOn 4000
+			Set b,YesNo(払いますか)
+			Clear
+			if (b==false)
+			{
+				Print けちな人ね！
+				WindowOn 4000
+			}
+			if (b)
+			{
+				if (Ley[a]<200)
+				{
+					Window 0
+					Size 356,96
+					Print お金が足りません
+					WindowOn 4000
+				}	
+				Window 0
+				Conversation %ポートニック
+				Print 嘘だよ、
+				Print 別にお金なんかいらないよ。
+				WindowOn 4000
+				Clear
+				Print あたしの魔法でバンバン、
+				Print 敵をやっつけてあげましょう。
+				WindowOn 4000
+			}
+			WindowOff
+		}
+	}
+	if (b)
+	{
+		CharSet 38,%ポートニック 
+	}
+	Set Flag[27],true
+}
+//No.16 神官戦士ホルス
+if (Turn>=110 && Scenario<=4 && Flag[28]==false && AreaButaiKz[1]<20)
+{
+	Set a,AreaKuni[1]
+	if (a==1 || a==2 || a==5 || a==8)
+	{
+		Set b,true
+		if (KuniPlayer[a])
+		{
+	              AreaFocus 1
+			Window 1
+			FaceOut a
+			WindowOn 100
+			Window 0
+			Size 356,96
+			Print ラザム神殿において
+			WindowOn 4000
+			Conversation 13
+			Print むむぅ、いつまでも
+			Print こんなところで修行していても
+			Print 世界は救われない。
+			WindowOn 4000
+			Clear			
+			Print どこかに世界を救う、
+			Print 英雄はいないのか？
+			WindowOn 4000
+			Set b,YesNo(仲間になるよう誘ってみますか？)
+			if (b)
+			{
+				Clear
+				Print 私に戦えと？			
+				WindowOn 4000
+				Clear
+				Print おもしろい、
+				Print ひとつ、やってやろうではないか。
+				WindowOn 4000
+				Window 0
+				Size 356,96
+				Print 神官戦士ホルスが
+				Print 仲間になりました。
+				WindowOn 4000
+			}
+			WindowOff
+		}
+		if (b)
+		{
+			CharSet 1,%Hホルス 
+		}
+		Set Flag[28],true
+	}
+}
+//No.17 ルートガルト統一
+if (Scenario==1 && Flag[29]==false)
+{
+	Set a,AreaKuni[29]
+	if (a>0 && KuniPlayer[a])
+	{
+		if (AreaKuni[26]==a && AreaKuni[27]==a && AreaKuni[28]==a && AreaKuni[30]==a)
+		{	
+	              AreaFocus 29
+			Music 勝利！
+			Window 1
+			FaceOut a
+			WindowOn 100
+			Window 0
+			Size 356,96
+			Print ルートガルト地方をすべて支配しました。
+			WindowOn 4000
+			Clear
+			Print ルートガルトの住民から
+			Print 500Leyの貢ぎ物がありました。
+			Plus Ley[a],500
+			WindowOn 4000
+			WindowOff 
+			Set Flag[29],true
+		}
+	}
+}
+//No.18 オステア港改築
+if (Turn>40 && Turn<65 && Random(5)==0 && Flag[30]==false)
+{
+       AreaFocus 25
+	Set a,AreaKuni[25]
+	if (a>0)
+	{
+		Window 1
+		FaceOut a
+		WindowOn 100
+	}
+	Window 0
+	Size 356,96
+	Print オステア港に他の大陸からの
+	Print 商人達が来ました。
+	WindowOn 4000
+	Clear
+	Print オステア港の街は急激に
+	Print 成長しました。
+	WindowOn 4000
+	WindowOff
+	Plus AreaCity[25],300
+	Plus AreaWall[25],200
+	Plus AreaRoad[25],20	
+	Set Flag[30],true
+}
+//ゴートⅧ世、ルートガルト占拠
+if (Flag[31]==false && KuniPlayer[1] && AreaKuni[29]==1)
+{
+       AreaFocus 29
+	Set Flag[31],true
+	Set a,0
+	if (HeroKuni[%フィーザレス]==1)
+	{
+		Set a,%フィーザレス
+	}
+	if (HeroKuni[%イオナ]==1)
+	{
+		Set a,%イオナ
+	}
+	if (HeroKuni[%ドルス]==1)
+	{
+		Set a,%ドルス
+	}
+	if (a>0)
+	{
+		Music 勝利！
+		Window 1
+		FaceOut 1
+		WindowOn 100
+		Window 0
+		Conversation a
+		Print おめでとうございます。
+		if (a==%イオナ)
+		{
+			Print 王都を奪回することができましたね。
+		}
+		if (a!=%イオナ)
+		{	
+			Print 王都を奪回することができましたな。
+		}	
+		WindowOn 4000
+		Clear
+		if (a==%イオナ)
+		{
+			Print 念願の王都帰還はどうですか？
+		}
+		if (a!=%イオナ)
+		{
+			Print 念願の王都帰還はいかがですかな？
+		}
+		WindowOn 4000
+		Window 1
+		Conversation 1
+		Print ああ、とても
+		Print 気持ちよい。
+		Print ありがとう、お前達。
+		WindowOn 4000
+		if (KuniFlag[3]!=0 || KuniFlag[14]!=0)
+		{
+			Clear
+			Print しかし、まだムクガイヤは生きている。
+			Print 奴を殺さなければ、戦いは終わらない。
+		}
+		if (KuniFlag[3]==0 && KuniFlag[14]==0)
+		{
+			Clear
+			Print だが、世界は平穏になっていない。
+			Print やるべきことは、まだたくさんある。
+		}
+		WindowOn 4000
+		Window 0
+		Conversation a
+		Print そのとおりです。
+		Print まだまだ、やるべきことはたくさんあります。
+		WindowOn 4000
+		Clear
+		if (a==%イオナ)
+		{
+			Print 私達は大陸に平和がおとずれるまで、
+		}
+		if (a!=%イオナ)
+		{
+			Print 我々は大陸に王権を戻すため
+		}		
+		Print 戦い続けなければなりません。
+		WindowOn 4000
+	}
+	Window 0
+	Size 356,96
+	Print ルートガルトの住民から
+	Print 300Leyの貢ぎ物が送られてきました。
+	WindowOn 4000
+	Plus Ley[1],300
+	WindowOff
+}
+//No20.ドルス死去
+if (Turn==44 && HeroFlag[%ドルス]>0 && HeroKuni[%ドルス]==1) 
+{
+	if (KuniPlayer[1])
+	{
+              AreaFocus BaseArea[1]
+		Music 終わりだよーん
+		Window 1
+		FaceOut 1
+		WindowOn 100
+		Window 0
+		Conversation %ドルス
+		Print 王子、
+		Print 突然ですが、私の命は
+		Print もう長くはありません。
+		WindowOn 4000
+		Window 1
+		Conversation 1
+		Print 何を言う、ドルス。
+		Print お主にやってもらうことはまだまだあるぞ。
+		WindowOn 4000
+		Window 0
+		Conversation %ドルス
+		Print しかし、王子。
+		Print 人には寿命というものがあるのです。
+		WindowOn 4000
+		Clear
+		Print 私は、もう十分に生きました。
+		Print そして、その時が今、来たのです。
+		WindowOn 4000
+		Window 1
+		Conversation 1
+		Print ドルス・・・・・。
+		WindowOn 4000
+		Window 0
+		Conversation %ドルス
+		Print 静かに休ましてください、王子。
+		Print 今までありがとうございました。
+		WindowOn 4000
+		WindowOff
+		Window 0
+		Size 356,96
+		Print ドルスが死にました。
+		WindowOn 4000
+		WindowOff
+	}
+	CharDelete %ドルス
+}
+//No 21.大いなる力・予告
+if (Turn>=50 && Turn<55 && KuniFlag[11]>0 && Flag[32]==false && HeroKuni[%ラクタイナ]==11)
+{
+	if (KuniPlayer[11])
+	{
+              AreaFocus BaseArea[11]
+		Window 1
+		FaceOut 11
+		WindowOn 100
+		Window 0
+		Conversation %ラクタイナ
+		Print 大将、
+		Print 大いなる力というものを知っているか？
+		WindowOn 4000
+		Window 1
+		Conversation 11
+		Print 大いなる力？
+		Print 知らねえなぁ・・・。
+		WindowOn 4000
+		Window 0
+		Conversation %ラクタイナ
+		Print 詳しいことは、私も知らないが、
+		Print どうも、その大いなる力というものは、
+		Print 人にとてつもない力を与えてくれるらしい。
+		WindowOn 4000
+		Window 1
+		Conversation 11
+		Print ほう、それは面白いな。
+		Print で、それはどこにあるんだ？
+		WindowOn 4000
+		Window 0
+		Conversation %ラクタイナ
+		Print おそらく、
+		Print 聖地グリンシャスにあるかと・・・。
+		WindowOn 4000
+		Window 1
+		Conversation 11
+		Print 聖地グリンシャス？
+		Print ああ、大陸の一番東南にある場所だな。
+		WindowOn 4000
+		Clear
+		if (AreaKuni[46]==8 || AreaKuni[47]==8)
+		{
+			Print あそこに行くには、
+			Print エルフォードが邪魔だな。
+			WindowOn 4000
+			Window 0
+			Conversation %ラクタイナ
+			Print そのとおりだ。
+			Print エルフォードと戦うことになるだろう。
+			WindowOn 4000
+			Window 1
+			Conversation 11
+		}
+		Print それじゃあ、聖地グリンシャスに行くか。
+		WindowOff
+		Window 0
+		Size 356,96
+		Print ちなみに、
+		Print ブレッド自身が聖地グリンシャスに
+		Print 移動しないと意味がありません。
+		WindowOn 4000
+		if (KuniFlag[8]!=0)
+		{
+			Clear
+			Print 早く行かないと、封印されてしまいます。
+			Print がんばって、移動なり戦争なりしてください。
+			WindowOn 4000
+		}
+		Clear
+		Print それと、大いなる力を手に入れなくても
+		Print ゲームには何ら関係ありません。
+		WindowOn 4000
+		Clear
+		Print 詳しくは、人物ファイルの
+		Print エルフォードの所を読みましょう。
+		WindowOn 4000
+		WindowOff
+	}
+	Set Flag[32],true
+}
+//No22.大いなる力
+if (Flag[32] && Flag[33]==false && Flag[34]==false && AreaKuni[47]==11 && AreaButaiKz[47]<20 && BaseArea[11]==47)
+{
+	if (KuniPlayer[11])
+	{
+              AreaFocus 47
+		Music あそこにあるものは
+		Window 1
+		Conversation 11
+		Print ついに聖地グリンシャスについたぞ。
+		Print ラクタイナの言ったことは本当だろうか？
+		WindowOn 4000
+		Clear
+		Print しかし、大いなる力とは
+		Print 何なんだ？
+		Print どこにあるんだ？
+		WindowOn 4000
+		Clear
+		Window 0
+		Size 356,96
+		Print ブレッドは、そうつぶやきながら、
+		Print 石碑の中心に立った。
+		WindowOn 4000
+		Window 1
+		Conversation 11
+		Print 大いなる力よ、
+		Print 俺の前に現れてくれ！
+		WindowOn 4000
+		Window 0
+		Size 356,96
+		Print ブレッドがそう言うと、
+		Print 石碑が光り、
+		Print あるモンスターがブレッドの前にいた。
+		WindowOn 4000
+		Window 1
+		Conversation 11
+		Print な、なんだ？
+		WindowOn 4000
+		Window 0
+		Conversation %アルティマイト
+		Print おまえか、
+		Print 私を呼び寄せたのは？
+		WindowOn 4000
+		Window 1
+		Conversation 11
+		Print （そういう事にしておくか・・・）
+		Print ああ、そうだ。
+		WindowOn 4000
+		Window 0
+		Conversation %アルティマイト
+		Print しばらくしないうちに
+		Print 人間もずいぶん変わったものだな。
+		Print それで、望みは何だ？
+		WindowOn 4000
+		Window 1
+		Conversation 11
+		Print （何なんだ、こいつは・・・）
+		Print 力が欲しい。
+		WindowOn 4000
+		Window 0
+		Conversation %アルティマイト
+		Print 力か・・・。
+		Print それはどんな力だ？
+		WindowOn 4000
+		Window 1
+		Conversation 11
+		Print 世界を支配する力だ。
+		WindowOn 4000
+		Window 0
+		Conversation %アルティマイト
+		Print そうか、それは簡単なことだ。
+		Print 私が戦えば、世界を支配することができる。
+		WindowOn 4000
+		Clear
+		Print ただし、私はここから動けない。
+		Print ラストニ・パクハイト・ニドルステと
+		Print 言って欲しい。
+		WindowOn 4000
+		Window 1
+		Conversation 11
+		Print （どういう事だ？）
+		Print （ためしに言ってみるか。）
+		WindowOn 4000
+		Clear
+		Print ラストニ・パクハイト・ニドルステ！！
+		WindowOn 4000
+		WindowOff
+		Window 0
+		Size 356,96
+		Print ブレットが呪文を唱えると、
+		Print そのモンスターは動き出した。
+		WindowOn 4000
+		Clear
+		Print ブレッドはアルティマイトを
+		Print 仲間にした。
+		WindowOn 4000
+		WindowOff
+	}
+	if (KuniPlayer[11]==false)
+	{
+              AreaFocus 47
+		Window 0
+		Size 356,96
+		Print ブレッドが、大いなる力を手に入れた。
+		WindowOn 4000
+		WindowOff
+	}
+	Set Flag[33],true
+	CharSet 47,%アルティマイト
+}
+//No23.大いなる力の封印
+if (KuniPlayer[8]==false || Flag[35] && Turn>=60 && Flag[32] && Flag[33]==false && Flag[34]==false && AreaKuni[47]==8)
+{
+	if (KuniPlayer[8])
+	{
+              AreaFocus 47
+		Window 0
+		Size 356,96
+		Print オルジンが出かけてから、
+		Print ５日が立った。
+		WindowOn 4000
+		Clear
+		Print どうも、その間、
+		Print 壮絶な戦いが行われたらしい。
+		WindowOn 4000
+		Clear
+		Print 付近の住民の話では、
+		Print 聖地グリンシャスは、その間、
+		Print 白く輝いたという。
+		WindowOn 4000
+		Clear
+		Print さらに４日たった後、オルジンは戻ってきた。
+		WindowOn 4000
+		Clear
+		Print そして、うまく封印することができたことを述べた。
+		WindowOn 4000
+		WindowOff
+	} 
+	if (KuniPlayer[11])
+	{
+              AreaFocus 47
+		Window 0
+		Size 356,96
+		Print エルフォードが
+		Print 大いなる力を封印した。
+		WindowOn 4000
+		WindowOff
+	}
+	Set Flag[34],true
+} 
+//No24.オルジンとエルフォード
+if (Flag[32] && Turn>=55 && Flag[33]==false && Flag[35]==false && KuniPlayer[8])
+{
+       AreaFocus BaseArea[8]
+	Window 0
+	Size 356,96
+	Print エルフォードのもとに
+	Print 客が訪れた。
+	WindowOn 4000
+	Window 1
+	FaceOut 8
+	WindowOn 100
+	Window 0
+	Conversation %オルジン
+	Print はじめまして、
+	Print オルジンといいます。
+	WindowOn 4000
+	Window 1
+	Conversation 8
+	Print オルジンどの、今日は
+	Print わざわざ、何のために来たのかな？
+	WindowOn 4000
+	Window 0
+	Conversation %オルジン
+	Print エルフォード様は、
+	Print 大いなる力というものをご存知ですか？
+	WindowOn 4000
+	Window 1
+	Conversation 8
+	Print ああ、聖地グリンシャスにあるものか。
+	WindowOn 4000
+	Clear
+	Print 太古の神々が、戦いのために創ったといわれる。
+	Print 戦いが終わった後で、再び使われることが
+	Print ないように、封印したといわれる。
+	WindowOn 4000
+	Window 0
+	Conversation %オルジン
+	Print そこまで知っているのなら、
+	Print 話がはやい。
+	WindowOn 4000
+	Window 1
+	Conversation 8
+	Print それがどうしたというのだ？
+	WindowOn 4000
+	Window 0
+	Conversation %オルジン
+	Print 今、その封印が解かれようとしているのです。
+	WindowOn 4000
+	Window 1
+	Conversation 8
+	Print なんだと！！
+	WindowOn 4000
+	Clear
+	Print 神々が封印したものが
+	Print そう簡単に解かれるわけないだろう？
+	WindowOn 4000
+	Window 0
+	Conversation %オルジン
+	Print 確かにそうです。
+	Print しかし、今その封印をとくだけの力を
+	Print 持った人間が現れたのです。
+	WindowOn 4000
+	Window 1
+	Conversation 8
+	Print ばかな・・・。
+	Print しかし、それが本当だったら
+	Print 大変なことになる。
+	WindowOn 4000
+	Clear
+	Print それで、
+	Print 私にどうしろというのだ？
+	WindowOn 4000
+	Window 0
+	Conversation %オルジン
+	Print エルフォード様には、聖地グリンシャスの
+	Print モンスターどもを追い払って欲しいのです。
+	WindowOn 4000
+	Clear
+	Print 封印の阻止は、私達がします。
+	Print また仮に、封印が解けていても
+	Print 再び封印をすることができます。
+	WindowOn 4000
+	Window 1
+	Conversation 8
+	Print そうか、わかった。
+	if (AreaKuni[47]==8)
+	{
+		Print 聖地グリンシャスの地は
+		Print 誰にも渡さない。
+	}
+	if (AreaKuni[47]!=8)
+	{
+		Print 聖地グリンシャスに
+		Print 今すぐ侵攻しよう
+	}
+	WindowOn 4000
+	Window 0
+	Conversation %オルジン
+	Print よろしくお願いします。
+	WindowOn 4000
+	WindowOff
+	Window 0
+	Size 356,96
+	Print そう、オルジンは言って
+	Print 聖地グリンシャスに出発した。
+	WindowOn 4000
+	WindowOff
+	Set Flag[35],true
+}
+//No25.ネアトン登場
+if (Flag[36]==false && Scenario<=2)
+{
+	Set a,AreaKuni[8]
+	if (a!=4 && a!=5 && a!=12 && a!=0 && BaseArea[a]==8 && AreaButaiKz[8]<20)
+	{
+		Set b,true
+		if (KuniPlayer[a])
+		{
+       		AreaFocus BaseArea[a]
+			Window 1
+			FaceOut a
+			WindowOn 100
+			Window 0
+			Conversation %ネアトン
+			Print はじめまして・・・。
+			Print ネアトンといいます。
+			WindowOn 4000
+			Clear
+			Print どうか、
+			Print 軍隊に入れてくれないでしょうか。
+			WindowOn 4000
+			Set b,YesNo(入れてあげますか？)
+			Clear
+			if (b)
+			{
+				Print ありがとうございます。
+			}
+			if (b==false)
+			{
+				Print そうですか・・・。
+				Print それは残念です。
+			}
+			WindowOn 4000
+			WindowOff
+		}
+		if (b)
+		{
+			CharSet 8,%ネアトン
+		}
+		Set Flag[36],true
+	}
+}
+//No26.援軍ムナード兄弟
+if (KuniFlag[4]!=0 && Flag[37]==false && Turn>=16 && Scenario==1)
+{
+	Set a,BaseArea[4]
+	if (AreaButaiKz[a]<19)
+	{
+		if (KuniPlayer[4])
+		{
+       		AreaFocus BaseArea[4]
+			Window 1
+			FaceOut 4
+			WindowOn 100
+			Set b,HeroFlag[154]
+			Window 0
+			if (b==0)
+			{
+				Size 356,96
+				Print ムナードとショハードの二人が
+				Print 魔界から、援軍にやってきたみたいです。
+				WindowOn 4000
+			}
+			if (b>0)
+			{
+				Conversation %フーリン
+				Print ルーゼル様、ルーゼル様
+				Print ムナード兄弟が来たよ。
+				WindowOn 4000
+				Window 1
+				Conversation 4
+				Print ムナード兄弟？
+				Print ムナードとショハードのことか？
+				WindowOn 4000
+				Window 0
+				Conversation %フーリン
+				Print うん、そう。
+				Print これで戦いも楽になるね。
+				WindowOn 4000
+			}
+			Window 0
+			Conversation %ムナード
+			Print ムナードです。
+			Print よろしくお願いします、ルーゼル様。
+			WindowOn 4000
+			Conversation %ショハード
+			Print 私は、ショハードです。
+			WindowOn 4000
+			WindowOff
+			Window 0
+			Size 356,96
+			Print ムナードとショハードの
+			Print 二人が仲間になりました。
+			WindowOn 4000
+			WindowOff
+		}
+		CharSet a,%ムナード
+		CharSet a,%ショハード
+		Set Flag[37],true
+	}
+}
+//No27.ビーストテイマーのうわさ
+if (Flag[38]==false && KuniPlayer[2] && Scenario==1 && Flag[39]==false)
+{
+	if (AreaKuni[35]==2 || AreaKuni[36]==2 && AreaKuni[34]==0 && HeroFlag[%スヴェステェン]>0)
+	{
+     		AreaFocus BaseArea[2]
+		Window 1
+		FaceOut 2
+		WindowOn 100
+		Window 0
+		Conversation %スヴェステェン
+		Print アルテナ様、
+		Print ビーストテイマーをご存知ですか？
+		WindowOn 4000
+		Window 1
+		Conversation 2
+		Print ビーストテイマー？
+		Print 知らないわ。
+		WindowOn 4000
+		Window 0
+		Conversation %スヴェステェン
+		Print ビーストテイマーと呼ばれる人たちは、
+		Print 獣を操ることができるといわれてます。
+		WindowOn 4000
+		Window 1
+		Conversation 2
+		Print 獣を操る？
+		Print モンスター達を従えるわけ？
+		WindowOn 4000
+		Window 0
+		Conversation %スヴェステェン
+		Print そのとおりです。
+		Print そして、今、ビーストテイマーが
+		Print ルグザム火山にいるという情報があります。
+		WindowOn 4000
+		Window 1
+		Conversation 2
+		Print へぇ、それは面白そうね。
+		Print さっそく、ルグザム火山に行こうか。
+		WindowOn 4000
+		WindowOff
+		Set Flag[38],true
+	}
+}
+//No28.ビーストテイマー・ミルフォース
+if (Flag[39]==false && Scenario==1)
+{
+	Set a,AreaKuni[34]
+	if (a>0 && AreaButaiKz[34]<20 && a!=4)
+	{
+		Set b,true
+		Set c,true
+		if (KuniPlayer[2] && a==2 && Flag[38]==true)
+		{
+       		AreaFocus 34
+			Set b,false
+			Window 1
+			FaceOut 2
+			WindowOn 100
+			if (HeroFlag[%スヴェステェン]>0)
+			{
+				Window 0
+				Conversation %スヴェステェン
+				Print やっと、ルグザム火山に来ましたね。
+				WindowOn 4000
+				Window 1
+				Conversation 2
+				Print さっそく、
+				Print 例のビーストテイマーに
+				Print 会いに行きましょう。
+				WindowOn 4000
+			}
+			Window 0
+			Conversation %ミルフォース
+			Print はじめまして、
+			Print 私がビーストテイマーのミルフォースです。
+			WindowOn 4000
+			Window 1
+			Conversation 2
+			Print （変な格好してるわね。）
+			Print あなたがビーストテイマーなの？
+			WindowOn 4000
+			Window 0
+			Conversation %ミルフォース
+			Print はい、そうです。
+			Print 何か、ご用でも？
+			WindowOn 4000
+			Window 1
+			Conversation 2
+			Print ぜひとも、あなたに私の軍隊で
+			Print 活躍してほしいの。
+			WindowOn 4000
+			Window 0
+			Conversation %ミルフォース
+			Print 私が・・・？
+			Print 私は、動物の世話をしている方が
+			Print 性に合います。
+			WindowOn 4000
+			Set d,YesNo(（そのとおりだわ。）)
+			if (d)
+			{
+				Window 1
+				Conversation 2
+				Print そう、それは残念だわ。
+				Print （こんな人どうでもいいわ。）
+				WindowOn 4000
+				WindowOff
+				Set c,false 
+			}
+			if (d==false)
+			{
+				Window 1
+				Conversation 2
+				Print でもどうしても、
+				Print あなたの力を貸してほしいの。
+				WindowOn 4000
+				Window 0
+				Conversation %ミルフォース
+				Print そうですか・・・。
+				Print そこまで言うなら仕方ありません。
+				WindowOn 4000
+				Clear
+				Print 私は非力ですが、
+				Print 軍に入りましょう。
+				WindowOn 4000
+				WindowOff
+			}
+		}
+		if (b && KuniPlayer[a])
+		{
+			Window 1
+			FaceOut a
+			WindowOn 100
+			Window 0
+			Size 356,96
+			Print ルグザム火山に、
+			Print ビーストテイマーがいるそうです。
+			WindowOn 4000
+			Set d,YesNo(訪ねてみますか？)
+			if (d==false)
+			{
+				Set c,false
+			}
+			if (d)
+			{
+				Window 0
+				Conversation %ミルフォース
+				Print はじめまして、
+				Print 私がビーストテイマーのミルフォースです。
+				WindowOn 4000
+				Clear
+				Print 私に軍隊に入ってほしいと？
+				WindowOn 4000
+				Clear
+				Set c,YesNo(そのとおり。)
+				if (c)
+				{
+					Print そこまでいわれたら仕方ありません。
+					Print 非力ですが全力を尽くしましょう。
+					WindowOn 4000
+				}
+			}			
+			WindowOff
+		}		
+		if (c)
+		{
+			CharSet	34,%ミルフォース
+		}
+		Set Flag[39],true
+	}
+} 
+//No29.ヨネアとニースルー
+if (Scenario==1 && Flag[40]==false && AreaButaiKz[30]<19 && AreaKuni[30]>0 && AreaKuni[30]!=4)
+{
+	Set a,AreaKuni[30]
+	Set b,true
+	if (KuniPlayer[a])
+	{
+     		AreaFocus 30
+		Window 1
+		FaceOut a	
+		WindowOn 100
+		Window 0
+		Size 356,96
+		Print 二人の魔術師が
+		Print 仕官を申し入れています。
+		WindowOn 4000
+		Window 0
+		Conversation %ヨネア
+		Print 私はヨネアと申します。
+		Print 魔術師として、活躍してみせます。
+		WindowOn 4000
+		Window 0
+		Conversation %ニースルー
+		Print 私はニースルーといいます。
+		Print 同じく、魔法に自信があります。
+		WindowOn 4000
+		Set b,YesNo(この者達を仲間にしますか？)
+		WindowOff
+	}
+	if (b)
+	{
+		CharSet 30,%ヨネア
+		CharSet 30,%ニースルー
+	}
+	Set Flag[40],true
+}
+//No30.ゾーマ登場
+if (Turn>=40 && Scenario<=2 && Random(5)==0 && Flag[41]==false)
+{
+	Set a,HeroKuni[%ヨネア]
+	Set c,BaseArea[a]
+	if (a>0 && AreaButaiKz[c]<20 && a!=4)
+	{
+		Set b,true
+		if (KuniPlayer[a])
+		{
+       		AreaFocus c
+			Window 1
+			FaceOut a
+			WindowOn 100
+			Window 0
+			Conversation %ヨネア
+			Print 私の友達にゾーマというものがいます。
+			Print この者を仲間にしてはどうでしょうか？
+			WindowOn 4000
+			Set b,YesNo(そうだな。)
+			if (b)
+			{
+				Window 0
+				Conversation %ゾーマ
+				Print 私はゾーマといいます。
+				Print よろしくお願いします。
+				WindowOn 4000
+			}					
+			WindowOff
+		}
+		if (b)
+		{
+			CharSet c,%ゾーマ
+		}
+		Set Flag[41],true
+	}
+}
+//No31.ビーストテイマー・ヤヌーク
+if (Scenario==1 && Flag[42]==false && AreaButaiKz[27]<20 && AreaKuni[27]>0 && AreaKuni[27]!=4)
+{
+	Set a,AreaKuni[27]
+	if (KuniPlayer[a])
+	{
+      		AreaFocus 27
+		Window 1
+		FaceOut a
+		WindowOn 100
+		Window 0
+		Size 356,96
+		Print ビーストテイマーのヤヌークというものが
+		Print 訪れています。
+		WindowOn 4000
+		Window 0
+		Conversation %ヤヌーク
+		Print 軍隊に入れてくれー。
+		Print かっかっかー。
+		WindowOn 4000
+		Window 0
+		Size 356,96
+		Print 勝手に、仲間になりました。
+		WindowOn 4000
+		WindowOff
+	}
+	CharSet 27,%ヤヌーク
+	Set Flag[42],true
+}
+//No32.オステアの戦士ノーア
+if (Scenario==1 && Flag[43]==false && AreaButaiKz[25]<20 && AreaKuni[25]>0 && AreaKuni[25]!=4)
+{
+	Set a,AreaKuni[25]
+	Set b,true
+	if (KuniPlayer[a])
+	{
+      		AreaFocus 25
+		Window 1
+		FaceOut a
+		WindowOn 100
+		Window 0
+		Size 356,96
+		Print オステアの地に、
+		Print とても力持ちの戦士がいるそうです。
+		WindowOn 4000
+		Set b,YesNo(訪ねてみますか？)
+		if (b)
+		{
+			Window 0
+			Conversation %ノーア
+			Print あなた様に会えて光栄です。
+			Print 前から会いたいと思っておりました。
+			WindowOn 4000
+			Set b,YesNo(仲間になるように誘ってみますか？)
+			if (b)
+			{
+				Clear
+				Print そうですか。
+				Print それでは、喜んで仲間にさせてもらいます。
+				WindowOn 4000
+				Window 0
+				Size 356,96
+				Print ノーアが仲間になった。
+				WindowOn 4000
+			} 
+		}
+		WindowOff
+	}
+	if (b)
+	{
+		CharSet 25,%ノーア
+	}
+	Set Flag[43],true
+}
+//No33.沼地の魔術師ガルダーム
+if (Scenario<=2 && Flag[44]==false && AreaKuni[42]==2 && AreaButaiKz[42]<20 && KuniFlag[6]==false)
+{
+	Set b,true
+	if (KuniPlayer[2])
+	{
+      		AreaFocus 42
+		Window 1
+		FaceOut 2
+		WindowOn 100
+		if (HeroFlag[%スヴェステェン]>0)
+		{
+			Window 0
+			Conversation %スヴェステェン
+			Print アルテナ様、
+			Print なんでも、沼地に
+			Print 強力な魔術師がいるとか・・・。
+			WindowOn 4000
+			Window 1
+			Conversation 2
+			Print 強力な魔術師？
+			Print 何それ？
+			WindowOn 4000
+			Window 0
+			Conversation %スヴェステェン
+			Print （何それって何だ？）
+			Print うわさによれば、ムクガイヤを
+			Print 超える魔力を持っている魔術師だとか・・・。
+			WindowOn 4000
+			Window 1
+			Conversation 2
+			Print ムクガイヤを超える・・・？
+			Print それってすごいことじゃないの？
+			WindowOn 4000
+			Window 0
+			Conversation %スヴェステェン
+			Print そうです。
+			Print すぐに、彼に会いに行きましょう。
+			WindowOn 4000
+			Window 1
+			Conversation 2
+			Print そうね。
+			Print すぐ行きましょう。
+			WindowOn 4000
+			WindowOff
+		}
+		Window 0
+		Size 356,96
+		Print アルテナは
+		Print 沼地に住むという
+		Print 魔術師のところを訪れた。
+		WindowOn 4000
+		Window 0
+		Conversation %ガルダーム
+		Print ようこそ、我が家へ、
+		Print このような所に
+		Print わざわざおこしになるとは・・・。
+		WindowOn 4000
+		Window 1
+		Conversation 2
+		Print これもあなたのためよ。
+		WindowOn 4000
+		Window 0
+		Conversation %ガルダーム
+		Print 私のため？
+		Print なぜです？
+		WindowOn 4000
+		Window 1
+		Conversation 2
+		Print （そんな深い意味はないんだけど・・・。）
+		Print あなたは今の生活に満足してないでしょう？
+		WindowOn 4000
+		Window 0
+		Conversation %ガルダーム
+		Print 確かにそうです。
+		WindowOn 4000
+		Window 1
+		Conversation 2
+		Print 世界は今、荒れています。
+		WindowOn 4000
+		Clear
+		Print それなのに、あなたのような能力のある
+		Print 魔術師が不満を抱かないわけないでしょう？
+		WindowOn 4000
+		Window 0
+		Conversation %ガルダーム
+		Print はっはっはっ。
+		Print 確かにそのとおりです。
+		WindowOn 4000
+		Clear
+		Print 恐れ入りました。
+		Print 私だって、何も考えていないわけでは
+		Print ありません。
+		WindowOn 4000
+		Clear
+		Print 世界を救いたい・・・
+		Print と、いう気持ちは誰にも負けません。
+		WindowOn 4000
+		Clear
+		Print ただ、私一人の力では余りに
+		Print 無力すぎるのです。
+		WindowOn 4000
+		Clear
+		Print 私はあなたのような英雄が現れるのを
+		Print ずっと待っていたのです。 
+		WindowOn 4000
+		Window 1
+		Conversation 2
+		Print じゃあ、私達の仲間に
+		Print なってくれるのね？
+		WindowOn 4000
+		Window 0
+		Conversation %ガルダーム
+		Print もちろんです。
+		WindowOn 4000
+		Window 1
+		Conversation 2
+		Print （はぁ、長かった。）
+		WindowOn 4000
+		WindowOff
+	}
+	if (b)
+	{
+		CharSet 42,%ガルダーム
+	}
+	Set Flag[44],true
+}
+//つぎはFlag50から
+//No34.女魔法戦士カリン
+if (Flag[50]==false && Turn>40 && Scenario<=2 && AreaButaiKz[3]<20)
+{
+	Set a,AreaKuni[3]
+	if (a>0 && a!=4 && a!=14 && a!=7 && a!=10)
+	{
+		Set b,true
+		if (KuniPlayer[a])
+		{
+	      		AreaFocus 3
+			Window 1
+			FaceOut a
+			WindowOn 100
+			Window 0
+			Size 356,96
+			Print 東アルナス砂漠に、
+			Print 強力な魔法戦士がいるそうです。
+			WindowOn 4000
+			Set b,YesNo(訪ねてみますか？)
+			if (b)
+			{
+				Window 0
+				Conversation %カリン
+				Print はじめまして、
+				Print 私はカリンといいます。
+				WindowOn 4000
+				Clear
+				Conversation %カリン
+				Print 何か、用があるのですか？
+				WindowOn 4000
+				Set b,YesNo(仲間になるように誘ってみますか？)
+				if (b)
+				{
+					Clear
+					Conversation %カリン
+					Print はぁ、そうですか・・・。
+					WindowOn 4000
+					Clear
+					Print まぁ、いいですわ。
+					Print （ここにいても暇だし）
+					WindowOn 4000
+					Window 0
+					Size 356,96
+					Print カリンが仲間になった。
+					WindowOn 4000
+				}
+			}
+			WindowOff
+		}
+		if (b)
+		{
+			CharSet	3,%カリン
+		}
+		Set Flag[50],true
+	}
+} 
+//No35.リザードナイト・モーゼン
+if (Flag[51]==false && Scenario==1 && AreaButaiKz[43]<20)
+{
+	Set a,AreaKuni[43]
+	if (a==6)
+	{
+		Set b,true
+		if (KuniPlayer[a])
+		{
+	      		AreaFocus 43
+			Window 1
+			FaceOut a
+			WindowOn 100
+			Window 0
+			Size 356,96
+			Print コリカ沼に、
+			Print 強力な戦士がいるそうです。
+			WindowOn 4000
+			Set b,YesNo(訪ねてみますか？)
+			if (b)
+			{
+				Window 0
+				Conversation %モーゼン
+				Print あのエルフ野郎…
+				Print あのエルフ野郎…
+				WindowOn 4000
+				Clear
+				Print ぶっ殺してやる…！！
+				WindowOn 4000
+				Window 1
+				Conversation a
+				Print ・・・・・・。
+				Print （なんなんだ、こいつは。）
+				WindowOn 4000
+				Clear
+				Print （しかし、役に立つかもな…。）
+				WindowOn 4000
+				Set b,YesNo(仲間になるように誘ってみますか？)
+				if (b)
+				{
+					Window 0
+					Conversation %モーゼン
+					Print 殺す。殺す。殺す。殺す。
+					Print 殺す。殺す。殺す。殺す。
+					WindowOn 4000
+					Window 1
+					Conversation 6
+					Print ・・・・・・。
+					Print （意味がわからん…。）
+					WindowOn 4000
+					Window 0
+					Size 356,96
+					Print モーゼンが仲間になった。
+					WindowOn 4000
+				}
+			}
+			WindowOff
+		}
+		if (b)
+		{
+			CharSet	43,%モーゼン
+		}
+		Set Flag[51],true
+	}
+} 
+//No36.野菜師メーヤ
+if (Flag[52]==false && Scenario<=2 && AreaButaiKz[55]<20)
+{
+	Set a,AreaKuni[55]
+	if (a>0 && a!=5 && a!=7 && a!=14)
+	{
+		Set b,true
+		if (KuniPlayer[a])
+		{
+	      		AreaFocus 55
+			Window 1
+			FaceOut a
+			WindowOn 100
+			Window 0
+			Conversation %メーヤ
+			Print あらあら、あなたが
+			Print あの・・・
+			WindowOn 4000
+			Clear
+			Print 誰でしたっけ？
+			WindowOn 4000
+			Set b,YesNo(名前を言う)
+			if (b==false)
+			{
+				Window 0
+				Conversation %メーヤ
+				Print だれよ、あんた？
+				WindowOn 4000
+				Clear
+				Print あんたに用なんかないわ。
+				WindowOn 4000
+			}
+			if (b)
+			{
+				Window 0
+				Conversation %メーヤ
+				Print あ、そうそう。
+				Print 思い出したわ。
+				WindowOn 4000
+				Clear
+				Print 戦争ごっこやっている人でしょ。
+				WindowOn 4000
+				Set c,YesNo(ちがう！！)
+				if (c)
+				{
+					Window 0
+					Conversation %メーヤ
+					Print あっ、そうなの？
+					WindowOn 4000
+					Clear
+					Print じゃ、人違いだわ。
+					Print さよならぁぁぁ・・・。
+					WindowOn 4000
+					Set b,false
+				}
+				if (c==false)
+				{
+					Window 0
+					Conversation %メーヤ
+					Print あ、やっぱりね。
+					WindowOn 4000
+					Clear
+					Print あたしさぁ、お金に困っているだけど…
+					WindowOn 4000
+					Clear
+					Print 働くからさぁ、
+					Print 雇ってくれない？
+					WindowOn 4000
+					Set b,YesNo(雇う)
+					if (b)
+					{
+						Clear
+						Print あんがと・・・。
+						Print ちゃんと働くよ。
+						WindowOn 4000
+						Window 0
+						Size 356,96
+						Print メーヤが仲間になった。
+						WindowOn 4000
+					}
+					if (b==false)
+					{
+						Clear
+						Print なんだ。
+						Print けちね。
+						WindowOn 4000
+					}
+				}
+			}
+			WindowOff
+		}
+		if (b)
+		{
+			CharSet	55,%メーヤ
+		}
+		Set Flag[52],true
+	}
+} 
+//No37.竜騎士オーティ
+if (Flag[53]==false && Turn>15 && Scenario==1 && KuniFlag[2]!=0)
+{
+	Set a,BaseArea[2]
+	if (AreaButaiKz[a]<20)
+	{
+		Set b,true
+		if (KuniPlayer[2])
+		{
+	      		AreaFocus BaseArea[2]
+			Window 1
+			FaceOut 2
+			WindowOn 100
+			Window 0
+			Conversation %オーティ
+			Print アルテナ様、
+			Print お久しぶりです。
+			WindowOn 4000
+			Window 1
+			Conversation 2
+			Print あら、オーティ。
+			Print ほんと、久さしぶりね。
+			WindowOn 4000
+			Clear
+			Print もう、用は済んだの？
+			WindowOn 4000
+			Window 0
+			Conversation %オーティ
+			Print ええ、済みました。
+			Print これからはアルテナ様のもとで働けます。
+			WindowOn 4000
+			Window 1
+			Conversation 2
+			Print そう、それはうれしいわ。
+			Print あなたがいればかなり助けになるわ。
+			WindowOn 4000
+			Window 0
+			Size 356,96
+			Print オーティが仲間になった。
+			WindowOn 4000
+			WindowOff
+		}
+		CharSet a,%オーティ
+		Set Flag[53],true
+	}
+} 
+//No38.気まぐれ戦士レグリス
+if (Flag[54]==false && Turn>55 && Scenario<=2 && AreaButaiKz[5]<20 && Random(5)==0)
+{
+	Set a,AreaKuni[5]
+	if (a==12)
+	{
+		Set b,true
+		if (KuniPlayer[12])
+		{
+	      		AreaFocus 5
+			Window 1
+			FaceOut 12
+			WindowOn 100
+			Window 0
+			Conversation %レグリス
+			Print お久しぶりです、
+			Print ナルディア様。
+			WindowOn 4000
+			Window 1
+			Conversation 12
+			Print あ、レグリス！！
+			Print 何用？
+			WindowOn 4000
+			Window 0
+			Conversation %レグリス
+			Print ナルディア様のもとで
+			Print 働きたいのです。
+			WindowOn 4000
+			Window 1
+			Conversation 12
+			Print そう、それは助かる。
+			Print あなたほどの戦士なら歓迎です。
+			WindowOn 4000
+			Window 0
+			Size 356,96
+			Print レグリスが仲間になった。
+			WindowOn 4000
+			WindowOff
+		}
+		CharSet 5,%レグリス
+		Set Flag[54],true
+	}
+} 
+//No39.緑のドリュアス・キオー
+if (Flag[55]==false && Scenario==1 && AreaButaiKz[44]<20 && AreaKuni[44]>0)
+{
+	Set a,AreaKuni[44]
+	if (Flag[56]==false)
+	{
+		Set b,true
+		if (KuniPlayer[a])
+		{
+	      		AreaFocus 44
+			Window 1
+			FaceOut a
+			WindowOn 100
+			Window 0
+			Conversation %キオー
+			Print えっと、私、ドリュアスのキオーといいます。
+			WindowOn 4000
+			Clear
+			Print 妹のキニーとはぐれてしまって･・・・
+			WindowOn 4000
+			Clear
+			Print 一緒に探してくれませんか？
+			Print この森にいると思うのですが・・・
+			Set b,YesNo(一緒に探そう)
+			if (b)
+			{
+				Clear
+				Print ありがとうございます
+				WindowOn 4000
+				Window 0
+				Size 356,96
+				Print キオーが仲間になった。
+			}
+			if (b==false)
+			{
+				Clear
+				Print そうですか。それは残念です。
+			}
+			WindowOn 4000
+			WindowOff
+		}
+		if (b)
+		{
+			CharSet 44,%キオー
+		}
+		Set Flag[55],true
+	}
+	if (Flag[56]==true)
+	{
+		if (HeroFlag[%キニー]==44)
+		{
+			if (KuniPlayer[a])
+			{
+				Window 1
+				FaceOut a
+				WindowOn 100
+				Window 0
+				Conversation %キニー
+				Print あっ、姉さん！！
+				WindowOn 4000
+				Window 1
+				Conversation %キオー
+				Print あ、キニー！
+				Print やっと会えたわ。
+				WindowOn 4000
+				Window 0
+				Conversation %キニー
+				Print だいぶ、探したわ。
+				Print もう、どこにいっているのよ。
+				WindowOn 4000
+				Window 1
+				Conversation %キオー
+				Print ごめん、ちょっと、散歩を
+				Print してただけなんだけど。
+				WindowOn 4000
+				Clear
+				Print 道に迷ってしまって・・・
+				Window 0
+				FaceOut a
+				Window 1
+				Conversation %キオー
+				Print この方ね、探してくれた方は。
+				WindowOn 4000
+				Clear
+				Print 微力ながらお手伝いしますわ。
+				WindowOn 4000
+				Window 0
+				Size 356,96
+				Print キオーが仲間になった。
+				WindowOn 4000
+				WindowOff
+			}
+			CharSet 44,%キオー
+			Set Flag[55],true
+		}
+	}
+} 
+//No40.青のドリュアス・キニー
+if (Flag[56]==false && Scenario==1 && AreaButaiKz[45]<20 && AreaKuni[45]>0)
+{
+	Set a,AreaKuni[45]
+	if (Flag[55]==false)
+	{
+		Set b,true
+		if (KuniPlayer[a])
+		{
+	      		AreaFocus 45
+			Window 1
+			FaceOut a
+			WindowOn 100
+			Window 0
+			Conversation %キニー
+			Print えっと、私、ドリュアスのキニーといいます。
+			WindowOn 4000
+			Clear
+			Print 姉のキオーとはぐれてしまって･・・・
+			WindowOn 4000
+			Clear
+			Print 一緒に探してくれませんか？
+			Print この森にいると思うのですが・・・
+			Set b,YesNo(一緒に探そう)
+			if (b)
+			{
+				Clear
+				Print ありがとうございます
+				WindowOn 4000
+				Window 0
+				Size 356,96
+				Print キニーが仲間になった。
+			}
+			if (b==false)
+			{
+				Clear
+				Print そうですか。それは残念です。
+			}
+			WindowOn 4000
+			WindowOff
+		}
+		if (b)
+		{
+			CharSet 45,%キニー
+		}
+		Set Flag[56],true
+	}
+	if (Flag[55]==true)
+	{
+		if (HeroFlag[%キオー]==45)
+		{
+			if (KuniPlayer[a])
+			{
+				Window 1
+				FaceOut a
+				WindowOn 100
+				Window 0
+				Conversation %キオー
+				Print あっ、キニー！！
+				WindowOn 4000
+				Window 1
+				Conversation %キニー
+				Print あ、姉さん！
+				Print やっと会えたわ。
+				WindowOn 4000
+				Window 0
+				Conversation %キオー
+				Print だいぶ、探したわ。
+				Print もう、どこにいっているのよ。
+				WindowOn 4000
+				Window 1
+				Conversation %キニー
+				Print ごめん、ちょっと、食材を
+				Print 探しに行っていただけなんだけど。
+				WindowOn 4000
+				Window 0
+				FaceOut a
+				Window 1
+				Conversation %キニー
+				Print この方ね、探してくれた方は。
+				WindowOn 4000
+				Clear
+				Print 微力ながらお手伝いしますわ。
+				WindowOn 4000
+				Window 0
+				Size 356,96
+				Print キニーが仲間になった。
+				WindowOn 4000
+				WindowOff
+			}
+			CharSet 45,%キニー
+			Set Flag[56],true
+		}
+	}
+}
+//No41.クロウボール
+if (KuniFlag[4]!=0 && Turn>50 && Random(13)==0)
+{
+	Set a,BaseArea[4]
+	if (AreaButaiKz[a]<20)
+	{
+      		AreaFocus a
+		if (HeroKuni[%パルスザン]==4 && Flag[57]==false && KuniPlayer[4])
+		{
+			Window 1
+			FaceOut 4
+			WindowOn 100
+			Window 0
+			Conversation %パルスザン
+			Print ルーゼル様
+			Print 魔界から面白いものが届きましたよ。
+			WindowOn 4000
+			Window 1
+			Conversation 4
+			Print 面白いもの？
+			Print なんだそれは。
+			WindowOn 4000
+			Window 0
+			Conversation %パルスザン
+			Print クロウボールです！
+			WindowOn 4000
+			Window 1
+			Conversation 4
+			Print クロウボール！？
+			Print あの殺人兵器か！！
+			WindowOn 4000
+			Window 0
+			Conversation %パルスザン
+			Print そうです。
+			Print これで人間どもも一掃できましょう。
+			WindowOn 4000
+			Window 1
+			Conversation 4
+			Print ははは。
+			Print これで、戦いも楽になるな。
+			WindowOn 4000
+			Clear
+			Set Flag[57],true
+			WindowOff
+		}
+		Window 1
+		FaceOut 4
+		WindowOn 100
+		Window 0
+		Size 356,96
+		Print クロウボールが魔界から
+		Print ルーゼルの元に運ばれた！
+		WindowOn 4000
+		WindowOff
+		CharSet a,%クロウボール
+	}
+} 
+//No42.海賊神官ナシュカ
+if (Flag[58]==false && Turn>15 && Scenario<=1 && AreaButaiKz[51]<20 && Random(5)==0)
+{
+	Set a,AreaKuni[51]
+	if (a==1 || a==2 || a==3 || a==5 || a==7 || a==10 || a==11 || a==12 || a==13)
+	{
+		Set b,true
+		if (KuniPlayer[a])
+		{
+	      		AreaFocus 51
+			Window 1
+			FaceOut a
+			WindowOn 100
+			Window 0
+			Conversation %ナシュカ
+			Print わたしは、ナシュカと申すもの。
+			WindowOn 4000
+			Clear
+			Print どうか、仲間に入れてくれませんか？
+			WindowOn 4000
+			Set b,YesNo(いいよ！)
+			if (b)
+			{
+				Window 0
+				Size 356,96
+				Print ナシュカが仲間になった。
+				WindowOn 4000
+			}
+			WindowOff
+		}
+		if (b)
+		{
+			CharSet 51,%ナシュカ
+		}
+		Set Flag[58],true
+	}
+} 
+End

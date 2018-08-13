@@ -1,0 +1,62 @@
+Music あそこにあるものは
+Print 0 ファーレントゥーガ 0 0 125
+Wait 600
+Print 1 Ver　1.40 140 30 212
+Wait 600
+Print 2 Copyright(C)　1999-2000　By　あとあと 0 80 14
+Wait 2000
+PrintOff 1
+Wait 1500
+Print 1 Phoenix　Saga　　第６編 -100 -40 16
+Wait 2500
+PrintOff 2
+PrintOff 1
+Wait 800
+PrintOff 0
+Wait 3000
+Bitmap Title1 0 0
+Wait 3000
+Fill 0
+Print 0 黒く漂う大陸・・・ 0 0 225
+Wait 2000
+PrintOff 0
+Wait 2000
+Bitmap Title2 0 0
+Wait 3000
+Fill 0
+Print 0 魔具化前の混沌時代 0 0 225
+Wait 2000
+PrintOff 0
+Wait 2000
+Bitmap Title3 0 0
+Wait 3000
+Fill 0
+Print 0 戦いに次ぐ戦い 0 0 225
+Wait 2000
+PrintOff 0
+Wait 2000
+Bitmap Title4 0 0
+Wait 3000
+Fill 0
+Print 0 赤い血しぶきに　助けを求める悲鳴 0 0 225
+Wait 2000
+PrintOff 0
+Wait 2000
+Bitmap Title5 0 0
+Wait 3000
+Fill 0
+Print 0 一人の王の死をきっかけに 0 0 225
+Wait 2000
+PrintOff 0
+Wait 2000
+Bitmap Title6 0 0
+Wait 3000
+Fill 0
+Print 0 今、この戦いは始まる・・・ 0 0 225 
+Wait 2000
+PrintOff 0
+Wait 2000
+Fill 0
+Wait 1500
+Bitmap TitleMain 0 0
+End
