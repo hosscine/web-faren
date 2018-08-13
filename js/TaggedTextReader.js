@@ -8,9 +8,7 @@ class TaggedTextReader {
     // this.readText(path)
 
     let hog = this.readTextFile(path)
-
-    console.log(this.data)
-    console.log(hog)
+    this.readTextFile2(path)
   }
 
   readText(path) {
@@ -47,11 +45,23 @@ class TaggedTextReader {
     }
   }
 
-  readTextFile(fileName) {
-    var reqFile = new XMLHttpRequest();
-    reqFile.open('GET', fileName, true);
-    reqFile.send(null);
-    return reqFile.responseText;
+  // readTextFile(path) {
+  //   var xhr = new XMLHttpRequest()
+  //   xhr.open("get", path, true)
+  //   xhr.onload = function() {
+  //     console.log(xhr.responseText)
+  //   }
+  //   xhr.send()
+  // }
+
+  readTextFile(path) {
+    let handleFileLoad = function(event){
+      console.log(event.result)
+    }
+    let queue = new createjs.LoadQueue(true);
+    queue.on("fileload", handleFileLoad, this);
+    queue.loadFile(path);
+    queue.load()
   }
 
 }
