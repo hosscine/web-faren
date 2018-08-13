@@ -10,9 +10,6 @@ class TaggedTextReader {
   }
 
   readFile(path) {
-    let handleFileLoad = function(event) {
-      console.log(event.result)
-    }
     let queue = new createjs.LoadQueue(true)
     queue.on("fileload", (event) => this.formatTaggedText(event.result))
     queue.loadFile(path)
