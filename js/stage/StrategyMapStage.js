@@ -2,7 +2,7 @@ class StrategyMapStage extends createjs.Stage {
   constructor(canvas) {
     super(canvas)
 
-    setup()
+    this.setup()
   }
 
   setup() {

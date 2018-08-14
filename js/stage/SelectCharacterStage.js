@@ -35,6 +35,8 @@ class SelectCharacterStage extends createjs.Stage {
       if (go) {
         this.mastersEnable = false
         stage = new StrategyMapStage(this.canvas)
+        createjs.Ticker.addEventListener("tick", stage)
+        stage.update()
       }
     }
 

@@ -1,3 +1,5 @@
+const HEADER_MARGINE = 5
+
 class StrategyHeaderBar extends createjs.Container {
   constructor() {
     super()
@@ -7,12 +9,25 @@ class StrategyHeaderBar extends createjs.Container {
 
   setup() {
     let background = this.addChild(new createjs.Shape())
-    background.graphics.beginFill("lightgray").drawRect(0, 0, 1280, 30)
+    background.graphics.beginFill("lightgray").drawRect(0, 0, 1280, 40)
 
-    this.leftText = this.addChild(new BBText("LEFT"))
+    this.leftTextBox = this.addChild(new BBText(""))
+    this.leftTextBox.x = HEADER_MARGINE
+    this.leftTextBox.y = HEADER_MARGINE
+    this.location = "自宅"
 
-    this.rightText = this.addChild(new BBText("RIGHT"))
-    this.rightText.x = 1000
+    this.rightTextBox = this.addChild(new BBText(""))
+    this.rightTextBox.x = 1280 - HEADER_MARGINE - this.rightTextBox.width
+    this.rightTextBox.y = HEADER_MARGINE
+    this.turn = 0
+  }
+
+  set location(location){
+    this.leftTextBox.text = location
+  }
+
+  set turn(turn){
+    this.rightTextBox.text = "第" + turn + "ターン"
   }
 
 }
