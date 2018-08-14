@@ -9,10 +9,14 @@ class MasterUnit extends Unit {
   setup(faceBitmap) {
     this.faceBitmap = new createjs.Container()
     this.faceBitmap.addChild(faceBitmap)
-    let nameText = this.faceBitmap.addChild(new createjs.Text(this.name, "5px arial", "white"))
-    // nameText.regX = nameText.getMeasuredWidth() / 2
-    // nameText.y = -2
-    nameText.x = nameText.getMeasuredWidth() / 2
+    let nameText = this.faceBitmap.addChild(new createjs.Text(this.name, "8px arial", "white"))
+    nameText.regX = nameText.getMeasuredWidth() / 2
+    nameText.x = faceBitmap.getBounds().width/2+10
+    // nameText.x = 50
+    // console.log(faceBitmap.getBounds())
+    // let hoge = this.faceBitmap.addChild(new createjs.Shape())
+    // hoge.graphics.beginFill("black").drawCircle(nameText.getMeasuredWidth()/ 2,faceBitmap.getBounds().height, 2, 2)
+    nameText.y = faceBitmap.getBounds().height
 
     // this.unitBitmap = unitBitmap
   }

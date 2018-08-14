@@ -1,3 +1,5 @@
+const faceMargine = 40
+
 class SelectCharacterStage extends createjs.Stage {
   constructor(canvas) {
     super(canvas)
@@ -5,13 +7,19 @@ class SelectCharacterStage extends createjs.Stage {
 
   setup(masters) {
     this.masters = masters
+    this.faceArea = this.addChild(new createjs.Container())
 
-    this.addChild(masters[0].faceBitmap)
-    for (let master in masters) {
-      console.log(masters[master])
-      let bmp = masters[master].faceBitmap
+    for (let i in masters) {
+      let bmp = this.faceArea.addChild(masters[i].faceBitmap)
       bmp.scaleX = bmp.scaleY = 2
-      this.addChild(bmp)
+      let id = parseInt(i)
+      let row = id % 2
+      let col = (id - id % 2)
+
+      bmp.x = col / 2 * bmp.getChildAt(0).getBounds().width * bmp.scaleX +
+        col * faceMargine + faceMargine
+      bmp.y = row * bmp.getChildAt(0).getBounds().height * bmp.scaleY +
+        faceMargine * row + bmp.getChildAt(1).getMeasuredHeight() * 2 * row
     }
   }
 
