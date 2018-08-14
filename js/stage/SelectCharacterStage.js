@@ -34,6 +34,7 @@ class SelectCharacterStage extends createjs.Stage {
       let go = window.confirm(data.master.name + "でゲームを開始します。")
       if (go) {
         this.mastersEnable = false
+        stage = new StrategyMapStage(this.canvas)
       }
     }
 

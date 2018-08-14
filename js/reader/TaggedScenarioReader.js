@@ -46,8 +46,4 @@ class TaggedScenarioReader extends TaggedTextReader {
     this.parseScenario()
   }
 
-  delegateFaceComplete() {
-    console.log("delegateFaceComplete is not implemented yet in:", this)
-  }
-
 }
