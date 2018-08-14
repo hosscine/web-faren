@@ -11,6 +11,7 @@ class SelectCharacterStage extends createjs.Stage {
     this.explanationArea = this.addChild(new ExplanationArea())
 
     this.displayMasters()
+    this.mastersEnable = true
   }
 
   displayMasters() {
@@ -29,18 +30,26 @@ class SelectCharacterStage extends createjs.Stage {
   }
 
   set mastersEnable(bool) {
-    let handleClick = () => {
-
+    let handleClick = (event, data) => {
+      window.confirm(data.master.name + "でゲームを開始します。")
     }
 
-    let handleMouseover = () => {
-
+    let handleMouseover = (event, data) => {
+      this.explanationArea.displayMaster(data.master)
     }
 
     for (let i in this.masters) {
-      if (bool) this.masters[i].faceBitmap.on("click", handleClick)
-      else this.masters[i].faceBitmap.off("click", handleClick)
+      if (bool){
+        this.masters[i].faceBitmap.on("click", handleClick, null, false, {
+          master: this.masters[i]
+        })
+        this.masters[i].faceBitmap.on("mouseover", handleMouseover, null, false, {
+          master: this.masters[i]
+        })
+      }
+      else this.masters[i].faceBitmap.removeAllEventListeners()
     }
+
   }
 }
 

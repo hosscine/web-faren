@@ -22,6 +22,7 @@
   function charaSelect() {
     const scenarioPath = "assets/data/Scenario1"
     stage = new SelectCharacterStage("GameCanvas")
+    stage.enableMouseOver()
     reader = new TaggedScenarioReader(scenarioPath, stage)
 
     createjs.Ticker.addEventListener("tick", stage)
