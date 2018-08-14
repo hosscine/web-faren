@@ -3,106 +3,106 @@ DefChar
 Element
 
 [EventMusic]
-ƒCƒxƒ“ƒg
+ã‚¤ãƒ™ãƒ³ãƒˆ
 
 [DecisiveMusic]
-Œˆí
+æ±ºæˆ¦
 
 [BattleMusic]
-14 “Þ—Ž
+14 å¥ˆè½
 
 [MasterBattleMusic]
-14 ‹ó‚Ì”Þ•û‚Ö
+14 ç©ºã®å½¼æ–¹ã¸
 
 [MasterRevival]
- 3 14 60 ƒ€ƒNƒKƒCƒ„‚ÍƒŠƒbƒ`[‚Æ‚µ‚Ä‚æ‚Ý‚ª‚¦‚Á‚½III
+ 3 14 60 ãƒ ã‚¯ã‚¬ã‚¤ãƒ¤ã¯ãƒªãƒƒãƒãƒ¼ã¨ã—ã¦ã‚ˆã¿ãŒãˆã£ãŸï¼ï¼ï¼
 
 [MasterInherit]
- 1 Hƒzƒ‹ƒX 13  1 ƒzƒ‹ƒX‚ªƒS[ƒg‡[¢‚ÌŽu‚ðŽó‚¯Œp‚¬A‚½‚¿ã‚ª‚Á‚½III
+ 1 Hãƒ›ãƒ«ã‚¹ 13  1 ãƒ›ãƒ«ã‚¹ãŒã‚´ãƒ¼ãƒˆâ…¢ä¸–ã®å¿—ã‚’å—ã‘ç¶™ãŽã€ãŸã¡ä¸ŠãŒã£ãŸï¼ï¼ï¼
 
 [Ghost]
 14
 
 [Master1]
-ƒS[ƒg‡[¢
-ƒS[ƒg‡[¢
+ã‚´ãƒ¼ãƒˆâ…¢ä¸–
+ã‚´ãƒ¼ãƒˆâ…¢ä¸–
 175   50  50 255
-‰¤‰Æ‚ÌŒÖ‚è
+çŽ‹å®¶ã®èª‡ã‚Š
 
 [Master2]
-ƒAƒ‹ƒeƒi
-ƒAƒ‹ƒeƒi
+ã‚¢ãƒ«ãƒ†ãƒŠ
+ã‚¢ãƒ«ãƒ†ãƒŠ
 190  255   0   0
-–i‚¦‚éÔ—´
+å ãˆã‚‹èµ¤é¾
 
 [Master3]
-ƒ€ƒNƒKƒCƒ„
-ƒ€ƒNƒKƒCƒ„
+ãƒ ã‚¯ã‚¬ã‚¤ãƒ¤
+ãƒ ã‚¯ã‚¬ã‚¤ãƒ¤
 145  208   0 208
-–§‚©‚È–ì–]
+å¯†ã‹ãªé‡Žæœ›
 
 [Master4]
-ƒ‹[ƒ[ƒ‹
-ƒ‹[ƒ[ƒ‹
+ãƒ«ãƒ¼ã‚¼ãƒ«
+ãƒ«ãƒ¼ã‚¼ãƒ«
 140  235 221  14
-–‚ŠE‚Ì‰Ì
+é­”ç•Œã®æ­Œ
 
 [Master5]
-ƒ‰ƒ€ƒ\ƒ“
-ƒ‰ƒ€ƒ\ƒ“
+ãƒ©ãƒ ã‚½ãƒ³
+ãƒ©ãƒ ã‚½ãƒ³
 185  153 217 153
-‹RŽm’c
+é¨Žå£«å›£
 
 [Master6]
-ƒQƒ‹ƒj[ƒh
-ƒQƒ‹ƒj[ƒh
+ã‚²ãƒ«ãƒ‹ãƒ¼ãƒ‰
+ã‚²ãƒ«ãƒ‹ãƒ¼ãƒ‰
 150  255 170 255
-À’n‚Ì—Y‚½‚¯‚Ñ
+æ²¼åœ°ã®é›„ãŸã‘ã³
 
 [Master7]
-ƒoƒ‹ƒoƒbƒ^
-ƒoƒ‹ƒoƒbƒ^
+ãƒãƒ«ãƒãƒƒã‚¿
+ãƒãƒ«ãƒãƒƒã‚¿
 155  248 209 146
-ƒSƒuƒŠƒ“si‹È
+ã‚´ãƒ–ãƒªãƒ³è¡Œé€²æ›²
 
 [Master8]
-ƒGƒ‹ƒtƒH[ƒh
-ƒGƒ‹ƒtƒH[ƒh
+ã‚¨ãƒ«ãƒ•ã‚©ãƒ¼ãƒ‰
+ã‚¨ãƒ«ãƒ•ã‚©ãƒ¼ãƒ‰
 210    0 120   0
-X‚Ì‚³‚³‚â‚«
+æ£®ã®ã•ã•ã‚„ã
 
 [Master9]
-ƒEƒH[ƒ‰ƒbƒN
-ƒEƒH[ƒ‰ƒbƒN
+ã‚¦ã‚©ãƒ¼ãƒ©ãƒƒã‚¯
+ã‚¦ã‚©ãƒ¼ãƒ©ãƒƒã‚¯
 130  153  97  36
-•€‚Ì–äÍ
+æ–§ã®ç´‹ç« 
 
 [Master10]
-ƒsƒˆƒ“
-ƒsƒˆƒ“
+ãƒ”ãƒ¨ãƒ³
+ãƒ”ãƒ¨ãƒ³
 200  255 255 255
-ƒAƒCƒXƒ}ƒ“‚Á‚Ä‰½‚¾H
+ã‚¢ã‚¤ã‚¹ãƒžãƒ³ã£ã¦ä½•ã ï¼Ÿ
 
 [Master11]
-ƒuƒŒƒbƒh
-ƒuƒŒƒbƒh
+ãƒ–ãƒ¬ãƒƒãƒ‰
+ãƒ–ãƒ¬ãƒƒãƒ‰
 160  200 200 255
-–ù‰õ‚È’j‚½‚¿
+æ„‰å¿«ãªç”·ãŸã¡
 
 [Master12]
-ƒiƒ‹ƒfƒBƒA
-ƒiƒ‹ƒfƒBƒA
+ãƒŠãƒ«ãƒ‡ã‚£ã‚¢
+ãƒŠãƒ«ãƒ‡ã‚£ã‚¢
 170  178 122  56
-»”™‚Ì¶‚«•û
+ç ‚æ¼ ã®ç”Ÿãæ–¹
 
 [Master13]
-ƒzƒ‹ƒX
-ƒzƒ‹ƒX
+ãƒ›ãƒ«ã‚¹
+ãƒ›ãƒ«ã‚¹
 180  255 255 170
-¹‰Ì
+è–æ­Œ
 
 [Master14]
-Rƒ€ƒNƒKƒCƒ„
-ƒ€ƒNƒKƒCƒ„
+Rãƒ ã‚¯ã‚¬ã‚¤ãƒ¤
+ãƒ ã‚¯ã‚¬ã‚¤ãƒ¤
 140  208   0 208
-Ž€—ì‚Æ‚Æ‚à‚É
+æ­»éœŠã¨ã¨ã‚‚ã«

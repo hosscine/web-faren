@@ -5,6 +5,7 @@ class TaggedTextReader {
   constructor(path) {
     this.data = {}
     this.text
+    this.filepath = path
 
     this.readFile(path)
   }
@@ -24,13 +25,14 @@ class TaggedTextReader {
     let contentsStart = 0
 
     for (let i in this.text) {
+
       let text = this.text[i]
 
       if (TAG_PATTERN.test(text)) { // タグかどうか
-        if (currentTag !== "") alert(path + " " + i + "行目に不正なタグがあります")
+        if (currentTag !== "") alert(this.filepath + " " + (parseInt(i) + 1) + "行目でタグが連続して出現しています")
         currentTag = TAG_PATTERN.exec(text)[1]
         contentsStart = parseInt(i) + 1
-      } else if (text === "") { // 改行かどうか
+      } else if (text === this.text[2]) { // 空行かどうか this.text[2]が空行だと仮定
         this.data[currentTag] = this.text.slice(contentsStart, parseInt(i)) // コンテンツ登録
         currentTag = ""
       }

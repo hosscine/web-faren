@@ -31,7 +31,10 @@ class SelectCharacterStage extends createjs.Stage {
 
   set mastersEnable(bool) {
     let handleClick = (event, data) => {
-      window.confirm(data.master.name + "でゲームを開始します。")
+      let go = window.confirm(data.master.name + "でゲームを開始します。")
+      if (go) {
+        this.mastersEnable = false
+      }
     }
 
     let handleMouseover = (event, data) => {
