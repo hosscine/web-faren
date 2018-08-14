@@ -2,9 +2,10 @@ const MASTER_PATTERN = /Master(\d+)/
 const IMAGE_DIR = "assets/Default/DefChar"
 
 class TaggedScenarioReader extends TaggedTextReader {
-  constructor(path) {
+  constructor(path, selectCharacterStage) {
     super(path)
 
+    this.stage = selectCharacterStage
     this.masters = []
     this.manifest = []
   }
@@ -16,10 +17,8 @@ class TaggedScenarioReader extends TaggedTextReader {
 
     let faceQueue = new createjs.LoadQueue(false)
     faceQueue.loadManifest(this.manifest)
-    faceQueue.on("fileload", (event) => {
-      event.item.unit.faceBitmap = new createjs.Bitmap(event.result)
-    })
-    faceQueue.on("complete", (event) => this.delegateFaceComplete())
+    faceQueue.on("fileload", (event) => event.item.unit.faceBitmap = new createjs.Bitmap(event.result))
+    faceQueue.on("complete", () => this.stage.setup(this.masters))
   }
 
   parseMaster(tag, contents) {
@@ -38,6 +37,11 @@ class TaggedScenarioReader extends TaggedTextReader {
     this.masters.push(master)
   }
 
+  getSelectCharacterStage(canvas) {
+    this.stage = new SelectCharacterStage(canvas, this.masters)
+    return(this.stage)
+  }
+  
   delegateScenarioComplete() {
     this.parseScenario()
   }

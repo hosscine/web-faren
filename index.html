@@ -2,103 +2,37 @@
 <html>
 
 <head>
-	<title>ファーレントゥーガ</title>
-	<script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
-	<link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
-
-	<script>
-		let stage // 絶対init内でinitizalizeする
-
-		function init() {
-
-			queue = new createjs.LoadQueue(false)
-			queue.addEventListener("fileload", handleFileLoad)
-			queue.addEventListener("complete", handleComplete)
-			queue.loadManifest([{
-					id: "ball",
-					src: "assets/ball.png"
-				},
-				{
-					id: "bat",
-					src: "assets/bat.png"
-				},
-				{
-					id: "head",
-					src: "assets/head.png"
-				},
-				{
-					id: "body",
-					src: "assets/body.png"
-				},
-				{
-					id: "pitching",
-					src: "assets/pitching.png"
-				}
-			])
-
-			stage = new createjs.Stage("GameCanvas")
-			stage.addEventListener("stagemousedown", () => bat.swing(-45, ball))
-
-			ground = stage.addChild(new Ground())
-			ground.x = 250
-			ground.y = 450
-			ground.scaleX = ground.scaleY = 0.7
-
-			createjs.Ticker.addEventListener("tick", stage)
-
-			stage.regX = stage.regY = 250
-			stage.x = stage.y = stage.canvas.height / 2
-			stage.scaleX = stage.scaleY = stage.canvas.height / 500
-			stage.enableMouseOver()
-			stage.update()
-		}
-
-		function handleFileLoad(event) {
-			switch (event.item.id) {
-				case "ball":
-					ball = new Ball(new createjs.Bitmap(event.result)) //Bitmapに変換する
-					stage.addChild(ball)
-					break
-				case "bat":
-					bat = new Bat(new createjs.Bitmap(event.result), 45, ball)
-					bat.x = 180
-					bat.y = 430
-					bat.scaleX = bat.scaleY = 0.5
-					stage.addChild(bat)
-					break
-			}
-		}
-
-		function handleComplete(event) {
-			pitcher = new Pitcher(
-				new createjs.Bitmap(queue.getResult("head")),
-				new createjs.Bitmap(queue.getResult("body")),
-				new createjs.Bitmap(queue.getResult("pitching")),
-				ball,
-				bat
-			)
-			stage.addChild(pitcher)
-			pitcher.scaleX = pitcher.scaleY = 0.3
-			pitcher.x = 250
-			pitcher.y = 200
-
-			stage.swapChildren(pitcher, scorer)
-			createjs.Ticker.addEventListener("tick", handleTick)
-			stage.update() //complete後にupdateする
-		}
-
-		function handleTick(event) {
-			if (!pitcher.pitchingReady || scorer.remainingBall === 0) return
-			pitcher.pitching(250, 250, 250, 600)
-			scorer.remainingBall = scorer.remainingBall - 1
-		}
-	</script>
+  <title>ファーレントゥーガ</title>
+  <script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+  <!-- <script src="https://code.createjs.com/1.0.0/createjs.js"></script> -->
+  <script src="js/reader/TaggedTextReader.js"></script>
+  <script src="js/reader/TaggedScenarioReader.js"></script>
+  <script src="js/bitmap/Unit.js"></script>
+  <script src="js/bitmap/MasterUnit.js"></script>
+  <script src="js/stage/SelectCharacterStage.js"></script>
+  <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
 </head>
 
-<body onload="init();">
-	<canvas id="GameCanvas" width="1280" height="720">
-		alternate content
-	</canvas>
+<body onload="charaSelect();">
+  <canvas id="GameCanvas" width="1280" height="720">
+  		alternate content
+  	</canvas>
 </body>
+
+<script>
+  function charaSelect() {
+    const scenarioPath = "assets/data/Scenario1"
+    stage = new SelectCharacterStage("GameCanvas")
+    reader = new TaggedScenarioReader(scenarioPath, stage)
+
+    shap = new createjs.Shape()
+    shap.graphics.beginFill("blue")
+      .drawCircle(300, 300, 100, 100)
+    stage.addChild(shap)
+
+    createjs.Ticker.addEventListener("tick", stage)
+    stage.update()
+  }
+</script>
 
 </html>
