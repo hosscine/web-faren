@@ -17,8 +17,9 @@ class TaggedScenarioReader extends TaggedTextReader {
     let faceQueue = new createjs.LoadQueue(false)
     faceQueue.loadManifest(this.manifest)
     faceQueue.on("fileload", (event) => {
-      event.item.unit.faceBitmap = event.result
+      event.item.unit.faceBitmap = new createjs.Bitmap(event.result)
     })
+    faceQueue.on("complete", (event) => this.delegateFaceComplete())
   }
 
   parseMaster(tag, contents) {
@@ -37,12 +38,12 @@ class TaggedScenarioReader extends TaggedTextReader {
     this.masters.push(master)
   }
 
-  getSelectCharacterStage() {
-
+  delegateScenarioComplete() {
+    this.parseScenario()
   }
 
-  handleComplete() {
-    this.parseScenario()
+  delegateFaceComplete() {
+    console.log("delegateFaceComplete is not implemented yet in:", this)
   }
 
 }

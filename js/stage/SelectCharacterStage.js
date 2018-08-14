@@ -5,8 +5,12 @@ class SelectCharacterStage extends createjs.Stage {
     this.masters = masters
   }
 
-  setup(){
-    for (let master in this.masters) this.addChild(master.faceBitmap)
+  setup() {
+    console.log("hoge")
+    for (let master in this.masters) {
+      console.log(this)
+      this.addChild(master.faceBitmap)
+    }
   }
 }
 
