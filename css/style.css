@@ -1,12 +1,13 @@
 #GameCanvas {
   display: block;
   width: 1280px;
+  height: 720px;
   margin-top: 40px;
   margin-left: auto;
   margin-right: auto;
   padding-left: 0;
   padding-right: 0;
-  background-color: pink;
+  background-color: #142686;
 }
 
 body {

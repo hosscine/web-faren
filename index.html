@@ -14,9 +14,7 @@
 </head>
 
 <body onload="charaSelect();">
-  <canvas id="GameCanvas" width="1280" height="720">
-  		alternate content
-  	</canvas>
+  <canvas id="GameCanvas" width="1280" height="720">alternate content</canvas>
 </body>
 
 <script>
@@ -24,11 +22,6 @@
     const scenarioPath = "assets/data/Scenario1"
     stage = new SelectCharacterStage("GameCanvas")
     reader = new TaggedScenarioReader(scenarioPath, stage)
-
-    shap = new createjs.Shape()
-    shap.graphics.beginFill("blue")
-      .drawCircle(300, 300, 100, 100)
-    stage.addChild(shap)
 
     createjs.Ticker.addEventListener("tick", stage)
     stage.update()

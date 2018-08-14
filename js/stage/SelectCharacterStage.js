@@ -8,7 +8,25 @@ class SelectCharacterStage extends createjs.Stage {
 
     this.addChild(masters[0].faceBitmap)
     for (let master in masters) {
-      this.addChild(master.faceBitmap)
+      console.log(masters[master])
+      let bmp = masters[master].faceBitmap
+      bmp.scaleX = bmp.scaleY = 2
+      this.addChild(bmp)
+    }
+  }
+
+  set mastersEnable(bool) {
+    let handleClick = () => {
+
+    }
+
+    let handleMouseover = () => {
+
+    }
+
+    for (let i in this.masters) {
+      if (bool) this.masters[i].faceBitmap.on("click", handleClick)
+      else this.masters[i].faceBitmap.off("click", handleClick)
     }
   }
 }
