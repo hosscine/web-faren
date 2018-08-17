@@ -7,7 +7,7 @@ class SelectCharacterStage extends createjs.Stage {
 
   setup(masters) {
     this.masters = masters
-    this.faceArea = this.addChild(new createjs.Container())
+    this.faceArea = this.addChild(new createjs.ScrollContainer(this.canvas))
     this.explanationArea = this.addChild(new ExplanationArea())
 
     this.displayMasters()
@@ -31,7 +31,7 @@ class SelectCharacterStage extends createjs.Stage {
 
   set mastersEnable(bool) {
     let handleClick = (event, data) => {
-      let go = window.confirm(data.master.name + "でゲームを開始します。")
+      let go = window.confirm(data.master.name + "でゲームを開始します")
       if (go) {
         this.mastersEnable = false
         stage = new StrategyMapStage(this.canvas)

@@ -1,7 +1,7 @@
 const BB_Color = "#012279"
 
 class BBText extends createjs.Container {
-  constructor(text, font = "20px arial", width = 200, height = 30) {
+  constructor(text, font = "25px arial", width = 200, height = 35) {
     super()
 
     this.width = width

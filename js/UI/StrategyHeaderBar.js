@@ -9,7 +9,7 @@ class StrategyHeaderBar extends createjs.Container {
 
   setup() {
     let background = this.addChild(new createjs.Shape())
-    background.graphics.beginFill("lightgray").drawRect(0, 0, 1280, 40)
+    background.graphics.beginFill("lightgray").drawRect(0, 0, 1280, 45)
 
     this.leftTextBox = this.addChild(new BBText(""))
     this.leftTextBox.x = HEADER_MARGINE
