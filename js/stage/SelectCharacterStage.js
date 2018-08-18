@@ -9,7 +9,6 @@ class SelectCharacterStage extends createjs.Stage {
     this.masters = masters
     this.faceContainer = this.addChild(new ScrollContainer())
     this.explanationArea = this.addChild(new ExplanationArea())
-    this.faceContainer.contentWidth = 200
 
     this.displayMasters()
     this.mastersEnable = true

@@ -18,7 +18,6 @@ class BBText extends createjs.Container {
     let background = this.addChild(new createjs.Shape())
     background.graphics.beginFill(BB_Color).drawRect(0, 0, this.width, this.height)
 
-    console.log(this.font)
     this.textBox = this.addChild(new createjs.Text(this._text, this.font, "white"))
     this.textBox.x = 5
     this.textBox.y = 5
