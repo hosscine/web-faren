@@ -14,17 +14,21 @@
   <script src="js/stage/SelectCharacterStage.js"></script>
   <script src="js/stage/StrategyMapStage.js"></script>
 
+  <script src="js/UI/ScrollContainer.js"></script>
   <script src="js/UI/ExplanationArea.js"></script>
   <script src="js/UI/StrategyHeaderBar.js"></script>
   <script src="js/UI/BBText.js"></script>
-  <script src="js/UI/DragContainer.js"></script>
-  <script src="js/UI/scroll-container.js"></script>
+
+  <script src="js/scroller/Scroller.js"></script>
+  <script src="js/scroller/Animate.js"></script>
 
   <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
 </head>
 
-<body onload="charaSelect();">
-  <canvas id="GameCanvas" width="1280" height="720">alternate content</canvas>
+<body>
+  <div id="container">
+    <canvas id="GameCanvas" width="1280" height="720">alternate content</canvas>
+  </div>
 </body>
 
 <script>
@@ -38,6 +42,9 @@
     createjs.Ticker.addEventListener("tick", stage)
     stage.update()
   }
+  charaSelect()
 </script>
+
+<script src="js/scroller/ScrollerSetting.js"></script>
 
 </html>

@@ -7,8 +7,15 @@ class SelectCharacterStage extends createjs.Stage {
 
   setup(masters) {
     this.masters = masters
-    this.faceArea = this.addChild(new createjs.ScrollContainer(this.canvas))
+    this.faceContainer = new createjs.Container()
     this.explanationArea = this.addChild(new ExplanationArea())
+
+    this.faceContainer.contentSize = {
+      width: 1000,
+      height: 560
+    }
+
+    this.addChild(this.faceContainer)
 
     this.displayMasters()
     this.mastersEnable = true
@@ -16,7 +23,7 @@ class SelectCharacterStage extends createjs.Stage {
 
   displayMasters() {
     for (let i in this.masters) {
-      let bmp = this.faceArea.addChild(this.masters[i].faceBitmap)
+      let bmp = this.faceContainer.addChild(this.masters[i].faceBitmap)
       let id = parseInt(i)
       let row = id % 2
       let col = (id - id % 2)
@@ -45,15 +52,14 @@ class SelectCharacterStage extends createjs.Stage {
     }
 
     for (let i in this.masters) {
-      if (bool){
+      if (bool) {
         this.masters[i].faceBitmap.on("click", handleClick, null, false, {
           master: this.masters[i]
         })
         this.masters[i].faceBitmap.on("mouseover", handleMouseover, null, false, {
           master: this.masters[i]
         })
-      }
-      else this.masters[i].faceBitmap.removeAllEventListeners()
+      } else this.masters[i].faceBitmap.removeAllEventListeners()
     }
 
   }
