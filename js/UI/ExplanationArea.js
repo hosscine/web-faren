@@ -1,4 +1,4 @@
-class ExplanationArea extends ScrollContainer {
+class ExplanationArea extends createjs.Container {
   constructor() {
     super()
 

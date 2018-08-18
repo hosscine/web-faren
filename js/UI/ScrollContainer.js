@@ -2,18 +2,29 @@ class ScrollContainer extends createjs.Container {
   constructor() {
     super()
 
-    this.setup()
+    this.setupScroll()
   }
 
-  setup() {
+  setupScroll() {
     if(scroller === undefined) Error("scroller is undefined")
     else {
       scroller.scrollTarget = this
-      scroller.__callback = function(left, top){
-        scroller.scrollTarget.x = -left
-        scroller.scrollTarget.y = -top
-      }
+      scroller.__callback = this.handleScroll
     }
+  }
+
+  handleScroll(left, top){
+    scroller.scrollTarget.x = -left
+    scroller.scrollTarget.y = -top
+  }
+
+  set contentWidth(width){
+    contentWidth = width
+    reflow()
+  }
+  set contentHeight(height){
+    contentHeight = height
+    reflow()
   }
 
 }

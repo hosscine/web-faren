@@ -7,15 +7,9 @@ class SelectCharacterStage extends createjs.Stage {
 
   setup(masters) {
     this.masters = masters
-    this.faceContainer = new createjs.Container()
+    this.faceContainer = this.addChild(new ScrollContainer())
     this.explanationArea = this.addChild(new ExplanationArea())
-
-    this.faceContainer.contentSize = {
-      width: 1000,
-      height: 560
-    }
-
-    this.addChild(this.faceContainer)
+    this.faceContainer.contentWidth = 200
 
     this.displayMasters()
     this.mastersEnable = true
@@ -34,6 +28,11 @@ class SelectCharacterStage extends createjs.Stage {
       bmp.y = row * bmp.getChildAt(0).getBounds().height * bmp.scaleY +
         faceMargine * row + bmp.getChildAt(1).getMeasuredHeight() * 2 * row
     }
+
+    let ncols = parseInt(this.masters.length / 2) + this.masters.length % 2
+    let faceWidth = this.masters[0].faceBitmap.getChildAt(0).getBounds().width *
+      this.masters[0].faceBitmap.scaleX
+    this.faceContainer.contentWidth = faceWidth * ncols + faceMargine * ncols * 2
   }
 
   set mastersEnable(bool) {
