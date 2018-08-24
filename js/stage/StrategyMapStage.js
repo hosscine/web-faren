@@ -6,8 +6,6 @@ class StrategyMapStage extends createjs.Stage {
     super(canvas)
 
     let queue = new createjs.LoadQueue(true)
-    this.ttr = new TaggedTextReader(AREADATA_PATH)
-    this.queue = queue
     queue.on("fileload", (event) => this.handleFileload(event))
     queue.on("complete", (event) => this.setup())
     queue.loadManifest([
@@ -31,7 +29,7 @@ class StrategyMapStage extends createjs.Stage {
 
   handleFileload(event) {
     if (event.item.id === "map") this.StrategyMap = new StrategyMap(new createjs.Bitmap(event.result))
-    else if (event.item.id === "areadata") console.log(event.result)
+    else if (event.item.id === "areadata") this.areaData = new AreaDataReader(event.result)
   }
 }
 
