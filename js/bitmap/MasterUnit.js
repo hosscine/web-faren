@@ -16,7 +16,7 @@ class MasterUnit extends Unit {
   }
 
   setMasterFlag(flagBitmap) {
-
+    this.flag = flagBitmap
   }
 
 }

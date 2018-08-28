@@ -1,5 +1,5 @@
 const MASTER_PATTERN = /Master(\d+)/
-const IMAGE_DIR = "assets/Default/DefChar"
+const IMAGE_DIR = "assets/Default/DefChar/"
 
 class TaggedScenarioReader extends TaggedTextReader {
   constructor(path, selectCharacterStage) {
@@ -31,7 +31,7 @@ class TaggedScenarioReader extends TaggedTextReader {
 
     this.manifest.push({
       id: tag,
-      src: IMAGE_DIR + "/Face" + id + ".png",
+      src: IMAGE_DIR + "Face" + id + ".png",
       unit: master
     })
     this.masters.push(master)
