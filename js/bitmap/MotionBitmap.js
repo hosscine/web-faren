@@ -1,13 +1,18 @@
-class MotionBitmap extends createjs.Bitmap {
+class MotionBitmap extends createjs.Container {
   constructor(imageOrUri, motionWidth, motionHeight, motionInterval) {
-    super(imageOrUri)
+    super()
 
-    this.mask = new createjs.Shape()
-    this.masks = []
+    this.bitmap = this.addChild(new createjs.Bitmap(imageOrUri))
+    this.bitmap.mask = new createjs.Shape()
+
+    this.maskSettings = []
     this.motionWidth = motionWidth
     this.motinHeight = motionHeight
     this.motionInterval = motionInterval
     this.currentMotion = 0
+
+    this.bitmap.mask.graphics.beginStroke("#000").drawRect(0, 0, this.motionWidth, this.motinHeight)
+    this.setupMotionMasks()
   }
 
   startMotion() {
@@ -19,34 +24,29 @@ class MotionBitmap extends createjs.Bitmap {
   }
 
   setupMotionMasks() {
-    let bounds = this.getBounds()
+    let bounds = this.bitmap.getBounds()
     let widthFrames = bounds.width / this.motionWidth
     let heightFrames = bounds.height / this.motinHeight
-    this.masks = []
+    this.maskSettings = []
 
     for (let i = 0; i < widthFrames; i++)
       for (let j = 0; j < heightFrames; j++)
-        this.masks.push({
+        this.maskSettings.push({
           x: i * this.motionWidth,
           y: j * this.motinHeight
         })
 
-    this.setupMaskPosition()
     this.startMotion()
   }
 
-  setupMaskPosition() {
-    this.mask.graphics.beginStroke("#000").drawRect(this.x, this.y, this.motionWidth, this.motinHeight)
-  }
-
   setMortion(number) {
-    this.x += this.masks[this.currentMotion].x - this.masks[number].x
-    this.y += this.masks[this.currentMotion].y - this.masks[number].y
+    this.bitmap.x += this.maskSettings[this.currentMotion].x - this.maskSettings[number].x
+    this.bitmap.y += this.maskSettings[this.currentMotion].y - this.maskSettings[number].y
     this.currentMotion = number
   }
 
   incrementMortion() {
-    if (this.currentMotion + 1 >= this.masks.length) this.setMortion(0)
+    if (this.currentMotion + 1 >= this.maskSettings.length) this.setMortion(0)
     else this.setMortion(this.currentMotion + 1)
   }
 

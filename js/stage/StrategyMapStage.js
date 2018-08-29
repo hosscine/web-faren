@@ -40,9 +40,9 @@ class StrategyMapStage extends createjs.Stage {
      // フラッグテスト用
     let testFlag = new MotionBitmap(this.playerMaster.flag.canvas, FLAG_SIZE, FLAG_SIZE, FLAG_MOTION_INTERVAL)
     this.strategyMap.addChild(testFlag)
-    testFlag.x = 450
+    testFlag.x = 250
     testFlag.y = 150
-    testFlag.setupMotionMasks()
+    this.testFlag = testFlag
   }
 
   handleFileload(event) {
