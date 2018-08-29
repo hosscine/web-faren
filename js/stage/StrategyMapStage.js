@@ -1,6 +1,7 @@
 const STRATEGY_MAP_PATH = "assets/Default/Picture/FieldMap.png"
 const AREADATA_PATH = "assets/Default/Data/AreaData"
 const FLAG_SIZE = 32
+const FLAG_MOTION_INTERVAL = 1000
 
 class StrategyMapStage extends createjs.Stage {
   constructor(canvas, masters, player) {
@@ -44,7 +45,7 @@ class StrategyMapStage extends createjs.Stage {
   handleFileload(event) {
     if (event.item.id === "map") this.StrategyMap = new StrategyMap(new createjs.Bitmap(event.result))
     else if (event.item.id === "areadata") this.areaData = new AreaDataReader(event.result)
-    else event.item.unit.setMasterFlag(new Flag(event.result, FLAG_SIZE, FLAG_SIZE))
+    else event.item.unit.setMasterFlag(new MotionBitmap(event.result, FLAG_SIZE, FLAG_SIZE, FLAG_MOTION_INTERVAL))
   }
 }
 
