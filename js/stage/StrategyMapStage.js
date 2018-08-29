@@ -1,7 +1,5 @@
 const STRATEGY_MAP_PATH = "assets/Default/Picture/FieldMap.png"
 const AREADATA_PATH = "assets/Default/Data/AreaData"
-const FLAG_SIZE = 32
-const FLAG_MOTION_INTERVAL = 1000
 
 class StrategyMapStage extends createjs.Stage {
   constructor(canvas, masters, player) {
@@ -41,15 +39,8 @@ class StrategyMapStage extends createjs.Stage {
     this.addChild(this.strategyMap)
     this.addChild(new StrategyHeaderBar())
 
-     // フラッグテスト用
-    let testFlag = new MotionBitmap(this.playerMaster.flag.canvas, FLAG_SIZE, FLAG_SIZE, FLAG_MOTION_INTERVAL)
-    this.strategyMap.addChild(testFlag)
-    testFlag.x = 250
-    testFlag.y = 150
-    this.testFlag = testFlag
-
     this.setupAreas()
-    // this.strategyMap.setupAreaFlag(this.masters, this.areaData, scenario.areaOwner)
+    this.strategyMap.setupAreaFlag(this.areas)
   }
 
   setupAreas() {
@@ -64,7 +55,7 @@ class StrategyMapStage extends createjs.Stage {
   }
 
   handleFileload(event) {
-    if (event.item.id === "map") this.strategyMap = new StrategyMap(new createjs.Bitmap(event.result))
+    if (event.item.id === "map") this.strategyMap = new StrategyMap(new createjs.Bitmap(event.result), HEADER_HEIGTH)
     else if (event.item.id === "areadata") this.areaData = new AreaDataReader(event.result)
     else if (event.item.id === "flag_neutral") this.neutralFlag = new AlphalizeBitmap(event.result)
     else event.item.unit.setMasterFlag(new AlphalizeBitmap(event.result))
