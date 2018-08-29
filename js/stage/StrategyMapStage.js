@@ -34,18 +34,21 @@ class StrategyMapStage extends createjs.Stage {
   }
 
   setup() {
-    this.addChild(this.StrategyMap)
+    this.addChild(this.strategyMap)
     this.addChild(new StrategyHeaderBar())
-    this.StrategyMap.addChild(this.playerMaster.flag) // フラッグテスト用
-    this.playerMaster.flag.x = 450
-    this.playerMaster.flag.y = 150
-    this.playerMaster.flag.setupMotionMasks()
+
+     // フラッグテスト用
+    let testFlag = new MotionBitmap(this.playerMaster.flag.canvas, FLAG_SIZE, FLAG_SIZE, FLAG_MOTION_INTERVAL)
+    this.strategyMap.addChild(testFlag)
+    testFlag.x = 450
+    testFlag.y = 150
+    testFlag.setupMotionMasks()
   }
 
   handleFileload(event) {
-    if (event.item.id === "map") this.StrategyMap = new StrategyMap(new createjs.Bitmap(event.result))
+    if (event.item.id === "map") this.strategyMap = new StrategyMap(new createjs.Bitmap(event.result))
     else if (event.item.id === "areadata") this.areaData = new AreaDataReader(event.result)
-    else event.item.unit.setMasterFlag(new MotionBitmap(event.result, FLAG_SIZE, FLAG_SIZE, FLAG_MOTION_INTERVAL))
+    else event.item.unit.setMasterFlag(new AlphalizeBitmap(event.result))
   }
 }
 

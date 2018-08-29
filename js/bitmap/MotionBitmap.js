@@ -1,16 +1,13 @@
 class MotionBitmap extends createjs.Bitmap {
   constructor(imageOrUri, motionWidth, motionHeight, motionInterval) {
-    let data = new createjs.BitmapData(imageOrUri)
-    super(data.canvas)
+    super(imageOrUri)
 
-    this.data = data
+    this.mask = new createjs.Shape()
     this.masks = []
     this.motionWidth = motionWidth
     this.motinHeight = motionHeight
     this.motionInterval = motionInterval
     this.currentMotion = 0
-
-    this.setupAlphaChannel()
   }
 
   startMotion() {
@@ -19,13 +16,6 @@ class MotionBitmap extends createjs.Bitmap {
       })
       .wait(this.motionInterval)
       .call(this.incrementMortion)
-  }
-
-  setupAlphaChannel() {
-    for (let i = 0; i < this.data.width; i++)
-      for (let j = 0; j < this.data.height; j++)
-        if (this.data.getPixel(i, j) === 0) this.data.setPixel32(i, j, 0x00000000)
-    this.data.updateContext()
   }
 
   setupMotionMasks() {
@@ -41,10 +31,12 @@ class MotionBitmap extends createjs.Bitmap {
           y: j * this.motinHeight
         })
 
-    this.mask = new createjs.Shape()
-    this.mask.graphics.beginStroke("#000").drawRect(this.x, this.y, this.motionWidth, this.motinHeight)
-
+    this.setupMaskPosition()
     this.startMotion()
+  }
+
+  setupMaskPosition() {
+    this.mask.graphics.beginStroke("#000").drawRect(this.x, this.y, this.motionWidth, this.motinHeight)
   }
 
   setMortion(number) {
