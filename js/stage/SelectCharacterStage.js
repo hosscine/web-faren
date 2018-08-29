@@ -50,6 +50,7 @@ class SelectCharacterStage extends createjs.Stage {
     }
 
     for (let i in this.masters) {
+      // bool = true ならマスターの顔絵にイベントリスナーを追加
       if (bool) {
         this.masters[i].faceBitmap.on("click", handleClick, null, false, {
           master: this.masters[i]
@@ -57,6 +58,7 @@ class SelectCharacterStage extends createjs.Stage {
         this.masters[i].faceBitmap.on("mouseover", handleMouseover, null, false, {
           master: this.masters[i]
         })
+        // bool = false ならイベントリスナーを削除
       } else this.masters[i].faceBitmap.removeAllEventListeners()
     }
 

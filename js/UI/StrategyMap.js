@@ -13,7 +13,7 @@ class StrategyMap extends ScrollContainer {
     this.contentHeight = this.mapBitmap.getBounds().height * this.scaleY
   }
 
-  setupAreaFlag(masters, areaData) {
+  setupAreaFlag(masters, areaData, areaOwner) {
     // for (let i in areaData.data) {
     //
     //   areaData.data[i].x

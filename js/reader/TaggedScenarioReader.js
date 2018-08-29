@@ -40,12 +40,12 @@ class TaggedScenarioReader extends TaggedTextReader {
   }
 
   parseArea(area) {
-    this.areaGovernor = []
+    this.areaOwner = []
 
     for(let i in area){
       let line = area[i].split(MULTI_SPACE_PATTERN)
       let parsedLine = line.map(e => parseInt(e)).filter(e => !isNaN(e))
-      Array.prototype.push.apply(this.areaGovernor, parsedLine)
+      Array.prototype.push.apply(this.areaOwner, parsedLine)
     }
   }
 

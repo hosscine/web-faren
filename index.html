@@ -16,6 +16,7 @@
   <!-- bitmap -->
   <script src="js/bitmap/BitmapData.js"></script>
   <script src="js/bitmap/Unit.js"></script>
+  <script src="js/bitmap/Area.js"></script>
   <script src="js/bitmap/MasterUnit.js"></script>
   <script src="js/bitmap/MotionBitmap.js"></script>
   <script src="js/bitmap/AlphalizeBitmap.js"></script>
@@ -50,7 +51,7 @@
     const scenarioPath = "assets/Default/Data/Scenario1"
     stage = new SelectCharacterStage("GameCanvas")
     stage.enableMouseOver()
-    reader = new TaggedScenarioReader(scenarioPath, stage)
+    scenario = new TaggedScenarioReader(scenarioPath, stage)
 
     createjs.Ticker.addEventListener("tick", stage)
     stage.update()
