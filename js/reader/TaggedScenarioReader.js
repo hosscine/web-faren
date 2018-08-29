@@ -1,4 +1,5 @@
 const MASTER_PATTERN = /Master(\d+)/
+const AREA_PATTERN = /Area/
 const IMAGE_DIR = "assets/Default/DefChar/"
 
 class TaggedScenarioReader extends TaggedTextReader {
@@ -13,6 +14,7 @@ class TaggedScenarioReader extends TaggedTextReader {
   parseScenario() {
     for (let tag in this.data) {
       if (MASTER_PATTERN.test(tag)) this.parseMaster(tag, this.data[tag])
+      else if(AREA_PATTERN.test(tag)) this.parseArea(this.data.Area)
     }
 
     let faceQueue = new createjs.LoadQueue(false)
@@ -35,6 +37,16 @@ class TaggedScenarioReader extends TaggedTextReader {
       unit: master
     })
     this.masters.push(master)
+  }
+
+  parseArea(area) {
+    this.areaGovernor = []
+
+    for(let i in area){
+      let line = area[i].split(MULTI_SPACE_PATTERN)
+      let parsedLine = line.map(e => parseInt(e)).filter(e => !isNaN(e))
+      Array.prototype.push.apply(this.areaGovernor, parsedLine)
+    }
   }
 
   getSelectCharacterStage(canvas) {

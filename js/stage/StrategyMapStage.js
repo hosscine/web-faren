@@ -43,6 +43,8 @@ class StrategyMapStage extends createjs.Stage {
     testFlag.x = 250
     testFlag.y = 150
     this.testFlag = testFlag
+
+    this.strategyMap.setupAreaFlag()
   }
 
   handleFileload(event) {
