@@ -18,7 +18,7 @@ class Area {
 
   getLineTo(targetArea) {
     let line = new createjs.Shape()
-    line.graphics.beginStroke("red").setStrokeStyle(2)
+    line.graphics.beginStroke("red").setStrokeStyle(1.5)
       .moveTo(this.x + FLAG_ROOT_X, this.y + FLAG_ROOT_Y)
       .lineTo(targetArea.x + FLAG_ROOT_X, targetArea.y + FLAG_ROOT_Y)
     return line

@@ -38,6 +38,7 @@ class StrategyMapStage extends createjs.Stage {
   setup() {
     this.addChild(this.strategyMap)
     this.addChild(new StrategyHeaderBar())
+    this.addChild(new StrategySideBar(this.playerMaster))
 
     this.setupAreas()
     this.strategyMap.setupAreaFlag(this.areas)
