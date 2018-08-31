@@ -44,10 +44,7 @@ class SelectCharacterStage extends createjs.Stage {
         createjs.Ticker.setFPS(60)
       }
     }
-
-    let handleMouseover = (event, data) => {
-      this.explanationArea.displayMaster(data.master)
-    }
+    let handleMouseover = (event, data) => this.explanationArea.displayMaster(data.master)
 
     for (let i in this.masters) {
       // bool = true ならマスターの顔絵にイベントリスナーを追加

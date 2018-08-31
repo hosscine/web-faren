@@ -6,13 +6,15 @@ class MasterUnit extends Unit {
     this.explanation = explanation
   }
 
-  setup(faceBitmap) {
+  setupFaceImage(imageOrUri) {
+    this.faceData = new AlphalizeBitmap(imageOrUri)
+
     this.faceBitmap = new createjs.Container()
-    this.faceBitmap.addChild(faceBitmap)
+    let face = this.faceBitmap.addChild(new createjs.Bitmap(this.faceData.canvas))
     let nameText = this.faceBitmap.addChild(new createjs.Text(this.name, "8px arial", "white"))
     nameText.regX = nameText.getMeasuredWidth() / 2
-    nameText.x = faceBitmap.getBounds().width / 2 + 10
-    nameText.y = faceBitmap.getBounds().height
+    nameText.x = face.getBounds().width / 2 + 10
+    nameText.y = face.getBounds().height
   }
 
   setMasterFlag(flagBitmap) {

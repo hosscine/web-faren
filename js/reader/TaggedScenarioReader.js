@@ -19,7 +19,7 @@ class TaggedScenarioReader extends TaggedTextReader {
 
     let faceQueue = new createjs.LoadQueue(false)
     faceQueue.loadManifest(this.manifest)
-    faceQueue.on("fileload", (event) => event.item.unit.setup(new createjs.Bitmap(event.result)))
+    faceQueue.on("fileload", (event) => event.item.unit.setupFaceImage(event.result))
     faceQueue.on("complete", () => this.stage.setup(this.masters))
   }
 
