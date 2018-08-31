@@ -1,6 +1,6 @@
 //Check
 //No.1 エンディング
-//ゴートⅢ世のエンディング
+//ゴートⅧ世のエンディング
 if (Flag[401])
 {
 	AreaFocus BaseArea[1]
@@ -73,11 +73,11 @@ if (Flag[401])
     Music 感動？
 	Window 0
 	Size 356,96
-	Print ゴートⅢ世は、大陸を制覇した。
+	Print ゴートⅧ世は、大陸を制覇した。
 	Print 真の支配者になったのである。
 	WindowOn 4000
 	Clear
-	Print ゴートⅢ世はリオーム王家
+	Print ゴートⅧ世はリオーム王家
 	Print 第２７代の王となった。
 	WindowOn 4000
 	Clear
@@ -97,7 +97,7 @@ if (Flag[401])
 	Set Flag[0],true
 }
 //アルテナのエンディング
-//ゴートⅢ世が生きているバージョン
+//ゴートⅧ世が生きているバージョン
 if (Flag[402] && KuniFlag[1])
 {
 	AreaFocus BaseArea[2]
@@ -150,7 +150,7 @@ if (Flag[402] && KuniFlag[1])
 		WindowOn 4000
 		Clear
 		Print このような戦いを
-		Print やってきたゴートⅢ世様は
+		Print やってきたゴートⅧ世様は
 		Print きっと良い名君となるでしょうね。
 		WindowOn 4000
 		Clear
@@ -166,7 +166,7 @@ if (Flag[402] && KuniFlag[1])
 	Print 平和の時代がおとずれたのである。
 	WindowOn 4000
 	Clear
-	Print ゴートⅢ世による政治は
+	Print ゴートⅧ世による政治は
 	Print うまく行われ、
 	WindowOn 4000
 	Clear
@@ -481,7 +481,7 @@ if (Flag[404])
 	Set Flag[0],true
 }
 //ラムソンのエンディング
-//ゴートⅢ世が生きているバージョン
+//ゴートⅧ世が生きているバージョン
 if (KuniFlag[1] && Flag[405])
 {
 	AreaFocus BaseArea[5]
@@ -491,7 +491,7 @@ if (KuniFlag[1] && Flag[405])
 	Print ラムソン達は、大陸を制覇した・・・。
 	WindowOn 4000
 	Clear
-	Print 後に名君といわれるゴートⅢ世による
+	Print 後に名君といわれるゴートⅧ世による
 	Print 統治が行われ、
 	WindowOn 4000
 	Clear
@@ -956,7 +956,7 @@ if (Flag[413])
 		WindowOn 4000
 		Window 0
 		Conversation %イオナ
-		Print これで、ゴートⅢ世様の
+		Print これで、ゴートⅧ世様の
 		Print 努力も報われるわけですね。
 		WindowOn 4000
 		Window 1
@@ -987,7 +987,7 @@ if (Flag[413])
 	Size 356,96
 	Print ホルスはムクガイヤを倒した。
 	WindowOn 2000
-	Print ゴートⅢ世の敵を討つことができたのだ。
+	Print ゴートⅧ世の敵を討つことができたのだ。
 	WindowOn 4000
 	Clear
 	Print ムクガイヤは
@@ -1099,14 +1099,14 @@ if (Flag[0])
 //No.2 ゲーム始め
 if (StartTurn==0 && Turn==1)
 {
-    //ゴートⅢ世
+    //ゴートⅧ世
     if (KuniPlayer[1])
     {
         AreaFocus BaseArea[1]
 		Window 0
 		Size 356,96
         	Print ムクガイヤの策謀によって
-		Print 都を追われたゴートⅢ世は
+		Print 都を追われたゴートⅧ世は
         WindowOn 4000
         Clear
 		Print ムクガイヤの追撃を逃れながら
@@ -1228,13 +1228,13 @@ if (StartTurn==0 && Turn==1)
     	WindowOn 4000
         Clear
         Print そんなとき、
-        Print ゴートⅢ世討伐を命じていた
+        Print ゴートⅧ世討伐を命じていた
         Print サルステーネが帰ってきた。
         WindowOn 4000
         WindowOff
     	Window 0
         Conversation %サルステーネ
-        Print 陛下、ゴートⅢ世を
+        Print 陛下、ゴートⅧ世を
         Print とり逃してしまいました。
         WindowOn 4000
         Window 1
@@ -1329,7 +1329,7 @@ if (StartTurn==0 && Turn==1)
 		WindowOff
 	}
 }
-//No.4 ゴートⅢ世･フェリル占領
+//No.4 ゴートⅧ世･フェリル占領
 if (Flag[16]==false && Scenario==1 && Turn<30 && KuniPlayer[1] && AreaKuni[55]!=1 && AreaKuni[58]==1)
 {
        AreaFocus 58
@@ -1439,7 +1439,7 @@ if (Scenario==1 && Flag[17]==false && AreaButaiKz[61]<=18)
         Set Flag[17],true
     }
 }
-//No.6 バルバッタ死す（ゴートⅢ世）
+//No.6 バルバッタ死す（ゴートⅧ世）
 if (Scenario<=2 && Flag[18]==false && KuniPlayer[1] && KuniFlag[7]==false)
 {
 	Set Flag[18],true
@@ -1503,7 +1503,7 @@ if (Scenario<=2 && Flag[19]==false)
 		}
 	}
 }
-//No.8 ゴートⅢ世、フェリル城占領
+//No.8 ゴートⅧ世、フェリル城占領
 if (Scenario<=2 && KuniPlayer[1] && Flag[20]==false && AreaKuni[57]==1)
 {
 	AreaFocus 57
@@ -1553,7 +1553,7 @@ if (Scenario<=2 && KuniPlayer[1] && Flag[20]==false && AreaKuni[57]==1)
 		WindowOff
 	}
 }
-//No.9 ゴートⅢ世、プレア占領
+//No.9 ゴートⅧ世、プレア占領
 if (Scenario<=3 && Flag[21]==false && KuniPlayer[1] && AreaKuni[8]==1)
 {
 	AreaFocus 8
@@ -2027,7 +2027,7 @@ if (Turn>40 && Turn<65 && Random(5)==0 && Flag[30]==false)
 	Plus AreaRoad[25],20
 	Set Flag[30],true
 }
-//ゴートⅢ世、ルートガルト占拠
+//ゴートⅧ世、ルートガルト占拠
 if (Flag[31]==false && KuniPlayer[1] && AreaKuni[29]==1)
 {
        AreaFocus 29
