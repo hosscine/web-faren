@@ -56,7 +56,11 @@
     const scenarioPath = "assets/Default/Data/Scenario1"
     stage = new SelectCharacterStage("GameCanvas")
     stage.enableMouseOver()
-    scenario = new TaggedScenarioReader(scenarioPath, stage)
+
+    scenario = new TaggedScenarioReader(scenarioPath)
+    scenario.delegateLoadMasterComplete = function() {
+      stage.setup(this.masters)
+    }
 
     createjs.Ticker.addEventListener("tick", stage)
     stage.update()

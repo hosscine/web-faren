@@ -3,10 +3,9 @@ const AREA_PATTERN = /Area/
 const IMAGE_DIR = "assets/Default/DefChar/"
 
 class TaggedScenarioReader extends TaggedTextReader {
-  constructor(path, selectCharacterStage) {
+  constructor(path) {
     super(path)
 
-    this.stage = selectCharacterStage
     this.masters = []
     this.manifest = []
   }
@@ -20,7 +19,7 @@ class TaggedScenarioReader extends TaggedTextReader {
     let faceQueue = new createjs.LoadQueue(false)
     faceQueue.loadManifest(this.manifest)
     faceQueue.on("fileload", (event) => event.item.unit.setupFaceImage(event.result))
-    faceQueue.on("complete", () => this.stage.setup(this.masters))
+    faceQueue.on("complete", (event) => this.delegateLoadMasterComplete(event))
   }
 
   parseMaster(tag, contents) {
@@ -54,8 +53,11 @@ class TaggedScenarioReader extends TaggedTextReader {
     return(this.stage)
   }
 
-  delegateScenarioComplete() {
+  delegateLoadComplete() {
     this.parseScenario()
   }
 
+  delegateLoadMasterComplete() {
+    console.log("delegateLoadMasterComplete is not implemented yet in:", this)
+  }
 }

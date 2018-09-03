@@ -13,7 +13,7 @@ class TaggedTextReader {
   readFile(path) {
     let queue = new createjs.LoadQueue(true)
     queue.on("fileload", (event) => this.formatTaggedText(event.result))
-    queue.on("complete", (event) => this.delegateScenarioComplete())
+    queue.on("complete", (event) => this.delegateLoadComplete())
     queue.loadFile(path)
     queue.load()
   }
@@ -40,8 +40,8 @@ class TaggedTextReader {
     }
   }
 
-  delegateScenarioComplete(){
-    console.log("delegateScenarioComplete is not implemented yet in:", this)
+  delegateLoadComplete(){
+    console.log("delegateLoadComplete is not implemented yet in:", this)
   }
 
 }
