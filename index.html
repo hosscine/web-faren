@@ -27,6 +27,7 @@
   <!-- stage -->
   <script src="js/stage/SelectCharacterStage.js"></script>
   <script src="js/stage/StrategyMapStage.js"></script>
+  <script src="js/stage/preloadAssets.js"></script>
 
   <!-- UI -->
   <script src="js/UI/ScrollContainer.js"></script>
@@ -52,7 +53,7 @@
 </body>
 
 <script>
-  function charaSelect() {
+  function firstLoadAssets() {
     const scenarioPath = "assets/Default/Data/Scenario1"
     stage = new SelectCharacterStage("GameCanvas")
     stage.enableMouseOver()
@@ -66,8 +67,9 @@
     stage.update()
   }
 
-  // Scrollerと併用のため
-  charaSelect()
+  // Scroller.js使用のためonloadは使わない
+  firstLoadAssets()
+  preloadAssets()
 </script>
 
 <!-- scroller -->
