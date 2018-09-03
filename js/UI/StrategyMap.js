@@ -17,10 +17,15 @@ class StrategyMap extends ScrollContainer {
   }
 
   setupAreaFlag(areas) {
+    // 先にエリア間の接続を描画
     for (let i in areas) {
       let adjacency = areas[i].adjacency
       for (let j in adjacency) this.addChild(areas[i].getLineTo(areas[adjacency[j] - 1]))
     }
-    for (let i in areas) this.addChild(areas[i].ownerFlag)
+    // 次にエリアの旗と名前を描画
+    for (let i in areas) {
+      let areaname = new createjs.Text(areas[i].name)
+      this.addChild(areas[i].ownerNameFlag)
+    }
   }
 }

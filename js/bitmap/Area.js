@@ -9,16 +9,30 @@ class Area {
     for (let i in data) this[i] = data[i]
   }
 
-  get ownerFlag() {
-    let flag = new MotionBitmap(this.owner.flag.canvas, FLAG_SIZE, FLAG_SIZE, FLAG_MOTION_INTERVAL)
-    flag.x = this.x
-    flag.y = this.y
-    return flag
+  get ownerNameFlag() {
+    let container = new createjs.Container()
+    container.x = this.x
+    container.y = this.y
+
+    let text = new createjs.Text(this.name, "15px arial", "white")
+    text.textAlign = "center"
+    text.x += 10
+    text.y += FLAG_SIZE
+
+    let outlineText = text.clone()
+    outlineText.color = "black"
+    outlineText.outline = 2
+
+    container.addChild(outlineText, text)
+
+    let flag = container.addChild(new MotionBitmap(this.owner.flag.canvas, FLAG_SIZE, FLAG_SIZE, FLAG_MOTION_INTERVAL))
+
+    return container
   }
 
   getLineTo(targetArea) {
     let line = new createjs.Shape()
-    line.graphics.beginStroke("red").setStrokeStyle(1.5)
+    line.graphics.beginStroke("red").setStrokeStyle(2)
       .moveTo(this.x + FLAG_ROOT_X, this.y + FLAG_ROOT_Y)
       .lineTo(targetArea.x + FLAG_ROOT_X, targetArea.y + FLAG_ROOT_Y)
     return line

@@ -1,6 +1,7 @@
 const STRATEGY_MAP_PATH = "assets/Default/Picture/FieldMap.png"
 const AREADATA_PATH = "assets/Default/Data/AreaData"
 const CHARACTERDATA_PATH = IMAGE_DIR + "CharacterData"
+const PICTURE_DIR = "assets/Default/Picture/"
 
 class StrategyMapStage extends createjs.Stage {
   constructor(canvas, masters, player) {
@@ -28,7 +29,7 @@ class StrategyMapStage extends createjs.Stage {
       },
       {
         id: "flag_neutral",
-        src: IMAGE_DIR + "FlagTMP.png"
+        src: PICTURE_DIR + "Flag0.png"
       }
     ]
     for(let i in this.masters)
