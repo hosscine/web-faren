@@ -1,6 +1,5 @@
 const MASTER_PATTERN = /Master(\d+)/
 const AREA_PATTERN = /Area/
-const IMAGE_DIR = "assets/Default/DefChar/"
 
 class TaggedScenarioReader extends TaggedTextReader {
   constructor(path) {

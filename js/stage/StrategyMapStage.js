@@ -1,8 +1,3 @@
-const STRATEGY_MAP_PATH = "assets/Default/Picture/FieldMap.png"
-const AREADATA_PATH = "assets/Default/Data/AreaData"
-const CHARACTERDATA_PATH = IMAGE_DIR + "CharacterData"
-const PICTURE_DIR = "assets/Default/Picture/"
-
 class StrategyMapStage extends createjs.Stage {
   constructor(canvas, masters, player) {
     super(canvas)
