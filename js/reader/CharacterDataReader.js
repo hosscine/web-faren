@@ -109,6 +109,7 @@ class CharacterDataReader extends BinaryReader {
     super(data)
 
     this.characters = []
+    this.imageManifest = []
 
     this.setup()
   }
@@ -124,6 +125,9 @@ class CharacterDataReader extends BinaryReader {
     let cdata = {}
 
     for (let key in CHARACTER_DATA) {
+      // if       名前ならstringにして格納
+      // else if  howToAttackのようなグループ化されたデータはgetDataByHashを使う
+      // else     単体のデータはgetDataByKeyを使う
       if (key === "name") cdata.name = this.getBitString10(0, (i += CHARACTER_DATA.name) - 1)
       else if (typeof CHARACTER_DATA[key] === "object")
         [cdata[key], i] = this.getDataByHash(CHARACTER_DATA[key], i)
@@ -133,6 +137,23 @@ class CharacterDataReader extends BinaryReader {
 
     this.characters.push(cdata)
     this.increseOffset10(i)
+
+    if(!(cdata.unitImageID <= 216 && cdata.unitImageID >= 200))
+    if (cdata.unitImageID !== 0) this.imageManifest.push({
+      id: "unit" + cdata.unitImageID,
+      src: IMAGE_DIR + "Char" + cdata.unitImageID + ".png",
+      data: cdata
+    })
+    if (cdata.faceImageID !== 0) this.imageManifest.push({
+      id: "face" + cdata.faceImageID,
+      src: IMAGE_DIR + "Face" + cdata.faceImageID + ".png",
+      data: cdata
+    })
+    if (cdata.flagImageID !== 0) this.imageManifest.push({
+      id: "flag" + cdata.flagImageID,
+      src: IMAGE_DIR + "Flag" + cdata.flagImageID + ".png",
+      data: cdata
+    })
   }
 
   getDataByKey(key, start) {

@@ -26,14 +26,15 @@ function preloadAssets() {
   let handleScriptLoad = function(event) {
     if (event.item.id === "charadata") {
       assets.charadata = new CharacterDataReader(event.result)
-      assets.imageManifest = imageManifest.concat(assets.charadata.manifest)
+      assets.imageManifest = assets.imageManifest.concat(assets.charadata.imageManifest)
     } else if (event.item.id === "areadata") assets.areaData = new AreaDataReader(event.result)
   }
 
   let handleScriptComplete = function(event) {
     let imageQueue = new createjs.LoadQueue()
     imageQueue.loadManifest(assets.imageManifest)
-    imageQueue.on("fileload", handleImageLoad(event))
+    imageQueue.on("progress", handleImageProgress)
+    imageQueue.on("fileload", handleImageLoad)
     imageQueue.on("complete", () => console.timeEnd("preload"))
   }
 
@@ -48,10 +49,16 @@ function preloadAssets() {
     }
   ]
 
+  let handleImageProgress = function(event) {
+    // console.log(event.progress)
+  }
+
   let handleImageLoad = function(event) {
     if (event.item.id === "map") assets.strategyMap = new StrategyMap(new createjs.Bitmap(event.result), HEADER_HEIGTH)
     else if (event.item.id === "neutralFlag") assets.neutralFlag = new AlphalizeBitmap(event.result)
-    // else event.item.unit.setMasterFlag(new AlphalizeBitmap(event.result))
+    else if (/Char\d+/.test(event.item.id)) event.item.data.unitImage = event.result
+    else if (/Face\d+/.test(event.item.id)) event.item.data.faceImage = event.result
+    else if (/Flag\d+/.test(event.item.id)) event.item.data.flagImage = event.result
   }
 
   let scriptQueue = new createjs.LoadQueue()
