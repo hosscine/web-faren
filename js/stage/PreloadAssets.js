@@ -3,6 +3,10 @@ const IMAGE_DIR = "assets/Default/DefChar/"
 const PICTURE_DIR = "assets/Default/Picture/"
 const ELEMENT_DIR = "assets/Default/Elements/"
 
+const UNIT_PATTERN = /unit\d+/
+const FACE_PATTERN = /face\d+/
+const FLAG_PATTERN = /flag\d+/
+
 const STRATEGY_MAP_PATH = "assets/Default/Picture/FieldMap.png"
 const AREADATA_PATH = "assets/Default/Data/AreaData"
 const CHARACTERDATA_PATH = IMAGE_DIR + "CharacterData"
@@ -54,11 +58,12 @@ function preloadAssets() {
   }
 
   let handleImageLoad = function(event) {
-    if (event.item.id === "map") assets.strategyMap = new StrategyMap(new createjs.Bitmap(event.result), HEADER_HEIGTH)
-    else if (event.item.id === "neutralFlag") assets.neutralFlag = new AlphalizeBitmap(event.result)
-    else if (/Char\d+/.test(event.item.id)) event.item.data.unitImage = event.result
-    else if (/Face\d+/.test(event.item.id)) event.item.data.faceImage = event.result
-    else if (/Flag\d+/.test(event.item.id)) event.item.data.flagImage = event.result
+    let i = event.item
+    if (i.id === "map") assets.strategyMap = new StrategyMap(new createjs.Bitmap(event.result), HEADER_HEIGTH)
+    else if (i.id === "neutralFlag") assets.neutralFlag = new AlphalizeBitmap(event.result)
+    else if (UNIT_PATTERN.test(i.id)) i.image = new AlphalizeBitmap(event.result)
+    else if (FACE_PATTERN.test(i.id)) i.image = new AlphalizeBitmap(event.result)
+    else if (FLAG_PATTERN.test(i.id)) i.image = new AlphalizeBitmap(event.result)
   }
 
   let scriptQueue = new createjs.LoadQueue()

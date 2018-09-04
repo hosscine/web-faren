@@ -109,6 +109,9 @@ class CharacterDataReader extends BinaryReader {
     super(data)
 
     this.characters = []
+    this.unitImages = []
+    this.faceImages = []
+    this.flagImages = []
     this.imageManifest = []
 
     this.setup()
@@ -117,7 +120,29 @@ class CharacterDataReader extends BinaryReader {
   setup() {
     this.increseOffset16(CHARACTER_DATA_HEADER_LENGTH)
 
-    while(this.offset + 324 <= this.data.byteLength) this.parseCharacter()
+    while (this.offset + 324 <= this.data.byteLength) this.parseCharacter()
+
+    this.setupImageManifest()
+  }
+
+  setupImageManifest() {
+    for (let id in this.unitImages) this.imageManifest.push({
+      id: "unit" + id,
+      src: IMAGE_DIR + "Char" + id + ".png",
+      image: this.unitImages[id],
+    })
+
+    for (let id in this.faceImages) this.imageManifest.push({
+      id: "face" + id,
+      src: IMAGE_DIR + "Face" + id + ".png",
+      image: this.faceImages[id],
+    })
+
+    for (let id in this.flagImages) this.imageManifest.push({
+      id: "flag" + id,
+      src: IMAGE_DIR + "Flag" + id + ".png",
+      image: this.flagImages[id],
+    })
   }
 
   parseCharacter() {
@@ -138,22 +163,10 @@ class CharacterDataReader extends BinaryReader {
     this.characters.push(cdata)
     this.increseOffset10(i)
 
-    if(!(cdata.unitImageID <= 216 && cdata.unitImageID >= 200))
-    if (cdata.unitImageID !== 0) this.imageManifest.push({
-      id: "unit" + cdata.unitImageID,
-      src: IMAGE_DIR + "Char" + cdata.unitImageID + ".png",
-      data: cdata
-    })
-    if (cdata.faceImageID !== 0) this.imageManifest.push({
-      id: "face" + cdata.faceImageID,
-      src: IMAGE_DIR + "Face" + cdata.faceImageID + ".png",
-      data: cdata
-    })
-    if (cdata.flagImageID !== 0) this.imageManifest.push({
-      id: "flag" + cdata.flagImageID,
-      src: IMAGE_DIR + "Flag" + cdata.flagImageID + ".png",
-      data: cdata
-    })
+    // 読み込む必要のある画像をピックアップ
+    if (cdata.unitImageID !== 0) this.unitImages[cdata.unitImageID] = []
+    if (cdata.faceImageID !== 0) this.faceImages[cdata.faceImageID] = []
+    if (cdata.flagImageID !== 0) this.flagImages[cdata.flagImageID] = []
   }
 
   getDataByKey(key, start) {
