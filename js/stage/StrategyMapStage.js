@@ -39,8 +39,10 @@ class StrategyMapStage extends createjs.Stage {
 
   setup() {
     this.addChild(this.strategyMap)
-    this.headerBar = this.addChild(new StrategyHeaderBar())
-    this.sideBar = this.addChild(new StrategySideBar(this.playerMaster))
+    this.headerBar = headerStage.addChild(new StrategyHeaderBar())
+    this.sideBar = sidebarStage.addChild(new StrategySideBar(this.playerMaster))
+    headerStage.update()
+    sidebarStage.update()
 
     this.setupAreas() // this.areas を作る
     this.strategyMap.setupAreaFlag(this.areas)
@@ -58,7 +60,7 @@ class StrategyMapStage extends createjs.Stage {
   }
 
   handleFileload(event) {
-    if (event.item.id === "map") this.strategyMap = new StrategyMap(new createjs.Bitmap(event.result), HEADER_HEIGTH)
+    if (event.item.id === "map") this.strategyMap = new StrategyMap(new createjs.Bitmap(event.result))
     else if (event.item.id === "charadata") this.charadata = new CharacterDataReader(event.result)
     else if (event.item.id === "areadata") this.areaData = new AreaDataReader(event.result)
     else if (event.item.id === "flag_neutral") this.neutralFlag = new AlphalizeBitmap(event.result)

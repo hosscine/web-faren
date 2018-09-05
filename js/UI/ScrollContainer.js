@@ -19,11 +19,11 @@ class ScrollContainer extends createjs.Container {
   }
 
   set contentWidth(width){
-    contentWidth = width
+    contentWidth = width + SIDEBAR_WIDTH
     reflow()
   }
   set contentHeight(height){
-    contentHeight = height
+    contentHeight = height - clientHeight * 0.1
     reflow()
   }
 

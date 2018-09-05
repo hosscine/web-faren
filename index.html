@@ -47,15 +47,26 @@
 </head>
 
 <body>
-  <div id="container">
+  <!-- <div id="container">
     <canvas id="GameCanvas" width="1280" height="720">alternate content</canvas>
+    <canvas id="sideCanvas" width = SIDEBAR_WIDTH, height="720"> </canvas>
+  </div> -->
+  <div id="container">
+  <canvas id="headerCanvas">hoge</canvas>
+  <div id="main">
+    <canvas id="mainCanvas" width="1280" height="720">hoge</canvas>
+    <canvas id="sidebarCanvas" width="200">hoge</canvas>
   </div>
+</div>
+
 </body>
 
 <script>
   function firstLoadAssets() {
     const scenarioPath = "assets/Default/Data/Scenario1"
-    stage = new SelectCharacterStage("GameCanvas")
+    headerStage = new createjs.Stage("headerStage")
+    stage = new SelectCharacterStage("mainCanvas")
+    sidebarStage = new createjs.Stage("sidebarStage")
     stage.enableMouseOver()
 
     scenario = new TaggedScenarioReader(scenarioPath)

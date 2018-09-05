@@ -1,6 +1,7 @@
 // Canvas and container setting
 let container = document.getElementById("container")
-let content = document.getElementById("GameCanvas")
+let header = document.getElementById("headerCanvas")
+let content = document.getElementById("mainCanvas")
 let contentWidthDefault = 1280
 let contentHeightDefault = 720
 
@@ -27,8 +28,13 @@ scroller = new Scroller(render, {
 
 // Reflow handling
 var reflow = function() {
-  clientWidth = container.clientWidth > contentWidthDefault ? contentWidthDefault : container.clientWidth
-  clientHeight = container.clientHeight > contentHeightDefault ? contentHeightDefault : container.clientHeight
+  // clientWidth = container.clientWidth > contentWidthDefault ? contentWidthDefault : container.clientWidth
+  // clientHeight = container.clientHeight > contentHeightDefault ? contentHeightDefault : container.clientHeight
+  clientWidth = container.clientWidth
+  clientHeight = container.clientHeight
+
+  // canvasのwidthは自動調節されないのでここで手動調節
+  content.setAttribute("width", clientWidth - 200)
 
   scroller.setDimensions(clientWidth, clientHeight, contentWidth, contentHeight)
 }
