@@ -11,11 +11,9 @@ class StrategySideBar extends createjs.Container {
   }
 
   setup() {
-    this.x = contentWidthDefault - SIDEBAR_WIDTH
-    this.y = HEADER_HEIGTH
     let background = this.addChild(new createjs.Shape())
     background.graphics.beginFill("darkblue")
-      .drawRect(0, 0, SIDEBAR_WIDTH, contentHeightDefault - HEADER_HEIGTH)
+      .drawRect(0, 0, SIDEBAR_WIDTH, clientHeight)
 
     this.setupMaster()
     this.setupAreaInfo()

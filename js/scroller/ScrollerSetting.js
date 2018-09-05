@@ -2,6 +2,7 @@
 let container = document.getElementById("container")
 let header = document.getElementById("headerCanvas")
 let content = document.getElementById("mainCanvas")
+let sidebar = document.getElementById("sidebarCanvas")
 let contentWidthDefault = 1280
 let contentHeightDefault = 720
 
@@ -28,13 +29,15 @@ scroller = new Scroller(render, {
 
 // Reflow handling
 var reflow = function() {
-  // clientWidth = container.clientWidth > contentWidthDefault ? contentWidthDefault : container.clientWidth
-  // clientHeight = content.clientHeight > contentHeightDefault ? contentHeightDefault : content.clientHeight
   clientWidth = content.clientWidth
   clientHeight = content.clientHeight
 
   // canvasのwidthは自動調節されないのでここで手動調節
+  header.setAttribute("width", container.clientWidth)
+  header.setAttribute("height", container.clientHeight * 0.1)
   content.setAttribute("width", container.clientWidth - 200)
+  content.setAttribute("height", container.clientHeight * 0.9)
+  sidebar.setAttribute("height", container.clientHeight * 0.9)
 
   scroller.setDimensions(clientWidth, clientHeight, contentWidth, contentHeight)
 }

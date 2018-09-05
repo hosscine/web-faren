@@ -10,7 +10,7 @@ class StrategyMap extends ScrollContainer {
     this.addChild(this.mapBitmap)
 
     this.contentWidth = this.mapBitmap.getBounds().width * this.scaleX
-    this.contentHeight = this.mapBitmap.getBounds().height * this.scaleY + 80
+    this.contentHeight = this.mapBitmap.getBounds().height * this.scaleY
   }
 
   setupAreaFlag(areas) {

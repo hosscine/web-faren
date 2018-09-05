@@ -47,10 +47,6 @@
 </head>
 
 <body>
-  <!-- <div id="container">
-    <canvas id="GameCanvas" width="1280" height="720">alternate content</canvas>
-    <canvas id="sideCanvas" width = SIDEBAR_WIDTH, height="720"> </canvas>
-  </div> -->
   <div id="container">
   <canvas id="headerCanvas">hoge</canvas>
   <div id="main">
@@ -64,9 +60,9 @@
 <script>
   function firstLoadAssets() {
     const scenarioPath = "assets/Default/Data/Scenario1"
-    headerStage = new createjs.Stage("headerStage")
+    headerStage = new createjs.Stage("headerCanvas")
     stage = new SelectCharacterStage("mainCanvas")
-    sidebarStage = new createjs.Stage("sidebarStage")
+    sidebarStage = new createjs.Stage("sidebarCanvas")
     stage.enableMouseOver()
 
     scenario = new TaggedScenarioReader(scenarioPath)
@@ -74,7 +70,9 @@
       stage.setup(this.masters)
     }
 
+    createjs.Ticker.addEventListener("tick", headerStage)
     createjs.Ticker.addEventListener("tick", stage)
+    createjs.Ticker.addEventListener("tick", sidebarStage)
     stage.update()
   }
 
