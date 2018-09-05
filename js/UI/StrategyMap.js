@@ -1,9 +1,8 @@
 class StrategyMap extends ScrollContainer {
-  constructor(mapBitmap, headerMargine) {
+  constructor(mapBitmap) {
     super()
 
     this.mapBitmap = mapBitmap
-    // this.headerMargine = headerMargine
     this.setup()
   }
 
@@ -11,8 +10,7 @@ class StrategyMap extends ScrollContainer {
     this.addChild(this.mapBitmap)
 
     this.contentWidth = this.mapBitmap.getBounds().width * this.scaleX
-    this.contentHeight = this.mapBitmap.getBounds().height * this.scaleY
-    console.log(this.mapBitmap.getBounds().height * this.scaleY)
+    this.contentHeight = this.mapBitmap.getBounds().height * this.scaleY + 80
   }
 
   setupAreaFlag(areas) {
@@ -23,7 +21,6 @@ class StrategyMap extends ScrollContainer {
     }
     // 次にエリアの旗と名前を描画
     for (let i in areas) {
-      let areaname = new createjs.Text(areas[i].name)
       this.addChild(areas[i].ownerNameFlag)
     }
   }

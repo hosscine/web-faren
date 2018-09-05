@@ -29,12 +29,12 @@ scroller = new Scroller(render, {
 // Reflow handling
 var reflow = function() {
   // clientWidth = container.clientWidth > contentWidthDefault ? contentWidthDefault : container.clientWidth
-  // clientHeight = container.clientHeight > contentHeightDefault ? contentHeightDefault : container.clientHeight
-  clientWidth = container.clientWidth
-  clientHeight = container.clientHeight
+  // clientHeight = content.clientHeight > contentHeightDefault ? contentHeightDefault : content.clientHeight
+  clientWidth = content.clientWidth
+  clientHeight = content.clientHeight
 
   // canvasのwidthは自動調節されないのでここで手動調節
-  content.setAttribute("width", clientWidth - 200)
+  content.setAttribute("width", container.clientWidth - 200)
 
   scroller.setDimensions(clientWidth, clientHeight, contentWidth, contentHeight)
 }

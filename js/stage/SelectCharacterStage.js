@@ -32,6 +32,8 @@ class SelectCharacterStage extends createjs.Stage {
     let faceWidth = this.masters[0].faceBitmap.getChildAt(0).getBounds().width *
       this.masters[0].faceBitmap.scaleX
     this.faceContainer.contentWidth = faceWidth * ncols + faceMargine * ncols * 2
+    this.faceContainer.contentHeight = contentHeightDefault - EXPLANATION_HEIGHT
+
   }
 
   set mastersEnable(bool) {
