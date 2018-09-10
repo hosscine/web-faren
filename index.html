@@ -27,6 +27,7 @@
   <!-- stage -->
   <script src="js/stage/SelectCharacterStage.js"></script>
   <script src="js/stage/StrategyMapStage.js"></script>
+  <script src="js/stage/SidebarStage.js"></script>
   <script src="js/stage/preloadAssets.js"></script>
 
   <!-- UI -->
@@ -62,12 +63,13 @@
     const scenarioPath = "assets/Default/Data/Scenario1"
     headerStage = new createjs.Stage("headerCanvas")
     stage = new SelectCharacterStage("mainCanvas")
-    sidebarStage = new createjs.Stage("sidebarCanvas")
+    sidebarStage = new SidebarStage("sidebarCanvas")
     stage.enableMouseOver()
 
     scenario = new TaggedScenarioReader(scenarioPath)
     scenario.delegateLoadMasterComplete = function() {
       stage.setup(this.masters)
+      sidebarStage.displayScenario(this.data)
     }
 
     createjs.Ticker.addEventListener("tick", headerStage)
