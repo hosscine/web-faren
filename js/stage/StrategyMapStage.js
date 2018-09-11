@@ -9,7 +9,6 @@ class StrategyMapStage extends createjs.Stage {
   }
 
   setup(assets) {
-    this.neutralFlag = assets.neutralFlag
     this.charadata = assets.charadata
     this.areaData = assets.areaData
     // for (master of this.masters) master.setMasterFlag()
@@ -19,13 +18,13 @@ class StrategyMapStage extends createjs.Stage {
     this.sideBar = sidebarStage.addChild(new StrategySideBar(this.playerMaster))
 
     this.setupAreas(assets) // this.areas を作る
-    console.log(this.areas[1].owner)
     this.strategyMap.setupAreaFlag(this.areas)
   }
 
   setupAreas(assets) {
     let neutralMaster = {}
-    neutralMaster.flag = this.neutralFlag
+    neutralMaster.flagBitmap = new MotionBitmap(assets.neutralFlag.canvas, FLAG_SIZE, FLAG_SIZE, FLAG_MOTION_INTERVAL)
+    console.log(neutralMaster)
     this.areas = []
     for (let i in this.areaData.data) {
       let ownerID = assets.scenario.areaOwner[i]

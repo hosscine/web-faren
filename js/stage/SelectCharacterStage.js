@@ -1,4 +1,4 @@
-const faceMargine = 40
+const SELECTABLE_FACE_MARGINE = 40
 
 class SelectCharacterStage extends createjs.Stage {
   constructor(canvas, assets) {
@@ -17,24 +17,24 @@ class SelectCharacterStage extends createjs.Stage {
 
   displayMasters() {
     for (let i in this.masters) {
-      let bmp = this.faceContainer.addChild(this.masters[i].faceBitmap)
+      let bmp = this.faceContainer.addChild(this.masters[i].selectableFaceBitmap)
       let id = parseInt(i)
       let row = id % 2
       let col = (id - id % 2)
 
       bmp.scaleX = bmp.scaleY = 2
       bmp.x = col / 2 * bmp.getChildAt(0).getBounds().width * bmp.scaleX +
-        col * faceMargine + faceMargine
+        col * SELECTABLE_FACE_MARGINE + SELECTABLE_FACE_MARGINE
       bmp.y = row * bmp.getChildAt(0).getBounds().height * bmp.scaleY +
-        faceMargine * row + bmp.getChildAt(1).getMeasuredHeight() * 2 * row
+        SELECTABLE_FACE_MARGINE * row + bmp.getChildAt(1).getMeasuredHeight() * 2 * row
     }
 
+    // this.faceContainer の contentWidth と contentHeight を計算
     let ncols = parseInt(this.masters.length / 2) + this.masters.length % 2
-    let faceWidth = this.masters[0].faceBitmap.getChildAt(0).getBounds().width *
-      this.masters[0].faceBitmap.scaleX
-    this.faceContainer.contentWidth = faceWidth * ncols + faceMargine * ncols * 2
+    let faceSample = this.faceContainer.children[0]
+    let faceWidth = faceSample.getChildAt(0).getBounds().width * faceSample.scaleX // 顔についてる名前テキストの長さ * スケール
+    this.faceContainer.contentWidth = faceWidth * ncols + SELECTABLE_FACE_MARGINE * ncols * 2
     this.faceContainer.contentHeight = contentHeightDefault - EXPLANATION_HEIGHT
-
   }
 
   gotoStrategyMap(playerMaster) {
@@ -51,19 +51,18 @@ class SelectCharacterStage extends createjs.Stage {
     }
     let handleMouseover = (event, data) => this.explanationArea.displayMaster(data.master)
 
-    for (let i in this.masters) {
-      // bool = true ならマスターの顔絵にイベントリスナーを追加
+    for (let face of this.faceContainer.children) {
+      // if    bool = true ならマスターの顔絵にイベントリスナーを追加
+      // else  bool = false ならイベントリスナーを削除
       if (bool) {
-        this.masters[i].faceBitmap.on("click", handleClick, null, false, {
-          master: this.masters[i]
+        face.on("click", handleClick, null, false, {
+          master: face.himself
         })
-        this.masters[i].faceBitmap.on("mouseover", handleMouseover, null, false, {
-          master: this.masters[i]
+        face.on("mouseover", handleMouseover, null, false, {
+          master: face.himself
         })
-        // bool = false ならイベントリスナーを削除
-      } else this.masters[i].faceBitmap.removeAllEventListeners()
+      } else face.removeAllEventListeners()
     }
-
   }
 }
 

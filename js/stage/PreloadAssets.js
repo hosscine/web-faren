@@ -68,6 +68,7 @@ function preloadAssets() {
 
   // 画像読み込み完了時にユニットのインスタンスを作成
   let handleImageComplete = function(event) {
+    for (master of assets.masters) master.setup(assets)
     console.timeEnd("preload")
   }
 

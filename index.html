@@ -69,6 +69,7 @@
     const scenarioPath = "assets/Default/Data/Scenario1"
     assets.scenario = new TaggedScenarioReader(scenarioPath)
     assets.scenario.delegateLoadMasterComplete = function() {
+      assets.masters = this.masters
       stage.setup(this.masters)
       sidebarStage.displayScenario(this.data)
     }

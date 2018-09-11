@@ -130,19 +130,19 @@ class CharacterDataReader extends BinaryReader {
     for (let i in this.havingUnit) this.imageManifest.push({
       id: "unit" + i,
       src: IMAGE_DIR + "Char" + i + ".png",
-      index: i
+      index: parseInt(i) - 1
     })
 
     for (let i in this.havingFace) this.imageManifest.push({
       id: "face" + i,
       src: IMAGE_DIR + "Face" + i + ".png",
-      index: i
+      index: parseInt(i) - 1
     })
 
     for (let i in this.havingFlag) this.imageManifest.push({
       id: "flag" + i,
       src: IMAGE_DIR + "Flag" + i + ".png",
-      index: i
+      index: parseInt(i) - 1
     })
   }
 

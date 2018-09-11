@@ -1,8 +1,3 @@
-const FLAG_SIZE = 32
-const FLAG_MOTION_INTERVAL = 1000
-const FLAG_ROOT_X = 7
-const FLAG_ROOT_Y = 30
-
 class Area {
   constructor(data, owner) {
     this.owner = owner
@@ -18,14 +13,13 @@ class Area {
     text.textAlign = "center"
     text.x += 10
     text.y += FLAG_SIZE
-
     let outlineText = text.clone()
     outlineText.color = "black"
     outlineText.outline = 2
-
     container.addChild(outlineText, text)
-console.log(this.owner)
-    let flag = container.addChild(new MotionBitmap(this.owner.flag.canvas, FLAG_SIZE, FLAG_SIZE, FLAG_MOTION_INTERVAL))
+
+    console.log(this.owner)
+    let flag = container.addChild(this.owner.flagBitmap)
 
     return container
   }
