@@ -9,8 +9,19 @@ class StrategyMap extends ScrollContainer {
   setup() {
     this.addChild(this.mapBitmap)
 
-    this.contentWidth = this.mapBitmap.getBounds().width * this.scaleX
-    this.contentHeight = this.mapBitmap.getBounds().height * this.scaleY
+    let width = this.mapBitmap.getBounds().width
+    let height = this.mapBitmap.getBounds().height
+
+    this.contentWidth = width * this.scaleX
+    this.contentHeight = height * this.scaleY
+
+    // マップ全体をキャッシュ
+    this.cache(this.x, this.y, width, height)
+    createjs.Tween.get(this, {
+        loop: -1
+      })
+      .wait(FLAG_MOTION_INTERVAL)
+      .call(() => this.updateCache())
   }
 
   setupAreaFlag(areas) {
@@ -23,5 +34,6 @@ class StrategyMap extends ScrollContainer {
     for (let i in areas) {
       this.addChild(areas[i].ownerNameFlag)
     }
+    this.updateCache()
   }
 }
