@@ -1,7 +1,8 @@
 class MasterUnit extends Unit {
   constructor(id, name, difficulty, explanation) {
-    super(id, name)
+    super(id)
 
+    this.name = name
     this.difficulty = difficulty
     this.explanation = explanation
   }

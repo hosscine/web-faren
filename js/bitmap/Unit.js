@@ -1,7 +1,15 @@
 class Unit {
-  constructor(id, name) {
+  constructor(id, assets = null) {
     this.id = id
-    this.name = name
+    if (assets !== null) this.setup(assets) 
+  }
+
+  setup(assets) {
+
+  }
+
+  setupImages(unitImage, faceImage, flagImage) {
+
   }
 
 }

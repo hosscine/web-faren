@@ -10,10 +10,12 @@ class SidebarStage extends createjs.Stage {
     background.graphics.beginFill("darkblue").drawRect(0, 0, SIDEBAR_WIDTH, 2000)
 
     let name = this.scenarioInfo.addChild(new createjs.Text(scenarioData.Name, "18px arial", "white"))
+    name.y = 10
 
-    let explanation = this.scenarioInfo.addChild(new createjs.Text("", "15px arial", "white"))
-    explanation.lineWidth = 200
-    explanation.y += 30
+    let explanation = this.scenarioInfo.addChild(new createjs.Text("", "16px arial", "white"))
+    explanation.lineWidth = SIDEBAR_WIDTH
+    explanation.x = 3
+    explanation.y = 40
     setWrapText(explanation, scenarioData.Explanation.join("\n"))
   }
 
@@ -38,7 +40,7 @@ function setWrapText(textInstance, text) {
   while (textArray[++i]) {
     textInstance.text += textArray[i]
 
-    if (textInstance.getMeasuredWidth() > initWidth) {
+    if (textInstance.getMeasuredWidth() > initWidth || textArray[i] === "\n") {
       lines.push(prevText)
       textInstance.text = textArray[i]
     }

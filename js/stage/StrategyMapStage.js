@@ -1,58 +1,34 @@
 class StrategyMapStage extends createjs.Stage {
-  constructor(canvas, masters, player) {
+  constructor(canvas, assets, masters, player) {
     super(canvas)
 
     this.masters = masters
     this.playerMaster = player
 
-    let queue = new createjs.LoadQueue(true)
-    queue.on("fileload", (event) => this.handleFileload(event))
-    queue.on("complete", (event) => this.setup())
-    let manifest = [
-      {
-        id: "map",
-        src: STRATEGY_MAP_PATH
-      },
-      {
-        id: "charadata",
-        src: CHARACTERDATA_PATH,
-        type: "binary"
-      },
-      {
-        id: "areadata",
-        src: AREADATA_PATH
-      },
-      {
-        id: "flag_neutral",
-        src: PICTURE_DIR + "Flag0.png"
-      }
-    ]
-    for(let i in this.masters)
-      manifest.push({
-        id: "flag" + i,
-        src: IMAGE_DIR + "Flag" + (parseInt(i) + 1) + ".png",
-        unit: this.masters[i]
-      })
-    queue.loadManifest(manifest)
-    queue.load()
+    this.setup(assets)
   }
 
-  setup() {
-    this.addChild(this.strategyMap)
+  setup(assets) {
+    this.neutralFlag = assets.neutralFlag
+    this.charadata = assets.charadata
+    this.areaData = assets.areaData
+    // for (master of this.masters) master.setMasterFlag()
+
+    this.strategyMap = this.addChild(assets.strategyMap)
     this.headerBar = headerStage.addChild(new StrategyHeaderBar())
     this.sideBar = sidebarStage.addChild(new StrategySideBar(this.playerMaster))
-    sidebarStage.update()
 
-    this.setupAreas() // this.areas を作る
+    this.setupAreas(assets) // this.areas を作る
+    console.log(this.areas[1].owner)
     this.strategyMap.setupAreaFlag(this.areas)
   }
 
-  setupAreas() {
+  setupAreas(assets) {
     let neutralMaster = {}
     neutralMaster.flag = this.neutralFlag
     this.areas = []
     for (let i in this.areaData.data) {
-      let ownerID = scenario.areaOwner[i]
+      let ownerID = assets.scenario.areaOwner[i]
       if (ownerID > 0) this.areas.push(new Area(this.areaData.data[i], this.masters[ownerID - 1]))
       else this.areas.push(new Area(this.areaData.data[i], neutralMaster))
     }

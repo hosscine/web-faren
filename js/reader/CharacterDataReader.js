@@ -109,10 +109,11 @@ class CharacterDataReader extends BinaryReader {
     super(data)
 
     this.characters = []
-    this.unitImages = []
-    this.faceImages = []
-    this.flagImages = []
     this.imageManifest = []
+
+    this.havingUnit = {}
+    this.havingFace = {}
+    this.havingFlag = {}
 
     this.setup()
   }
@@ -126,22 +127,22 @@ class CharacterDataReader extends BinaryReader {
   }
 
   setupImageManifest() {
-    for (let id in this.unitImages) this.imageManifest.push({
-      id: "unit" + id,
-      src: IMAGE_DIR + "Char" + id + ".png",
-      image: this.unitImages[id],
+    for (let i in this.havingUnit) this.imageManifest.push({
+      id: "unit" + i,
+      src: IMAGE_DIR + "Char" + i + ".png",
+      index: i
     })
 
-    for (let id in this.faceImages) this.imageManifest.push({
-      id: "face" + id,
-      src: IMAGE_DIR + "Face" + id + ".png",
-      image: this.faceImages[id],
+    for (let i in this.havingFace) this.imageManifest.push({
+      id: "face" + i,
+      src: IMAGE_DIR + "Face" + i + ".png",
+      index: i
     })
 
-    for (let id in this.flagImages) this.imageManifest.push({
-      id: "flag" + id,
-      src: IMAGE_DIR + "Flag" + id + ".png",
-      image: this.flagImages[id],
+    for (let i in this.havingFlag) this.imageManifest.push({
+      id: "flag" + i,
+      src: IMAGE_DIR + "Flag" + i + ".png",
+      index: i
     })
   }
 
@@ -164,9 +165,9 @@ class CharacterDataReader extends BinaryReader {
     this.increseOffset10(i)
 
     // 読み込む必要のある画像をピックアップ
-    if (cdata.unitImageID !== 0) this.unitImages[cdata.unitImageID] = []
-    if (cdata.faceImageID !== 0) this.faceImages[cdata.faceImageID] = []
-    if (cdata.flagImageID !== 0) this.flagImages[cdata.flagImageID] = []
+    if (cdata.unitImageID !== 0) this.havingUnit[cdata.unitImageID] = 0
+    if (cdata.faceImageID !== 0) this.havingFace[cdata.faceImageID] = 0
+    if (cdata.flagImageID !== 0) this.havingFlag[cdata.flagImageID] = 0
   }
 
   getDataByKey(key, start) {

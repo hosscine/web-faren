@@ -24,7 +24,7 @@ class Area {
     outlineText.outline = 2
 
     container.addChild(outlineText, text)
-
+console.log(this.owner)
     let flag = container.addChild(new MotionBitmap(this.owner.flag.canvas, FLAG_SIZE, FLAG_SIZE, FLAG_MOTION_INTERVAL))
 
     return container

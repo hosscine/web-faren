@@ -12,7 +12,6 @@ const AREADATA_PATH = "assets/Default/Data/AreaData"
 const CHARACTERDATA_PATH = IMAGE_DIR + "CharacterData"
 
 function preloadAssets() {
-  assets = {}
   console.time("preload")
 
   assets.scriptManifest = [
@@ -34,12 +33,13 @@ function preloadAssets() {
     } else if (event.item.id === "areadata") assets.areaData = new AreaDataReader(event.result)
   }
 
+  // スクリプト読み込み完了時に画像読み込みを開始
   let handleScriptComplete = function(event) {
     let imageQueue = new createjs.LoadQueue()
     imageQueue.loadManifest(assets.imageManifest)
     imageQueue.on("progress", handleImageProgress)
     imageQueue.on("fileload", handleImageLoad)
-    imageQueue.on("complete", () => console.timeEnd("preload"))
+    imageQueue.on("complete", handleImageComplete)
   }
 
   assets.imageManifest = [
@@ -61,9 +61,14 @@ function preloadAssets() {
     let i = event.item
     if (i.id === "map") assets.strategyMap = new StrategyMap(new createjs.Bitmap(event.result), HEADER_HEIGTH)
     else if (i.id === "neutralFlag") assets.neutralFlag = new AlphalizeBitmap(event.result)
-    else if (UNIT_PATTERN.test(i.id)) i.image = new AlphalizeBitmap(event.result)
-    else if (FACE_PATTERN.test(i.id)) i.image = new AlphalizeBitmap(event.result)
-    else if (FLAG_PATTERN.test(i.id)) i.image = new AlphalizeBitmap(event.result)
+    else if (UNIT_PATTERN.test(i.id)) assets.charadata.characters[i.index].unitImage = new AlphalizeBitmap(event.result)
+    else if (FACE_PATTERN.test(i.id)) assets.charadata.characters[i.index].faceImage = new AlphalizeBitmap(event.result)
+    else if (FLAG_PATTERN.test(i.id)) assets.charadata.characters[i.index].flagImage = new AlphalizeBitmap(event.result)
+  }
+
+  // 画像読み込み完了時にユニットのインスタンスを作成
+  let handleImageComplete = function(event) {
+    console.timeEnd("preload")
   }
 
   let scriptQueue = new createjs.LoadQueue()

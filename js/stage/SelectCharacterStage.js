@@ -1,8 +1,9 @@
 const faceMargine = 40
 
 class SelectCharacterStage extends createjs.Stage {
-  constructor(canvas) {
+  constructor(canvas, assets) {
     super(canvas)
+    this.assets = assets
   }
 
   setup(masters) {
@@ -36,15 +37,17 @@ class SelectCharacterStage extends createjs.Stage {
 
   }
 
+  gotoStrategyMap(playerMaster) {
+    this.mastersEnable = false
+    stage = new StrategyMapStage(this.canvas, this.assets, this.masters, playerMaster)
+    createjs.Ticker.addEventListener("tick", stage)
+    createjs.Ticker.setFPS(60)
+  }
+
   set mastersEnable(bool) {
     let handleClick = (event, data) => {
       let go = window.confirm(data.master.name + "でゲームを開始します")
-      if (go) {
-        this.mastersEnable = false
-        stage = new StrategyMapStage(this.canvas, this.masters, data.master)
-        createjs.Ticker.addEventListener("tick", stage)
-        createjs.Ticker.setFPS(60)
-      }
+      if (go) this.gotoStrategyMap(data.master)
     }
     let handleMouseover = (event, data) => this.explanationArea.displayMaster(data.master)
 

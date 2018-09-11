@@ -60,14 +60,15 @@
 
 <script>
   function firstLoadAssets() {
-    const scenarioPath = "assets/Default/Data/Scenario1"
+    assets = {}
     headerStage = new createjs.Stage("headerCanvas")
-    stage = new SelectCharacterStage("mainCanvas")
+    stage = new SelectCharacterStage("mainCanvas", assets)
     sidebarStage = new SidebarStage("sidebarCanvas")
     stage.enableMouseOver()
 
-    scenario = new TaggedScenarioReader(scenarioPath)
-    scenario.delegateLoadMasterComplete = function() {
+    const scenarioPath = "assets/Default/Data/Scenario1"
+    assets.scenario = new TaggedScenarioReader(scenarioPath)
+    assets.scenario.delegateLoadMasterComplete = function() {
       stage.setup(this.masters)
       sidebarStage.displayScenario(this.data)
     }
@@ -75,7 +76,6 @@
     createjs.Ticker.addEventListener("tick", headerStage)
     createjs.Ticker.addEventListener("tick", stage)
     createjs.Ticker.addEventListener("tick", sidebarStage)
-    stage.update()
   }
 
   // Scroller.js使用のためonloadは使わない
