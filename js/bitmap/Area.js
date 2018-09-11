@@ -18,7 +18,6 @@ class Area {
     outlineText.outline = 2
     container.addChild(outlineText, text)
 
-    console.log(this.owner)
     let flag = container.addChild(this.owner.flagBitmap)
 
     return container
