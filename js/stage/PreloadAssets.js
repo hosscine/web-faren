@@ -36,6 +36,7 @@ function preloadAssets() {
   // スクリプト読み込み完了時に画像読み込みを開始
   let handleScriptComplete = function(event) {
     let imageQueue = new createjs.LoadQueue()
+    imageQueue.setMaxConnections(16)
     imageQueue.loadManifest(assets.imageManifest)
     imageQueue.on("progress", handleImageProgress)
     imageQueue.on("fileload", handleImageLoad)

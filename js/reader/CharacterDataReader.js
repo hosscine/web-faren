@@ -104,6 +104,7 @@ const CHARACTER_DATA = {
   isUndead: 1,
   undefined7: 128
 }
+const CHARACTER_DATA_LENGTH = 324
 
 class CharacterDataReader extends BinaryReader {
   constructor(data) {
@@ -123,14 +124,14 @@ class CharacterDataReader extends BinaryReader {
   setup() {
     this.increseOffset16(CHARACTER_DATA_HEADER_LENGTH)
 
-    while (this.offset + 324 <= this.data.byteLength) this.parseCharacter()
+    while (this.offset + CHARACTER_DATA_LENGTH <= this.data.byteLength) this.parseCharacter()
 
+    this.parseEmployable()
     this.setupImageManifest()
   }
 
   no2id(no) {
-    for (let id in this.characters)
-      if (this.characters[id].unitImageID === no) return id
+    return Object.keys(this.characters)[no - 1]
   }
 
   setupImageManifest() {
@@ -176,6 +177,15 @@ class CharacterDataReader extends BinaryReader {
     if (cdata.unitImageID !== 0) this.havingUnit[cdata.unitImageID] = cdata.id
     if (cdata.faceImageID !== 0) this.havingFace[cdata.faceImageID] = cdata.id
     if (cdata.flagImageID !== 0) this.havingFlag[cdata.flagImageID] = cdata.id
+  }
+
+  parseEmployable() {
+    for (let id in this.characters) {
+      let emp = this.characters[id].employable
+      let newEmployable = []
+      for (let no in emp) if(emp[no] !== 0) newEmployable.push(this.no2id(emp[no]))
+      this.characters[id].employable = newEmployable
+    }
   }
 
   getStringByKey(key, start) {
