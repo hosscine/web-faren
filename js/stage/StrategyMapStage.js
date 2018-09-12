@@ -23,8 +23,8 @@ class StrategyMapStage extends createjs.Stage {
 
   placeUniqueUnits(assets) {
     for (let locate of assets.scenario.initialLocation){
-      let unitID = assets.charadata.nameIdHash[locate.unitName]
-      let unit = assets.charadata.characters[unitID].isMaster ? assets.masters[unitID] : new Unit(unitID, assets)
+      let id = locate.unitID
+      let unit = assets.charadata.characters[id].isMaster ? assets.mastersDic[id] : new Unit(id, assets)
       this.areas[locate.areaID - 1].placeUnits(unit)
       unit.rank = locate.unitRank
     }

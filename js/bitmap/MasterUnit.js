@@ -4,8 +4,9 @@ const FLAG_ROOT_X = 7
 const FLAG_ROOT_Y = 30
 
 class MasterUnit extends Unit {
-  constructor(id, name, difficulty, explanation) {
-    super(id)
+  constructor(no, name, difficulty, explanation) {
+    super(no)
+    this.no = no
 
     this.longName = name
     this.name = name
@@ -14,9 +15,10 @@ class MasterUnit extends Unit {
   }
 
   setup(assets) {
+    this.id = assets.charadata.no2id(this.no)
     super.setup(assets)
     this.isMaster = true
-    assets.charadata.characters[this.id - 1].isMaster = true
+    assets.charadata.characters[this.id].isMaster = true
   }
 
   set FaceImage(alphaBitmap) {

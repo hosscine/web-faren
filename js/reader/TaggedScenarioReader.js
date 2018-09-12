@@ -51,7 +51,7 @@ class TaggedScenarioReader extends TaggedTextReader {
     for (let lc of locate){
       let line = lc.split(MULTI_SPACE_PATTERN)
       this.initialLocation.push({
-        unitName: line[0],
+        unitID: line[0],
         areaID: parseInt(line[1]),
         unitRank: parseInt(line[2])
       })

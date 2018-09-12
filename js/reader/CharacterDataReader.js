@@ -128,6 +128,11 @@ class CharacterDataReader extends BinaryReader {
     this.setupImageManifest()
   }
 
+  no2id(no) {
+    for (let id in this.characters)
+      if (this.characters[id].unitImageID === no) return id
+  }
+
   setupImageManifest() {
     for (let i in this.havingUnit) this.imageManifest.push({
       id: "unit" + i,

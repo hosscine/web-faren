@@ -5,7 +5,7 @@ class Unit {
   }
 
   setup(assets) {
-    let data = assets.charadata.characters[this.id - 1]
+    let data = assets.charadata.characters[this.id]
     for (let i in data) this[i] = data[i]
   }
 
