@@ -1,6 +1,7 @@
 class Area {
   constructor(data, owner) {
     this.owner = owner
+    this.stayingUnits = []
     for (let i in data) this[i] = data[i]
   }
 
@@ -29,5 +30,9 @@ class Area {
       .moveTo(this.x + FLAG_ROOT_X, this.y + FLAG_ROOT_Y)
       .lineTo(targetArea.x + FLAG_ROOT_X, targetArea.y + FLAG_ROOT_Y)
     return line
+  }
+
+  placeUnits(units) {
+    return this.stayingUnits = this.stayingUnits.concat(units)
   }
 }

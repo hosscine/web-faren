@@ -110,6 +110,7 @@ class CharacterDataReader extends BinaryReader {
 
     this.characters = []
     this.imageManifest = []
+    this.nameIdHash = {}
 
     this.havingUnit = {}
     this.havingFace = {}
@@ -162,6 +163,7 @@ class CharacterDataReader extends BinaryReader {
     }
 
     this.characters.push(cdata)
+    this.nameIdHash[cdata.name] = this.characters.length
     this.increseOffset10(i)
 
     // 読み込む必要のある画像をピックアップ

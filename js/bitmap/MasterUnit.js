@@ -13,6 +13,12 @@ class MasterUnit extends Unit {
     this.explanation = explanation
   }
 
+  setup(assets) {
+    super.setup(assets)
+    this.isMaster = true
+    assets.charadata.characters[this.id - 1].isMaster = true
+  }
+
   set FaceImage(alphaBitmap) {
     this.faceImage = alphaBitmap
   }
@@ -35,8 +41,7 @@ class MasterUnit extends Unit {
     return new MotionBitmap(this.flagImage.canvas, FLAG_SIZE, FLAG_SIZE, FLAG_MOTION_INTERVAL)
   }
 
-  setMasterFlag(flagBitmap) {
-    this.flag = flagBitmap
-  }
+  initialEmployment() {
 
+  }
 }
