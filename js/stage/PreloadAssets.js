@@ -61,9 +61,9 @@ function preloadAssets() {
     let i = event.item
     if (i.id === "map") assets.strategyMap = new createjs.Bitmap(event.result)
     else if (i.id === "neutralFlag") assets.neutralFlag = new AlphalizeBitmap(event.result)
-    else if (UNIT_PATTERN.test(i.id)) assets.charadata.characters[i.index].unitImage = new AlphalizeBitmap(event.result)
-    else if (FACE_PATTERN.test(i.id)) assets.charadata.characters[i.index].faceImage = new AlphalizeBitmap(event.result)
-    else if (FLAG_PATTERN.test(i.id)) assets.charadata.characters[i.index].flagImage = new AlphalizeBitmap(event.result)
+    else if (UNIT_PATTERN.test(i.id)) assets.charadata.characters[i.unitID].unitImage = new AlphalizeBitmap(event.result)
+    else if (FACE_PATTERN.test(i.id)) assets.charadata.characters[i.unitID].faceImage = new AlphalizeBitmap(event.result)
+    else if (FLAG_PATTERN.test(i.id)) assets.charadata.characters[i.unitID].flagImage = new AlphalizeBitmap(event.result)
   }
 
   // 画像読み込み完了時にユニットのインスタンスを作成

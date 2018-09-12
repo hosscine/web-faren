@@ -28,8 +28,16 @@ class BinaryReader {
     return this.getBitArray10(i, j).reduce((a,x) => a += x, 0)
   }
 
+  getBitHexadecimal16(i, j) {
+    return this.getBitArray16(i, j).map(x => x.toString(16))
+  }
+
+  getBitHexadecimal10(i, j) {
+    return this.getBitArray10(i, j).map(x => x.toString(16))
+  }
+
   getBitString16(i, j) {
-    return UnescapeSJIS(this.getUint8Array(i, j).reduce((a,x) => a += (x !== 0 ? "%" + x.toString(16) : ""), ""))
+    return UnescapeSJIS(this.getBitArray16(i, j).reduce((a,x) => a += (x !== 0 ? "%" + x.toString(16) : ""), ""))
   }
 
   getBitString10(i, j) {
