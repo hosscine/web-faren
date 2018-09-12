@@ -16,7 +16,8 @@ class MasterUnit extends Unit {
 
   setup(assets) {
     this.id = assets.charadata.no2id(this.no)
-    super.setup(assets)
+    super.setup(assets) 
+    this.nameText.text = this.name
     this.isMaster = true
     assets.charadata.characters[this.id].isMaster = true
   }
@@ -28,11 +29,11 @@ class MasterUnit extends Unit {
   get selectableFaceBitmap() {
     let container = new createjs.Container()
     let face = container.addChild(new createjs.Bitmap(this.faceImage.canvas))
-    let nameText = container.addChild(new createjs.Text(this.name, "8px arial", "white"))
+    this.nameText = container.addChild(new createjs.Text(this.name, "8px arial", "white"))
     container.himself = this
-    nameText.textAlign = "center"
-    nameText.x = face.getBounds().width / 2
-    nameText.y = face.getBounds().height
+    this.nameText.textAlign = "center"
+    this.nameText.x = face.getBounds().width / 2
+    this.nameText.y = face.getBounds().height
     return container
   }
 

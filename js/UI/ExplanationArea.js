@@ -39,7 +39,7 @@ class ExplanationArea extends createjs.Container {
     let exptext = ""
     for (let i in master.explanation) exptext += master.explanation[i] + "\n"
 
-    this.texts.name.text = master.name
+    this.texts.name.text = master.longName
     this.texts.explanation.text = exptext
     this.texts.difficulty.text = master.difficulty
   }

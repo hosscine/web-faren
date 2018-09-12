@@ -30,7 +30,7 @@ class SelectCharacterStage extends createjs.Stage {
     }
 
     // this.faceContainer の contentWidth と contentHeight を計算
-    let ncols = parseInt(this.masters.length / 2) + this.masters.length % 2
+    let ncols = this.masters.length / 2 + this.masters.length % 2
     let faceSample = this.faceContainer.children[0]
     let faceWidth = faceSample.getChildAt(0).getBounds().width * faceSample.scaleX // 顔についてる名前テキストの長さ * スケール
     this.faceContainer.contentWidth = faceWidth * ncols + SELECTABLE_FACE_MARGINE * ncols * 2
