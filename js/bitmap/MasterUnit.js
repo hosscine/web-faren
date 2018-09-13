@@ -16,7 +16,7 @@ class MasterUnit extends Unit {
 
   setup(assets) {
     this.id = assets.charadata.no2id(this.no)
-    super.setup(assets) 
+    super.setup(assets)
     this.nameText.text = this.name
     this.isMaster = true
     assets.charadata.characters[this.id].isMaster = true
@@ -44,7 +44,24 @@ class MasterUnit extends Unit {
     return new MotionBitmap(this.flagImage.canvas, FLAG_SIZE, FLAG_SIZE, FLAG_MOTION_INTERVAL)
   }
 
-  initialEmployment() {
+  initialEmploy(fund, nStaying, assets) {
+    let candidates = []
+    for (let id of this.employable) candidates.push(assets.charadata.characters[id])
+    candidates.sort((a, b) => { return -(a.cost - b.cost) })
 
+    let units = []
+    let priority = 0
+    while (priority <= candidates.length - 1)
+      for (let i = priority; i <= priority + 2 && i <= candidates.length - 1; i++)
+        if (fund - candidates[i].cost > 0 && nStaying + units.length < MAX_AREA_UNITS) {
+          units.push(new Unit(candidates[i].id, assets))
+          fund -= candidates[i].cost
+        }
+        else {
+          priority += 1
+          break
+        }
+    console.log(fund)
+    return units
   }
 }

@@ -38,6 +38,7 @@ class SelectCharacterStage extends createjs.Stage {
   }
 
   gotoStrategyMap(playerMaster) {
+    playerMaster.isPlayer = true
     this.mastersEnable = false
     stage = new StrategyMapStage(this.canvas, this.assets, this.masters, playerMaster)
     createjs.Ticker.addEventListener("tick", stage)
