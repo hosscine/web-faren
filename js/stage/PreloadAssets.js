@@ -30,13 +30,14 @@ function preloadAssets() {
     if (event.item.id === "charadata") {
       assets.charadata = new CharacterDataReader(event.result)
       assets.imageManifest = assets.imageManifest.concat(assets.charadata.imageManifest)
+      setupMasters("charadata")
     } else if (event.item.id === "areadata") assets.areaData = new AreaDataReader(event.result)
   }
 
   // スクリプト読み込み完了時に画像読み込みを開始
   let handleScriptComplete = function(event) {
     let imageQueue = new createjs.LoadQueue()
-    imageQueue.setMaxConnections(16)
+    imageQueue.setMaxConnections(1000)
     imageQueue.loadManifest(assets.imageManifest)
     imageQueue.on("progress", handleImageProgress)
     imageQueue.on("fileload", handleImageLoad)
@@ -69,11 +70,7 @@ function preloadAssets() {
 
   // 画像読み込み完了時にユニットのインスタンスを作成
   let handleImageComplete = function(event) {
-    assets.mastersDic = {}
-    for (master of assets.masters) {
-      master.setup(assets)
-      assets.mastersDic[master.id] = master
-    }
+    setupMasters("image")
     console.timeEnd("preload")
   }
 
@@ -83,3 +80,22 @@ function preloadAssets() {
   scriptQueue.on("complete", handleScriptComplete)
 
 }
+
+  // シナリオ・マスター読み込み完了後
+  // CharacterData 読み込み完了後
+  // assetsの画像読み込み後
+  // の計3回呼び出される
+  function setupMasters(readyKey) {
+    assets.readyFlag[readyKey] = true 
+    
+    if (assets.readyFlag.scenario & assets.readyFlag.charadata) {
+      stage.mastersDic = {}
+      for (master of stage.masters) {
+        master.setup(assets)
+        stage.mastersDic[master.id] = master
+      }
+      stage.displayMasters()
+    }
+    
+    // if (assets.readyFlag.scenario & assets.readyFlag.charadata & assets.readyFlag.image)
+  }

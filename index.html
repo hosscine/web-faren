@@ -49,18 +49,20 @@
 
 <body>
   <div id="container">
-  <canvas id="headerCanvas">hoge</canvas>
-  <div id="main">
-    <canvas id="mainCanvas" width="1280" height="720">hoge</canvas>
-    <canvas id="sidebarCanvas" width="200">hoge</canvas>
+    <canvas id="headerCanvas">hoge</canvas>
+    <div id="main">
+      <canvas id="mainCanvas" width="1280" height="720">hoge</canvas>
+      <canvas id="sidebarCanvas" width="200">hoge</canvas>
+    </div>
   </div>
-</div>
 
 </body>
 
 <script>
   function firstLoadAssets() {
     assets = {}
+    assets.readyFlag = { scenario: false, charadata: false, image: false }
+
     headerStage = new createjs.Stage("headerCanvas")
     stage = new SelectCharacterStage("mainCanvas", assets)
     sidebarStage = new SidebarStage("sidebarCanvas")
@@ -68,9 +70,9 @@
 
     const scenarioPath = "assets/Default/Data/Scenario1"
     assets.scenario = new TaggedScenarioReader(scenarioPath)
-    assets.scenario.delegateLoadMasterComplete = function() {
-      assets.masters = this.masters
+    assets.scenario.delegateLoadMasterComplete = function () {
       stage.setup(this.masters)
+      setupMasters("scenario")
       sidebarStage.displayScenario(this.data)
     }
 
