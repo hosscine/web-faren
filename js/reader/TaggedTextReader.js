@@ -40,7 +40,7 @@ class TaggedTextReader {
     }
   }
 
-  delegateLoadComplete(){
+  delegateLoadComplete() {
     console.log("delegateLoadComplete is not implemented yet in:", this)
   }
 

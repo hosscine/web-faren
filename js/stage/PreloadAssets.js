@@ -26,7 +26,7 @@ function preloadAssets() {
     }
   ]
 
-  let handleScriptLoad = function(event) {
+  let handleScriptLoad = function (event) {
     if (event.item.id === "charadata") {
       assets.charadata = new CharacterDataReader(event.result)
       assets.imageManifest = assets.imageManifest.concat(assets.charadata.imageManifest)
@@ -35,7 +35,7 @@ function preloadAssets() {
   }
 
   // スクリプト読み込み完了時に画像読み込みを開始
-  let handleScriptComplete = function(event) {
+  let handleScriptComplete = function (event) {
     let imageQueue = new createjs.LoadQueue()
     imageQueue.setMaxConnections(1000)
     imageQueue.loadManifest(assets.imageManifest)
@@ -55,11 +55,11 @@ function preloadAssets() {
     }
   ]
 
-  let handleImageProgress = function(event) {
+  let handleImageProgress = function (event) {
     // console.log(event.progress)
   }
 
-  let handleImageLoad = function(event) {
+  let handleImageLoad = function (event) {
     let i = event.item
     if (i.id === "map") assets.strategyMap = new createjs.Bitmap(event.result)
     else if (i.id === "neutralFlag") assets.neutralFlag = new AlphalizeBitmap(event.result)
@@ -69,7 +69,7 @@ function preloadAssets() {
   }
 
   // 画像読み込み完了時にユニットのインスタンスを作成
-  let handleImageComplete = function(event) {
+  let handleImageComplete = function (event) {
     setupMasters("image")
     console.timeEnd("preload")
   }
@@ -81,21 +81,21 @@ function preloadAssets() {
 
 }
 
-  // シナリオ・マスター読み込み完了後
-  // CharacterData 読み込み完了後
-  // assetsの画像読み込み後
-  // の計3回呼び出される
-  function setupMasters(readyKey) {
-    assets.readyFlag[readyKey] = true 
-    
-    if (assets.readyFlag.scenario & assets.readyFlag.charadata) {
-      stage.mastersDic = {}
-      for (master of stage.masters) {
-        master.setup(assets)
-        stage.mastersDic[master.id] = master
-      }
-      stage.displayMasters()
+// シナリオ・マスター読み込み完了後
+// CharacterData 読み込み完了後
+// assetsの画像読み込み後
+// の計3回呼び出される
+function setupMasters(readyKey) {
+  assets.readyFlag[readyKey] = true
+
+  if (assets.readyFlag.scenario & assets.readyFlag.charadata) {
+    stage.mastersDic = {}
+    for (master of stage.masters) {
+      master.setup(assets)
+      stage.mastersDic[master.id] = master
     }
-    
-    // if (assets.readyFlag.scenario & assets.readyFlag.charadata & assets.readyFlag.image)
+    // stage.displayMasters()
   }
+
+  // if (assets.readyFlag.scenario & assets.readyFlag.charadata & assets.readyFlag.image)
+}

@@ -183,7 +183,7 @@ class CharacterDataReader extends BinaryReader {
     for (let id in this.characters) {
       let emp = this.characters[id].employable
       let newEmployable = []
-      for (let no in emp) if(emp[no] !== 0) newEmployable.push(this.no2id(emp[no]))
+      for (let no in emp) if (emp[no] !== 0) newEmployable.push(this.no2id(emp[no]))
       this.characters[id].employable = newEmployable
     }
   }

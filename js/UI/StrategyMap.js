@@ -17,9 +17,7 @@ class StrategyMap extends ScrollContainer {
 
     // マップ全体をキャッシュ
     this.cache(this.x, this.y, width, height)
-    createjs.Tween.get(this, {
-        loop: -1
-      })
+    createjs.Tween.get(this, { loop: -1 })
       .wait(FLAG_MOTION_INTERVAL)
       .call(() => this.updateCache())
   }

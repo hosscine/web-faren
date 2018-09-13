@@ -1,8 +1,9 @@
 class StrategyMapStage extends createjs.Stage {
-  constructor(canvas, assets, masters, player) {
+  constructor(canvas, assets, masters, mastersDic, player) {
     super(canvas)
 
     this.masters = masters
+    this.mastersDic = mastersDic
     this.playerMaster = player
 
     this.setup(assets)
@@ -19,13 +20,13 @@ class StrategyMapStage extends createjs.Stage {
     this.setupAreas(assets) // this.areas を作る
     this.placeUniqueUnits(assets)
     this.strategyMap.setupAreaFlag(this.areas)
-    for(let area of this.areas) area.initialEmployment()
+    for (let area of this.areas) area.initialEmployment()
   }
 
   placeUniqueUnits(assets) {
-    for (let locate of assets.scenario.initialLocation){
+    for (let locate of assets.scenario.initialLocation) {
       let id = locate.unitID
-      let unit = assets.charadata.characters[id].isMaster ? assets.mastersDic[id] : new Unit(id, assets)
+      let unit = assets.charadata.characters[id].isMaster ? this.mastersDic[id] : new Unit(id, assets)
       this.areas[locate.areaID - 1].placeUnits(unit)
       unit.rank = locate.unitRank
     }

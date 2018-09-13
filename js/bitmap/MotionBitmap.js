@@ -16,9 +16,7 @@ class MotionBitmap extends createjs.Container {
   }
 
   startMotion() {
-    createjs.Tween.get(this, {
-        loop: -1
-      })
+    createjs.Tween.get(this, { loop: -1 })
       .wait(this.motionInterval)
       .call(this.incrementMortion)
   }
