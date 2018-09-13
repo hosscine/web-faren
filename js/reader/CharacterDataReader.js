@@ -54,7 +54,7 @@ const CHARACTER_DATA = {
     skillID: 2,
     skillTimes: 2
   },
-  heroChar: 1,
+  heroChar: 2,
   higherClass: 2,
   experience: 2,
   wanderingTurn: {
@@ -99,16 +99,24 @@ const CHARACTER_DATA = {
   undefined4: 2,
   flagImageID: 2,
   undefined5: 2,
-  undefined6: 31,
+  id: 21,
+  undefined6: 10,
   isUndead: 1,
-  undefined7: 129
+  undefined7: 128
 }
+const CHARACTER_DATA_LENGTH = 324
 
 class CharacterDataReader extends BinaryReader {
   constructor(data) {
     super(data)
 
-    this.characters = []
+    this.characters = {}
+    this.imageManifest = []
+    this.nameIdHash = {}
+
+    this.havingUnit = {}
+    this.havingFace = {}
+    this.havingFlag = {}
 
     this.setup()
   }
@@ -116,7 +124,34 @@ class CharacterDataReader extends BinaryReader {
   setup() {
     this.increseOffset16(CHARACTER_DATA_HEADER_LENGTH)
 
-    while(this.offset + 324 <= this.data.byteLength) this.parseCharacter()
+    while (this.offset + CHARACTER_DATA_LENGTH <= this.data.byteLength) this.parseCharacter()
+
+    this.parseEmployable()
+    this.setupImageManifest()
+  }
+
+  no2id(no) {
+    return Object.keys(this.characters)[no - 1]
+  }
+
+  setupImageManifest() {
+    for (let i in this.havingUnit) this.imageManifest.push({
+      id: "unit" + i,
+      src: IMAGE_DIR + "Char" + i + ".png",
+      unitID: this.havingUnit[i]
+    })
+
+    for (let i in this.havingFace) this.imageManifest.push({
+      id: "face" + i,
+      src: IMAGE_DIR + "Face" + i + ".png",
+      unitID: this.havingFace[i]
+    })
+
+    for (let i in this.havingFlag) this.imageManifest.push({
+      id: "flag" + i,
+      src: IMAGE_DIR + "Flag" + i + ".png",
+      unitID: this.havingFlag[i]
+    })
   }
 
   parseCharacter() {
@@ -124,15 +159,37 @@ class CharacterDataReader extends BinaryReader {
     let cdata = {}
 
     for (let key in CHARACTER_DATA) {
-      if (key === "name") cdata.name = this.getBitString10(0, (i += CHARACTER_DATA.name) - 1)
+      // if       idか名前ならstringにして格納
+      // else if  howToAttackのようなグループ化されたデータはgetDataByHashを使う
+      // else     単体のデータはgetDataByKeyを使う
+      if (key === "name" || key === "id")
+        [cdata[key], i] = this.getStringByKey(key, i)
       else if (typeof CHARACTER_DATA[key] === "object")
         [cdata[key], i] = this.getDataByHash(CHARACTER_DATA[key], i)
       else
         [cdata[key], i] = this.getDataByKey(key, i)
     }
 
-    this.characters.push(cdata)
+    this.characters[cdata.id] = cdata
     this.increseOffset10(i)
+
+    // 読み込む必要のある画像をピックアップ
+    if (cdata.unitImageID !== 0) this.havingUnit[cdata.unitImageID] = cdata.id
+    if (cdata.faceImageID !== 0) this.havingFace[cdata.faceImageID] = cdata.id
+    if (cdata.flagImageID !== 0) this.havingFlag[cdata.flagImageID] = cdata.id
+  }
+
+  parseEmployable() {
+    for (let id in this.characters) {
+      let emp = this.characters[id].employable
+      let newEmployable = []
+      for (let no in emp) if (emp[no] !== 0) newEmployable.push(this.no2id(emp[no]))
+      this.characters[id].employable = newEmployable
+    }
+  }
+
+  getStringByKey(key, start) {
+    return [this.getBitString10(start, (start += CHARACTER_DATA[key]) - 1), start]
   }
 
   getDataByKey(key, start) {

@@ -8,12 +8,12 @@ class AreaDataReader {
     this.parseAreaData()
   }
 
-  parseAreaData(){
-    for(let i in this.text){
+  parseAreaData() {
+    for (let i in this.text) {
       let line = this.text[i].split(MULTI_SPACE_PATTERN)
-      if(line[0] === "End") break
-      let adjacency = line.slice(10,18).map(e => parseInt(e))
-      
+      if (line[0] === "End") break
+      let adjacency = line.slice(10, 18).map(e => parseInt(e))
+
       this.data[i] = {}
       this.data[i].name = line[0]
       this.data[i].type = parseInt(line[1])

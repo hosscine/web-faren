@@ -27,6 +27,8 @@
   <!-- stage -->
   <script src="js/stage/SelectCharacterStage.js"></script>
   <script src="js/stage/StrategyMapStage.js"></script>
+  <script src="js/stage/SidebarStage.js"></script>
+  <script src="js/stage/preloadAssets.js"></script>
 
   <!-- UI -->
   <script src="js/UI/ScrollContainer.js"></script>
@@ -47,23 +49,41 @@
 
 <body>
   <div id="container">
-    <canvas id="GameCanvas" width="1280" height="720">alternate content</canvas>
+    <canvas id="headerCanvas">hoge</canvas>
+    <div id="main">
+      <canvas id="mainCanvas" width="1280" height="720">hoge</canvas>
+      <canvas id="sidebarCanvas" width="200">hoge</canvas>
+    </div>
   </div>
+
 </body>
 
 <script>
-  function charaSelect() {
-    const scenarioPath = "assets/Default/Data/Scenario1"
-    stage = new SelectCharacterStage("GameCanvas")
-    stage.enableMouseOver()
-    scenario = new TaggedScenarioReader(scenarioPath, stage)
+  function firstLoadAssets() {
+    assets = {}
+    assets.readyFlag = { scenario: false, charadata: false, image: false }
 
+    headerStage = new createjs.Stage("headerCanvas")
+    stage = new SelectCharacterStage("mainCanvas", assets)
+    sidebarStage = new SidebarStage("sidebarCanvas")
+    stage.enableMouseOver()
+
+    const scenarioPath = "assets/Default/Data/Scenario1"
+    assets.scenario = new TaggedScenarioReader(scenarioPath)
+    assets.scenario.delegateLoadMasterComplete = function () {
+      stage.setup(this.masters)
+      setupMasters("scenario")
+      sidebarStage.displayScenario(this.data)
+    }
+
+    createjs.Ticker.addEventListener("tick", headerStage)
     createjs.Ticker.addEventListener("tick", stage)
-    stage.update()
+    createjs.Ticker.addEventListener("tick", sidebarStage)
   }
 
-  // Scrollerと併用のため
-  charaSelect()
+  // Scroller.js使用のためonloadは使わない
+  firstLoadAssets()
+  preloadAssets()
 </script>
 
 <!-- scroller -->

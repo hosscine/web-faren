@@ -1,3 +1,5 @@
+const EXPLANATION_HEIGHT = 220
+
 class ExplanationArea extends createjs.Container {
   constructor() {
     super()
@@ -7,7 +9,7 @@ class ExplanationArea extends createjs.Container {
 
   setup() {
     let background = this.addChild(new createjs.Shape())
-    background.graphics.beginFill("lightgray").drawRect(0, 0, 1280, 220)
+    background.graphics.beginFill("lightgray").drawRect(0, 0, 1280, EXPLANATION_HEIGHT)
     this.y = 500
 
     let nameText = this.addChild(new createjs.Text("", "25px arial oblique", "darkred"))
@@ -37,7 +39,7 @@ class ExplanationArea extends createjs.Container {
     let exptext = ""
     for (let i in master.explanation) exptext += master.explanation[i] + "\n"
 
-    this.texts.name.text = master.name
+    this.texts.name.text = master.longName
     this.texts.explanation.text = exptext
     this.texts.difficulty.text = master.difficulty
   }

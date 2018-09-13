@@ -11,11 +11,9 @@ class StrategySideBar extends createjs.Container {
   }
 
   setup() {
-    this.x = contentWidthDefault - SIDEBAR_WIDTH
-    this.y = HEADER_HEIGTH
     let background = this.addChild(new createjs.Shape())
     background.graphics.beginFill("darkblue")
-      .drawRect(0, 0, SIDEBAR_WIDTH, contentHeightDefault - HEADER_HEIGTH)
+      .drawRect(0, 0, SIDEBAR_WIDTH, clientHeight)
 
     this.setupMaster()
     this.setupAreaInfo()
@@ -27,8 +25,6 @@ class StrategySideBar extends createjs.Container {
 
     let face = this.masterContainer.addChild(this.player.faceBitmap)
     face.scaleX = face.scaleY = face.x = face.y = 1
-    face.children[1].scaleX = face.children[1].scaleY = 2
-    face.children[1].x += 60
 
     let contentY = 0
     this.income = this.masterContainer.addChild(new createjs.Text("収入 0Ley", "15px arial", "white"))

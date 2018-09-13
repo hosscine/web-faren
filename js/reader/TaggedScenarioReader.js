@@ -1,12 +1,9 @@
 const MASTER_PATTERN = /Master(\d+)/
-const AREA_PATTERN = /Area/
-const IMAGE_DIR = "assets/Default/DefChar/"
 
 class TaggedScenarioReader extends TaggedTextReader {
-  constructor(path, selectCharacterStage) {
+  constructor(path) {
     super(path)
 
-    this.stage = selectCharacterStage
     this.masters = []
     this.manifest = []
   }
@@ -14,13 +11,14 @@ class TaggedScenarioReader extends TaggedTextReader {
   parseScenario() {
     for (let tag in this.data) {
       if (MASTER_PATTERN.test(tag)) this.parseMaster(tag, this.data[tag])
-      else if(AREA_PATTERN.test(tag)) this.parseArea(this.data.Area)
+      else if (tag === "Area") this.parseArea(this.data.Area)
+      else if (tag === "Locate") this.parseLocate(this.data.Locate)
     }
 
     let faceQueue = new createjs.LoadQueue(false)
     faceQueue.loadManifest(this.manifest)
-    faceQueue.on("fileload", (event) => event.item.unit.setupFaceImage(event.result))
-    faceQueue.on("complete", () => this.stage.setup(this.masters))
+    faceQueue.on("fileload", (event) => event.item.unit.faceImage = new AlphalizeBitmap(event.result))
+    faceQueue.on("complete", (event) => this.delegateLoadMasterComplete(event))
   }
 
   parseMaster(tag, contents) {
@@ -41,21 +39,30 @@ class TaggedScenarioReader extends TaggedTextReader {
 
   parseArea(area) {
     this.areaOwner = []
-
-    for(let i in area){
+    for (let i in area) {
       let line = area[i].split(MULTI_SPACE_PATTERN)
       let parsedLine = line.map(e => parseInt(e)).filter(e => !isNaN(e))
       Array.prototype.push.apply(this.areaOwner, parsedLine)
     }
   }
 
-  getSelectCharacterStage(canvas) {
-    this.stage = new SelectCharacterStage(canvas, this.masters)
-    return(this.stage)
+  parseLocate(locate) {
+    this.initialLocation = []
+    for (let lc of locate) {
+      let line = lc.split(MULTI_SPACE_PATTERN)
+      this.initialLocation.push({
+        unitID: line[0],
+        areaID: parseInt(line[1]),
+        unitRank: parseInt(line[2])
+      })
+    }
   }
 
-  delegateScenarioComplete() {
+  delegateLoadComplete() {
     this.parseScenario()
   }
 
+  delegateLoadMasterComplete() {
+    console.log("delegateLoadMasterComplete is not implemented yet in:", this)
+  }
 }

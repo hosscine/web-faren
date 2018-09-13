@@ -23,11 +23,11 @@ class StrategyHeaderBar extends createjs.Container {
     this.turn = 0
   }
 
-  set location(location){
+  set location(location) {
     this.leftTextBox.text = location
   }
 
-  set turn(turn){
+  set turn(turn) {
     this.rightTextBox.text = "第" + turn + "ターン"
   }
 

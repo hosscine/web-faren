@@ -1,74 +1,51 @@
-const STRATEGY_MAP_PATH = "assets/Default/Picture/FieldMap.png"
-const AREADATA_PATH = "assets/Default/Data/AreaData"
-const CHARACTERDATA_PATH = IMAGE_DIR + "CharacterData"
-const PICTURE_DIR = "assets/Default/Picture/"
-
 class StrategyMapStage extends createjs.Stage {
-  constructor(canvas, masters, player) {
+  constructor(canvas, assets, masters, mastersDic, player) {
     super(canvas)
 
     this.masters = masters
+    this.mastersDic = mastersDic
     this.playerMaster = player
 
-    let queue = new createjs.LoadQueue(true)
-    queue.on("fileload", (event) => this.handleFileload(event))
-    queue.on("complete", (event) => this.setup())
-    let manifest = [
-      {
-        id: "map",
-        src: STRATEGY_MAP_PATH
-      },
-      {
-        id: "charadata",
-        src: CHARACTERDATA_PATH,
-        type: "binary"
-      },
-      {
-        id: "areadata",
-        src: AREADATA_PATH
-      },
-      {
-        id: "flag_neutral",
-        src: PICTURE_DIR + "Flag0.png"
-      }
-    ]
-    for(let i in this.masters)
-      manifest.push({
-        id: "flag" + i,
-        src: IMAGE_DIR + "Flag" + (parseInt(i) + 1) + ".png",
-        unit: this.masters[i]
-      })
-    queue.loadManifest(manifest)
-    queue.load()
+    this.setup(assets)
   }
 
-  setup() {
-    this.addChild(this.strategyMap)
-    this.headerBar = this.addChild(new StrategyHeaderBar())
-    this.sideBar = this.addChild(new StrategySideBar(this.playerMaster))
+  setup(assets) {
+    this.charadata = assets.charadata
+    this.areaData = assets.areaData
 
-    this.setupAreas() // this.areas を作る
+    this.strategyMap = this.addChild(new StrategyMap(assets.strategyMap, HEADER_HEIGTH))
+    this.headerBar = headerStage.addChild(new StrategyHeaderBar())
+    this.sideBar = sidebarStage.addChild(new StrategySideBar(this.playerMaster))
+
+    this.setupAreas(assets) // this.areas を作る
+    this.placeUniqueUnits(assets)
     this.strategyMap.setupAreaFlag(this.areas)
+    for (let area of this.areas) area.initialEmployment()
   }
 
-  setupAreas() {
-    let neutralMaster = {}
-    neutralMaster.flag = this.neutralFlag
-    this.areas = []
-    for (let i in this.areaData.data) {
-      let ownerID = scenario.areaOwner[i]
-      if (ownerID > 0) this.areas.push(new Area(this.areaData.data[i], this.masters[ownerID - 1]))
-      else this.areas.push(new Area(this.areaData.data[i], neutralMaster))
+  placeUniqueUnits(assets) {
+    for (let locate of assets.scenario.initialLocation) {
+      let id = locate.unitID
+      let unit = assets.charadata.characters[id].isMaster ? this.mastersDic[id] : new Unit(id, assets)
+      this.areas[locate.areaID - 1].placeUnits(unit)
+      unit.rank = locate.unitRank
     }
   }
 
-  handleFileload(event) {
-    if (event.item.id === "map") this.strategyMap = new StrategyMap(new createjs.Bitmap(event.result), HEADER_HEIGTH)
-    else if (event.item.id === "charadata") this.charadata = new CharacterDataReader(event.result)
-    else if (event.item.id === "areadata") this.areaData = new AreaDataReader(event.result)
-    else if (event.item.id === "flag_neutral") this.neutralFlag = new AlphalizeBitmap(event.result)
-    else event.item.unit.setMasterFlag(new AlphalizeBitmap(event.result))
+  setupAreas(assets) {
+    this.areas = []
+    for (let i in this.areaData.data) {
+      let ownerID = assets.scenario.areaOwner[i]
+      if (ownerID > 0) this.areas.push(new Area(this.areaData.data[i], this.masters[ownerID - 1], this.areas, assets))
+      else {
+        let neutralMaster = {}
+        neutralMaster.isNeutral = true
+        neutralMaster.flagBitmap = new MotionBitmap(assets.neutralFlag.canvas, FLAG_SIZE, FLAG_SIZE, FLAG_MOTION_INTERVAL)
+        this.areas.push(new Area(this.areaData.data[i], neutralMaster, this.areas, assets))
+      }
+    }
   }
+
 }
 
 window.StrategyMapStage = createjs.promote(StrategyMapStage, "Stage")
