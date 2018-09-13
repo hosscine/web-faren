@@ -54,7 +54,7 @@ const CHARACTER_DATA = {
     skillID: 2,
     skillTimes: 2
   },
-  heroChar: 1,
+  heroChar: 2,
   higherClass: 2,
   experience: 2,
   wanderingTurn: {
@@ -100,7 +100,7 @@ const CHARACTER_DATA = {
   flagImageID: 2,
   undefined5: 2,
   id: 21,
-  undefined6: 11,
+  undefined6: 10,
   isUndead: 1,
   undefined7: 128
 }

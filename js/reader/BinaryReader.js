@@ -25,7 +25,8 @@ class BinaryReader {
   }
 
   getBitNumeric10(i, j) {
-    return this.getBitArray10(i, j).reduce((a,x) => a += x, 0)
+    return parseInt(this.getBitHexadecimal10(i, j).reverse().reduce((a,x) => a += x, ""), 16)
+    // return this.getBitArray10(i, j).reduce((a,x) => a += x, 0)
   }
 
   getBitHexadecimal16(i, j) {

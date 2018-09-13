@@ -61,7 +61,7 @@ class MasterUnit extends Unit {
           priority += 1
           break
         }
-    console.log(fund)
+        
     return units
   }
 }
