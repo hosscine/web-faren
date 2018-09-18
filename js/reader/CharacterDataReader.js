@@ -174,9 +174,18 @@ class CharacterDataReader extends BinaryReader {
     this.increseOffset10(i)
 
     // 読み込む必要のある画像をピックアップ
-    if (cdata.unitImageID !== 0) this.havingUnit[cdata.unitImageID] = cdata.id
-    if (cdata.faceImageID !== 0) this.havingFace[cdata.faceImageID] = cdata.id
-    if (cdata.flagImageID !== 0) this.havingFlag[cdata.flagImageID] = cdata.id
+    if (cdata.unitImageID !== 0) {
+      let having = this.havingUnit[cdata.unitImageID]
+      this.havingUnit[cdata.unitImageID] = having === undefined ? [cdata.id] : having.concat(cdata.id)
+    }
+    if (cdata.faceImageID !== 0) {
+      let having = this.havingFace[cdata.faceImageID]
+      this.havingFace[cdata.faceImageID] = having === undefined ? [cdata.id] : having.concat(cdata.id)
+    }
+    if (cdata.flagImageID !== 0) {
+      let having = this.havingFlag[cdata.flagImageID]
+      this.havingFlag[cdata.flagImageID] = having === undefined ? [cdata.id] : having.concat(cdata.id)
+    }
   }
 
   parseEmployable() {

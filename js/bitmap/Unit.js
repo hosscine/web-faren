@@ -16,4 +16,8 @@ class Unit {
     return new createjs.Bitmap(this.faceImage.canvas)
   }
 
+  get power() {
+    return (this.experience + 20) // * 1.6 ** this.rank
+  }
+
 }

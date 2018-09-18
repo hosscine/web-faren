@@ -15,12 +15,43 @@ class StrategySideBar extends createjs.Container {
     background.graphics.beginFill("darkblue")
       .drawRect(0, 0, SIDEBAR_WIDTH, clientHeight)
 
-    this.setupMaster()
-    this.setupAreaInfo()
-    this.setAreaCommand()
+    this.setupMasterContainer()
+    this.setupAreaInfoContainer()
+    this.setupAreaCommandContainer()
+    this.setupStayingUnitsContainer()
   }
 
-  setupMaster() {
+  displayArea(area) {
+    this.areaIncome.text = "収入  " + area.income
+    this.nfamily.text = "同種族  " + 0 + "人"
+    this.transportation.text = "交通  " + (area.isBestTransport ? "〇" : "×")
+    this.wall.text = "城壁 " + area.wall + "/" + area.maxWall
+    this.city.text = "街 " + area.city + "/" + area.maxCity
+    this.road.text = "道路 " + area.road + "/" + area.maxRoad
+
+    this.displayUnits(area.stayingUnits)
+  }
+
+  displayUnits(units) {
+    this.stayingUnitsContainer.removeAllChildren()
+    let x = 12
+    let y = 10
+
+    for (let unit of units) {
+      let bitmap = new createjs.Bitmap(unit.unitImage.canvas)
+      bitmap.x = x
+      bitmap.y = y
+      this.stayingUnitsContainer.addChild(bitmap)
+
+      x += 36
+      if (x > SIDEBAR_WIDTH - 35) {
+        x = 12
+        y += 40
+      }
+    }
+  }
+
+  setupMasterContainer() {
     this.masterContainer = this.addChild(new createjs.Container())
 
     let face = this.masterContainer.addChild(this.player.faceBitmap)
@@ -48,7 +79,7 @@ class StrategySideBar extends createjs.Container {
     // flag.y = 60
   }
 
-  setupAreaInfo() {
+  setupAreaInfoContainer() {
     this.areaInfoContainer = this.addChild(new createjs.Container())
     this.areaInfoContainer.y = 150
 
@@ -83,7 +114,7 @@ class StrategySideBar extends createjs.Container {
     this.road.y = contentY
   }
 
-  setAreaCommand() {
+  setupAreaCommandContainer() {
     this.areaCommandContainer = this.addChild(new createjs.Container())
     this.areaCommandContainer.y = 300
     this.stayCommands = {}
@@ -115,12 +146,14 @@ class StrategySideBar extends createjs.Container {
     this.stayCommands.building.y = contentY
   }
 
-  displayArea(area) {
-    this.areaIncome.text = "収入  " + area.income
-    this.nfamily.text = "同種族  " + 0 + "人"
-    this.transportation.text = "交通  " + (area.isBestTransport ? "〇" : "×")
-    this.wall.text = "城壁 " + area.wall + "/" + area.maxWall
-    this.city.text = "街 " + area.city + "/" + area.maxCity
-    this.road.text = "道路 " + area.road + "/" + area.maxRoad
+  setupStayingUnitsContainer() {
+    let stayingParent = this.addChild(new createjs.Container())
+    stayingParent.y = 400
+
+    let rect = stayingParent.addChild(new createjs.Shape())
+    rect.graphics.beginStroke("white").drawRoundRect(5, 0, SIDEBAR_WIDTH - 10, 175, 3)
+
+    this.stayingUnitsContainer = stayingParent.addChild(new createjs.Container())
   }
+
 }
