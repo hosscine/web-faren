@@ -18,8 +18,8 @@ class StrategySideBar extends createjs.Container {
     this.setupMaster()
     this.setupAreaInfo()
     this.setAreaCommand()
-
   }
+
   setupMaster() {
     this.masterContainer = this.addChild(new createjs.Container())
 
@@ -115,6 +115,12 @@ class StrategySideBar extends createjs.Container {
     this.stayCommands.building.y = contentY
   }
 
-  setCurrentArea(area) {
+  displayArea(area) {
+    this.areaIncome.text = "収入  " + area.income
+    this.nfamily.text = "同種族  " + 0 + "人"
+    this.transportation.text = "交通  " + (area.isBestTransport ? "〇" : "×")
+    this.wall.text = "城壁 " + area.wall + "/" + area.maxWall
+    this.city.text = "街 " + area.city + "/" + area.maxCity
+    this.road.text = "道路 " + area.road + "/" + area.maxRoad
   }
 }

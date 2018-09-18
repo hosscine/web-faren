@@ -1,12 +1,64 @@
 const MAX_AREA_UNITS = 20
 
 class Area {
-  constructor(data, owner, allAreas, assets) {
+  constructor(data, owner, allAreas, assets, sidebar) {
     this.owner = owner
     this.allAreas = allAreas
     this.assets = assets
     this.stayingUnits = []
+    this.sidebar = sidebar
+    
     for (let i in data) this[i] = data[i]
+  }
+
+  setupAreaStatus() {
+    if (this.stayMaster) {
+      this.city = this.maxCity / 3
+      this.road = this.maxRoad / 3
+      this.wall = this.maxWall
+
+    }
+    else if (this.owner.isMaster) {
+      this.city = this.maxCity / 6
+      this.road = this.maxRoad / 6
+      this.wall = (this.maxWall * (this.initialWall + 40)) / 100
+      
+    }
+    else {
+      this.city = this.maxCity / 10
+      this.road = this.maxRoad / 10
+      this.wall = (this.maxWall * this.initialWall) / 100
+    }
+
+  }
+
+  set city(value) {
+    this._city = value > this.maxCity ? this.maxCity : Math.round(value)
+  }
+  get city() {
+    return this._city
+  }
+
+  set road(value) {
+    this._road = value > this.maxRoad ? this.maxRoad : Math.round(value)
+  }
+  get road() {
+    return this._road
+  }
+
+  set wall(value) {
+    this._wall = value > this.maxWall ? this.maxWall : Math.round(value)
+  }
+  get wall() {
+    return this._wall
+  }
+
+  get isBestTransport() {
+    return this._road === this.maxRoad
+  }
+
+  get income() {
+    return Math.round((this.basicIncome + (this.city / 4)) * (this.isBestTransport ? 2 : 1))
   }
 
   get ownerNameFlag() {
@@ -21,11 +73,16 @@ class Area {
     let outlineText = text.clone()
     outlineText.color = "black"
     outlineText.outline = 2
-    container.addChild(outlineText, text)
 
-    let flag = container.addChild(this.owner.flagBitmap)
+    container.addChild(outlineText, text)
+    container.addChild(this.owner.flagBitmap)
+    container.on("click", () => this.handleClick())
 
     return container
+  }
+
+  handleClick() {
+    this.sidebar.displayArea(this)
   }
 
   getLineTo(targetArea) {
@@ -52,6 +109,7 @@ class Area {
     // empcost = (area.m_inhabitcost * inhcost[m_GameLevel - 1] * (35 + mtrand_n(90))) / 100;
     // rank = m_GameLevel / 2;
     // idlist = &area.m_inhabit;
+    this.setupAreaStatus()
   }
 
   get stayMaster() {

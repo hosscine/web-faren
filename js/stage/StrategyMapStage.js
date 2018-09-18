@@ -36,12 +36,13 @@ class StrategyMapStage extends createjs.Stage {
     this.areas = []
     for (let i in this.areaData.data) {
       let ownerID = assets.scenario.areaOwner[i]
-      if (ownerID > 0) this.areas.push(new Area(this.areaData.data[i], this.masters[ownerID - 1], this.areas, assets))
+      if (ownerID > 0)
+        this.areas.push(new Area(this.areaData.data[i], this.masters[ownerID - 1], this.areas, assets, this.sideBar))
       else {
         let neutralMaster = {}
         neutralMaster.isNeutral = true
         neutralMaster.flagBitmap = new MotionBitmap(assets.neutralFlag.canvas, FLAG_SIZE, FLAG_SIZE, FLAG_MOTION_INTERVAL)
-        this.areas.push(new Area(this.areaData.data[i], neutralMaster, this.areas, assets))
+        this.areas.push(new Area(this.areaData.data[i], neutralMaster, this.areas, assets, this.sideBar))
       }
     }
   }
