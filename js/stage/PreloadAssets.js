@@ -10,11 +10,17 @@ const FLAG_PATTERN = /flag\d+/
 function preloadAssets() {
   console.time("preload")
 
+  assets = {}
+
   assets.scriptManifest = [
     {
       id: "charadata",
       src: IMAGE_DIR + "CharacterData",
       type: createjs.LoadQueue.BINARY
+    },
+    {
+      id: "scenario",
+      src: DATA_DIR + "Scenario1"
     },
     {
       id: "areadata",
@@ -30,8 +36,8 @@ function preloadAssets() {
     if (event.item.id === "charadata") {
       assets.charadata = new CharacterDataReader(event.result)
       assets.imageManifest = assets.imageManifest.concat(assets.charadata.imageManifest)
-      setupMasters("charadata")
     }
+    else if (event.item.id === "scenario") assets.scenario = new TaggedScenarioReader(event.result)
     else if (event.item.id === "areadata") assets.areaData = new AreaDataReader(event.result)
     else if (event.item.id === "callable") assets.callable = new TaggedCallableReader(event.result)
   }
@@ -39,7 +45,7 @@ function preloadAssets() {
   // スクリプト読み込み完了時に画像読み込みを開始
   let handleScriptComplete = function (event) {
     let imageQueue = new createjs.LoadQueue()
-    imageQueue.setMaxConnections(1000)
+    imageQueue.setMaxConnections(10000)
     imageQueue.loadManifest(assets.imageManifest)
     imageQueue.on("progress", handleImageProgress)
     imageQueue.on("fileload", handleImageLoad)
@@ -73,12 +79,15 @@ function preloadAssets() {
       for (let id of i.unitID) assets.charadata.characters[id].flagImage = new AlphalizeBitmap(event.result)
   }
 
-  // 画像読み込み完了時にユニットのインスタンスを作成
+  // 画像読み込み完了時に各ステージにデータを渡す
   let handleImageComplete = function (event) {
-    setupMasters("image")
+    stage.setup(assets.scenario.masters, assets)
+    sidebarStage.displayScenario(assets.scenario.data)
+
     console.timeEnd("preload")
   }
 
+  // スクリプトの読み込み開始
   let scriptQueue = new createjs.LoadQueue()
   scriptQueue.loadManifest(assets.scriptManifest)
   scriptQueue.on("fileload", handleScriptLoad)

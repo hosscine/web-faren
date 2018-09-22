@@ -1,11 +1,14 @@
 const MASTER_PATTERN = /Master(\d+)/
 
 class TaggedScenarioReader extends TaggedTextReader {
-  constructor(path) {
-    super(path)
+  constructor(text) {
+    super(text)
 
     this.masters = []
-    this.manifest = []
+    this.areaOwner = []
+    this.initialLocation = []
+
+    this.parseScenario()
   }
 
   parseScenario() {
@@ -14,11 +17,6 @@ class TaggedScenarioReader extends TaggedTextReader {
       else if (tag === "Area") this.parseArea(this.data.Area)
       else if (tag === "Locate") this.parseLocate(this.data.Locate)
     }
-
-    let faceQueue = new createjs.LoadQueue(false)
-    faceQueue.loadManifest(this.manifest)
-    faceQueue.on("fileload", (event) => event.item.unit.faceImage = new AlphalizeBitmap(event.result))
-    faceQueue.on("complete", (event) => this.delegateLoadMasterComplete(event))
   }
 
   parseMaster(tag, contents) {
@@ -27,18 +25,13 @@ class TaggedScenarioReader extends TaggedTextReader {
     let difficulty = contents[1]
     let explanation = contents.slice(2, 5)
 
+    // このときマスターのIDは数字になっている
+    // MasterUnit.setup(assets) 呼び出し時に一般ユニット同様ユニット名のIDが指定される
     let master = new MasterUnit(id, name, difficulty, explanation)
-
-    this.manifest.push({
-      id: tag,
-      src: IMAGE_DIR + "Face" + id + ".png",
-      unit: master
-    })
     this.masters.push(master)
   }
 
   parseArea(area) {
-    this.areaOwner = []
     for (let i in area) {
       let line = area[i].split(MULTI_SPACE_PATTERN)
       let parsedLine = line.map(e => parseInt(e)).filter(e => !isNaN(e))
@@ -47,7 +40,6 @@ class TaggedScenarioReader extends TaggedTextReader {
   }
 
   parseLocate(locate) {
-    this.initialLocation = []
     for (let lc of locate) {
       let line = lc.split(MULTI_SPACE_PATTERN)
       this.initialLocation.push({
@@ -56,13 +48,5 @@ class TaggedScenarioReader extends TaggedTextReader {
         unitRank: parseInt(line[2])
       })
     }
-  }
-
-  delegateLoadComplete() {
-    this.parseScenario()
-  }
-
-  delegateLoadMasterComplete() {
-    console.log("delegateLoadMasterComplete is not implemented yet in:", this)
   }
 }

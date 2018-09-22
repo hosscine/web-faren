@@ -2,13 +2,13 @@ const TAG_PATTERN = /\[(\S+)\]/ // []で囲われた空白以外の文字列
 const NEW_LINE_PATTERN = /\r\n|\r|\n/
 
 class TaggedTextReader {
-  constructor(path) {
+  constructor(text) {
+    this.text = text
     this.data = {}
-    this.text
-    this.filepath = path
-
-    this.readFile(path)
+    
+    this.formatTaggedText(text)
   }
+
 
   readFile(path) {
     let queue = new createjs.LoadQueue(true)

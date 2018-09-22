@@ -1,13 +1,20 @@
 const SELECTABLE_FACE_MARGINE = 40
 
 class SelectCharacterStage extends createjs.Stage {
-  constructor(canvas, assets) {
+  constructor(canvas) {
     super(canvas)
-    this.assets = assets
   }
 
-  setup(masters) {
+  setup(masters, assets) {
     this.masters = masters
+    this.assets = assets
+    
+    this.mastersDic = {}
+    for (let master of masters) {
+      master.setup(assets)
+      this.mastersDic[master.id] = master
+    }
+
     this.faceContainer = this.addChild(new ScrollContainer())
     this.explanationArea = this.addChild(new ExplanationArea())
 
