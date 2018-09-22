@@ -7,7 +7,7 @@ class Area {
     this.assets = assets
     this.stayingUnits = []
     this.sidebar = sidebar
-    
+
     for (let i in data) this[i] = data[i]
   }
 
@@ -22,7 +22,7 @@ class Area {
       this.city = this.maxCity / 6
       this.road = this.maxRoad / 6
       this.wall = (this.maxWall * (this.initialWall + 40)) / 100
-      
+
     }
     else {
       this.city = this.maxCity / 10
@@ -98,7 +98,7 @@ class Area {
   }
 
   initialEmployment() {
-    let fund = 0 
+    let fund = 0
     if (this.stayMaster) fund += 150 // 本拠地補正
     if (this.isSafetyArea) fund -= 250 // 安全地帯補正
     if (this.owner.isPlayer) fund += 320 + Math.random() * 80
@@ -109,7 +109,14 @@ class Area {
     // empcost = (area.m_inhabitcost * inhcost[m_GameLevel - 1] * (35 + mtrand_n(90))) / 100;
     // rank = m_GameLevel / 2;
     // idlist = &area.m_inhabit;
+    this.sortStayingUnits()
     this.setupAreaStatus()
+  }
+
+  sortStayingUnits() {
+    this.stayingUnits.sort((a, b) => { // 戦力指数, 獲得経験値でソート
+      return -(a.competence - b.competence + (a.earnedExperience - b.earnedExperience) * 0.001)
+    })
   }
 
   get stayMaster() {

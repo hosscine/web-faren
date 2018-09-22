@@ -7,6 +7,9 @@ class Unit {
   setup(assets) {
     let data = assets.charadata.characters[this.id]
     for (let i in data) this[i] = data[i]
+
+    this.rank = 0
+    this.earnedExperience = 0
   }
 
   get faceBitmap() {
@@ -16,8 +19,9 @@ class Unit {
     return new createjs.Bitmap(this.faceImage.canvas)
   }
 
-  get power() {
-    return (this.experience + 20) // * 1.6 ** this.rank
+  // 戦力指数のこと
+  get competence() {
+    return Math.floor((this.experience + 20) * 1.6 ** this.rank)
   }
 
 }
