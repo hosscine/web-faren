@@ -2,11 +2,13 @@ const CALL_PATTERN = /Call(\d+)/
 const CALL_INIT_PATTERN = /Init(\d+)/
 
 class TaggedCallableReader extends TaggedTextReader {
-  constructor(path) {
-    super(path)
+  constructor(text) {
+    super(text)
 
     this.employable = []
     this.initialEmployable = []
+
+    this.parseCallable()
   }
 
   parseCallable() {
@@ -27,9 +29,5 @@ class TaggedCallableReader extends TaggedTextReader {
     let type = parseInt(CALL_INIT_PATTERN.exec(tag)[1])
     if (this.initialEmployable.length !== type) Error("CallableのInitの順番がおかしいです。")
     this.initialEmployable.push(contents)
-  }
-
-  delegateLoadComplete() {
-    this.parseCallable()
   }
 }

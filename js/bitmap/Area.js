@@ -1,12 +1,14 @@
 const MAX_AREA_UNITS = 20
+const LEVEL_INITIAL_FUND_MAGNIFICATION = [3, 5, 7, 10, 14]
 
 class Area {
-  constructor(data, owner, allAreas, assets, sidebar) {
+  constructor(data, owner, allAreas, assets, sidebar, gameLevel) {
     this.owner = owner
     this.allAreas = allAreas
     this.assets = assets
     this.stayingUnits = []
     this.sidebar = sidebar
+    this.gameLevel = gameLevel
 
     for (let i in data) this[i] = data[i]
   }
@@ -29,7 +31,6 @@ class Area {
       this.road = this.maxRoad / 10
       this.wall = (this.maxWall * this.initialWall) / 100
     }
-
   }
 
   set city(value) {
@@ -102,13 +103,12 @@ class Area {
     if (this.stayMaster) fund += 150 // 本拠地補正
     if (this.isSafetyArea) fund -= 250 // 安全地帯補正
     if (this.owner.isPlayer) fund += 320 + Math.random() * 80
-    else fund += 350 + Math.random() * 50
+    else if(this.owner.isMaster) fund += 350 + Math.random() * 50
+    else fund += (this.guardsMagnification * this.levelMagnification * (35 + Math.random() * 90)) / 100
 
-    if (!this.owner.isNeutral)
-      this.placeUnits(this.owner.initialEmploy(fund, this.stayingUnits.length, this.assets))
-    // empcost = (area.m_inhabitcost * inhcost[m_GameLevel - 1] * (35 + mtrand_n(90))) / 100;
-    // rank = m_GameLevel / 2;
-    // idlist = &area.m_inhabit;
+    this.placeUnits(this.owner.initialEmploy(
+      fund, this.stayingUnits.length, this.assets, this.initialEmployable))
+
     this.sortStayingUnits()
     this.setupAreaStatus()
   }
@@ -117,6 +117,18 @@ class Area {
     this.stayingUnits.sort((a, b) => { // 戦力指数, 獲得経験値でソート
       return -(a.competence - b.competence + (a.earnedExperience - b.earnedExperience) * 0.001)
     })
+  }
+
+  get employable() {
+    return this.assets.callable.employable[this.type]
+  }
+
+  get initialEmployable() {
+    return this.assets.callable.initialEmployable[this.type]
+  }
+
+  get levelMagnification() {
+    return LEVEL_INITIAL_FUND_MAGNIFICATION[this.gameLevel]
   }
 
   get stayMaster() {

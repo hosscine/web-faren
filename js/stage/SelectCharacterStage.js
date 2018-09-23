@@ -8,7 +8,8 @@ class SelectCharacterStage extends createjs.Stage {
   setup(masters, assets) {
     this.masters = masters
     this.assets = assets
-    
+
+    // unitidでアクセスできるマスターの連想配列を作成
     this.mastersDic = {}
     for (let master of masters) {
       master.setup(assets)

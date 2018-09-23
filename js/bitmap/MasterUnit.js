@@ -16,14 +16,8 @@ class MasterUnit extends Unit {
 
   setup(assets) {
     this.id = assets.charadata.no2id(this.no)
-    super.setup(assets)
-    // this.nameText.text = this.name
-    this.isMaster = true
     assets.charadata.characters[this.id].isMaster = true
-  }
-
-  set FaceImage(alphaBitmap) {
-    this.faceImage = alphaBitmap
+    super.setup(assets)
   }
 
   get selectableFaceBitmap() {
@@ -44,11 +38,17 @@ class MasterUnit extends Unit {
     return new MotionBitmap(this.flagImage.canvas, FLAG_SIZE, FLAG_SIZE, FLAG_MOTION_INTERVAL)
   }
 
-  initialEmploy(fund, nStaying, assets) {
+  initialEmploy(fund, nStaying, assets, areaEmployable) {
+    // 雇用費の降順に並べた初期雇用候補を作成
     let candidates = []
-    for (let id of this.employable) candidates.push(assets.charadata.characters[id])
+    if (this.isMaster) for (let id of this.employable) candidates.push(assets.charadata.characters[id])
+    else for (let id of areaEmployable) candidates.push(assets.charadata.characters[id])
     candidates.sort((a, b) => { return -(a.cost - b.cost) })
 
+    // while    任意の雇用候補が雇える間
+    //   for    雇用候補の先頭3人を優先して雇う
+    //     if   お金が足りていてエリアに空きがあれば雇う
+    //     else ダメなら雇用候補の先頭2~4人を優先するようにする
     let units = []
     let priority = 0
     while (priority <= candidates.length - 1)
