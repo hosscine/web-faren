@@ -64,13 +64,10 @@ class SelectCharacterStage extends createjs.Stage {
       // if    bool = true ならマスターの顔絵にイベントリスナーを追加
       // else  bool = false ならイベントリスナーを削除
       if (bool) {
-        face.on("click", handleClick, null, false, {
-          master: face.himself
-        })
-        face.on("mouseover", handleMouseover, null, false, {
-          master: face.himself
-        })
-      } else face.removeAllEventListeners()
+        face.on("click", handleClick, null, false, { master: face.himself })
+        face.on("mouseover", handleMouseover, null, false, { master: face.himself })
+      }
+      else face.removeAllEventListeners()
     }
   }
 }

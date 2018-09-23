@@ -19,6 +19,22 @@ class Unit {
     return new createjs.Bitmap(this.faceImage.canvas)
   }
 
+  getUnitBitmap(displayer) {
+    this.displayer = displayer
+    let bitmap = new createjs.Bitmap(this.unitImage.canvas)
+    bitmap.on("click", () => this.handleClick())
+    bitmap.on("mouseover", () => this.handleMouseover())
+    return bitmap
+  }
+
+  handleClick() {
+    this.displayer.displayUnitDetail(this)
+  }
+
+  handleMouseover() {
+    this.displayer.displayUnitOverview(this)
+  }
+
   // 戦力指数のこと
   get competence() {
     return Math.floor((this.experience + 20) * 1.6 ** this.rank)

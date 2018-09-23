@@ -38,7 +38,7 @@ class StrategySideBar extends createjs.Container {
     let y = 10
 
     for (let unit of units) {
-      let bitmap = new createjs.Bitmap(unit.unitImage.canvas)
+      let bitmap = unit.getUnitBitmap(this)
       bitmap.x = x
       bitmap.y = y
       this.stayingUnitsContainer.addChild(bitmap)
@@ -49,6 +49,14 @@ class StrategySideBar extends createjs.Container {
         y += 40
       }
     }
+  }
+
+  displayUnitDetail(unit) {
+    
+  }
+
+  displayUnitOverview(unit) {
+
   }
 
   setupMasterContainer() {
