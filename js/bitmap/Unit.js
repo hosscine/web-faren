@@ -1,5 +1,6 @@
 const STRING_MAP_SPECIES = ["人間系", "エルフ", "悪魔", "ドワーフ", "リザードマン", "ゴブリン", "アイスマン", "モンスター"]
 const STRING_MAP_RANK = ["E", "D", "C", "B", "A", "S"]
+const STRING_MAP_MAGIC = ["✖", "Ｄ", "Ｃ", "Ｂ", "Ａ", "Ｓ"]
 
 class Unit {
   constructor(id, assets = null) {
@@ -16,7 +17,7 @@ class Unit {
     this.buff = {}
     this.basic = {}
     this.resetBuff()
-    this.calculateBasicStatus()    
+    this.calculateBasicStatus()
   }
 
   calculateBasicStatus() {
