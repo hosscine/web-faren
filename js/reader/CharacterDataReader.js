@@ -34,7 +34,7 @@ const CHARACTER_DATA = {
   },
   species: 2,
   cost: 2,
-  standard: {
+  base: {
     moveType: 2,
     moveRange: 2,
     HP: 2,

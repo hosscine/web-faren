@@ -19,6 +19,7 @@ class StrategySideBar extends createjs.Container {
     this.setupAreaInfoContainer()
     this.setupAreaCommandContainer()
     this.setupStayingUnitsContainer()
+    this.setupUnitOverview()
   }
 
   displayArea(area) {
@@ -52,10 +53,22 @@ class StrategySideBar extends createjs.Container {
   }
 
   displayUnitDetail(unit) {
-    
+
   }
 
   displayUnitOverview(unit) {
+    this.overviewData.name.text = unit.name
+    this.overviewData.spacies.text = unit.spacies
+    this.overviewData.rank.text = unit.rank
+    this.overviewData.experience.text = unit.earnedExperience
+    this.overviewData.HP.text = unit.HP
+    this.overviewData.MP.text = unit.MP
+    this.overviewData.physicalStrength.text = unit.physicalStrength
+    this.overviewData.physicalResistance.text = unit.physicalResistance
+    this.overviewData.technique.text = unit.technique
+    this.overviewData.agility.text = unit.agility
+    this.overviewData.magicalStrength.text = unit.magicalStrength
+    this.overviewData.magicalResistance.text = unit.magicalResistance
 
   }
 
@@ -162,6 +175,69 @@ class StrategySideBar extends createjs.Container {
     rect.graphics.beginStroke("white").drawRoundRect(5, 0, SIDEBAR_WIDTH - 10, 175, 3)
 
     this.stayingUnitsContainer = stayingParent.addChild(new createjs.Container())
+  }
+
+  setupUnitOverview() {
+    this.unitOverviewContainer = this.addChild(new createjs.Container())
+    this.unitOverviewContainer.y = 600
+
+    let rect = this.unitOverviewContainer.addChild(new createjs.Shape())
+    rect.graphics.beginStroke("white").drawRect(5, 0, SIDEBAR_WIDTH - 10, 105)
+
+    let contentY = 0
+    let name = this.unitOverviewContainer.addChild(new createjs.Text("ファイアジャイアント", "15px arial", "white"))
+    name.x = 10
+    name.y = contentY += 3
+
+    let spacies = this.unitOverviewContainer.addChild(new createjs.Text("人間系", "14px arial", "white"))
+    spacies.x = 10
+    spacies.y = contentY += 20
+
+    let rank = this.unitOverviewContainer.addChild(new createjs.Text("Rank S", "14px arial", "white"))
+    rank.x = 10
+    rank.y = contentY += 15
+
+    let experience = this.unitOverviewContainer.addChild(new createjs.Text("Exp 100", "14px arial", "white"))
+    experience.x = 70
+    experience.y = contentY
+
+    let HP = this.unitOverviewContainer.addChild(new createjs.Text("HP 100/100", "14px arial", "white"))
+    HP.x = 10
+    HP.y = contentY += 20
+
+    let MP = this.unitOverviewContainer.addChild(new createjs.Text("MP 100/100", "14px arial", "white"))
+    MP.x = 100
+    MP.y = contentY
+
+    let physicalStrength = this.unitOverviewContainer.addChild(new createjs.Text("攻撃 100", "14px arial", "white"))
+    physicalStrength.x = 10
+    physicalStrength.y = contentY += 15
+
+    let physicalResistance = this.unitOverviewContainer.addChild(new createjs.Text("防御 100", "14px arial", "white"))
+    physicalResistance.x = 75
+    physicalResistance.y = contentY
+
+    let technique = this.unitOverviewContainer.addChild(new createjs.Text("技量 100", "14px arial", "white"))
+    technique.x = 135
+    technique.y = contentY
+
+    let agility = this.unitOverviewContainer.addChild(new createjs.Text("速さ 100", "14px arial", "white"))
+    agility.x = 10
+    agility.y = contentY += 15
+
+    let magicalStrength = this.unitOverviewContainer.addChild(new createjs.Text("魔力 100", "14px arial", "white"))
+    magicalStrength.x = 75
+    magicalStrength.y = contentY
+
+    let magicalResistance = this.unitOverviewContainer.addChild(new createjs.Text("抵抗 100", "14px arial", "white"))
+    magicalResistance.x = 135
+    magicalResistance.y = contentY
+
+    this.overviewData = {
+      name: name, spacies: spacies, rank: rank, experience: experience, HP: HP, MP: MP,
+      physicalStrength: physicalStrength, physicalResistance: physicalResistance, technique: technique,
+      agility: agility, magicalStrength: magicalStrength, magicalResistance: magicalResistance
+    }
   }
 
 }

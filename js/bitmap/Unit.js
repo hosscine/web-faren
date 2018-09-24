@@ -10,6 +10,18 @@ class Unit {
 
     this.rank = 0
     this.earnedExperience = 0
+    this.buff = {}
+    this.basic = {}
+    this.resetBuff()
+    this.calculateBasicStatus()    
+  }
+
+  calculateBasicStatus() {
+    for (let key in this.standard) this.basic[key] = this.standard[key] * 1.08 ** this.rank
+  }
+
+  resetBuff() {
+    for (let key in this.standard) this.buff[key] = 1
   }
 
   get faceBitmap() {
@@ -33,6 +45,38 @@ class Unit {
 
   handleMouseover() {
     this.displayer.displayUnitOverview(this)
+  }
+
+  get HP() {
+    return this.basic.HP * this.buff.HP
+  }
+
+  get MP() {
+    return this.basic.MP * this.buff.MP
+  }
+
+  get physicalStrength() {
+    return this.basic.physicalStrength * this.buff.physicalStrength
+  }
+
+  get physicalResistance() {
+    return this.basic.physicalResistance * this.buff.physicalResistance
+  }
+
+  get technique() {
+    return this.basic.technique * this.buff.technique
+  }
+
+  get agility() {
+    return this.basic.agility * this.buff.agility
+  }
+
+  get magicalStrength() {
+    return this.basic.magicalStrength * this.buff.magicalStrength
+  }
+
+  get magicalResistance() {
+    return this.basic.magicalResistance * this.buff.magicalResistance
   }
 
   // 戦力指数のこと
