@@ -1,3 +1,6 @@
+const STRING_MAP_SPECIES = ["人間系", "エルフ", "悪魔", "ドワーフ", "リザードマン", "ゴブリン", "アイスマン", "モンスター"]
+const STRING_MAP_RANK = ["E", "D", "C", "B", "A", "S"]
+
 class Unit {
   constructor(id, assets = null) {
     this.id = id
@@ -17,11 +20,11 @@ class Unit {
   }
 
   calculateBasicStatus() {
-    for (let key in this.standard) this.basic[key] = this.standard[key] * 1.08 ** this.rank
+    for (let key in this.base) this.basic[key] = this.base[key] * 1.08 ** this.rank
   }
 
   resetBuff() {
-    for (let key in this.standard) this.buff[key] = 1
+    for (let key in this.base) this.buff[key] = 1
   }
 
   get faceBitmap() {
@@ -36,6 +39,7 @@ class Unit {
     let bitmap = new createjs.Bitmap(this.unitImage.canvas)
     bitmap.on("click", () => this.handleClick())
     bitmap.on("mouseover", () => this.handleMouseover())
+    bitmap.on("mouseout", () => this.handleMouseout())
     return bitmap
   }
 
@@ -45,6 +49,18 @@ class Unit {
 
   handleMouseover() {
     this.displayer.displayUnitOverview(this)
+  }
+
+  handleMouseout() {
+    this.displayer.undisplayUnitOverview()
+  }
+
+  get strSpecies() {
+    return STRING_MAP_SPECIES[this.species]
+  }
+
+  get strRank() {
+    return STRING_MAP_RANK[this.rank]
   }
 
   get HP() {
