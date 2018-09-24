@@ -19,7 +19,8 @@ class StrategySideBar extends createjs.Container {
     this.setupAreaInfoContainer()
     this.setupAreaCommandContainer()
     this.setupStayingUnitsContainer()
-    this.setupUnitOverview()
+    this.setupUnitOverviewContainer()
+    this.setupUnitDetailContainer()
   }
 
   displayArea(area) {
@@ -53,14 +54,24 @@ class StrategySideBar extends createjs.Container {
   }
 
   displayUnitDetail(unit) {
-    
+    if (this.flag) this.undisplayUnitDetauil()
+    this.flag = true
+
+    let unitBitmap = this.unitDetailContainer.addChild(new createjs.Bitmap(unit.unitImage.canvas))
+    unitBitmap.x = 10
+    unitBitmap.y = 17
+  }
+
+  undisplayUnitDetauil() {
+    this.unitDetailContainer.removeChildAt(this.unitDetailContainer.children.length - 1)
   }
 
   displayUnitOverview(unit) {
     this.overviewData.name.text = unit.name
     this.overviewData.species.text = unit.strSpecies
     this.overviewData.rank.text = "Rank " + unit.strRank
-    this.overviewData.experience.text = "Exp" + unit.earnedExperience
+    this.overviewData.experience.text = "Exp " + unit.earnedExperience
+    this.overviewData.nattackBuff.text = unit.buff.nattack === 1 ? " " : unit.buff.nattack === 2 ? "攻撃増" : "攻撃減"
     this.overviewData.HP.text = "HP  " + unit.HP + " / " + unit.basic.HP
     this.overviewData.MP.text = "MP  " + unit.MP + " / " + unit.basic.MP
     this.overviewData.physicalStrength.text = "攻撃 " + unit.physicalStrength
@@ -187,13 +198,13 @@ class StrategySideBar extends createjs.Container {
     this.stayingUnitsContainer = stayingParent.addChild(new createjs.Container())
   }
 
-  setupUnitOverview() {
+  setupUnitOverviewContainer() {
     let unitOverviewContainer = this.addChild(new createjs.Container())
     this.unitOverviewContainer = unitOverviewContainer
     unitOverviewContainer.y = 600
 
     let rect = unitOverviewContainer.addChild(new createjs.Shape())
-    rect.graphics.beginStroke("white").drawRect(5, 0, SIDEBAR_WIDTH - 10, 105)
+    rect.graphics.beginStroke("white").drawRect(5, 0, SIDEBAR_WIDTH - 10, 118)
 
     let contentY = 0
     let name = unitOverviewContainer.addChild(new createjs.Text("ファイアジャイアント", "15px arial", "white"))
@@ -212,9 +223,13 @@ class StrategySideBar extends createjs.Container {
     experience.x = 70
     experience.y = contentY
 
+    let nattackBuff = unitOverviewContainer.addChild(new createjs.Text("攻撃増", "14px arial", "white"))
+    nattackBuff.x = 10
+    nattackBuff.y = contentY += 15
+
     let HP = unitOverviewContainer.addChild(new createjs.Text("HP 100/100", "14px arial", "white"))
     HP.x = 10
-    HP.y = contentY += 20
+    HP.y = contentY += 15
 
     let MP = unitOverviewContainer.addChild(new createjs.Text("MP 100/100", "14px arial", "white"))
     MP.x = 100
@@ -245,10 +260,98 @@ class StrategySideBar extends createjs.Container {
     magicalResistance.y = contentY
 
     this.overviewData = {
-      name: name, species: species, rank: rank, experience: experience, HP: HP, MP: MP,
+      name: name, species: species, rank: rank, experience: experience, nattackBuff: nattackBuff, HP: HP, MP: MP,
       physicalStrength: physicalStrength, physicalResistance: physicalResistance, technique: technique,
       agility: agility, magicalStrength: magicalStrength, magicalResistance: magicalResistance
     }
+  }
+
+  setupUnitDetailContainer() {
+    let unitDetailContainer = this.addChild(new createjs.Container())
+    this.unitDetailContainer = unitDetailContainer
+
+    let background = unitDetailContainer.addChild(new createjs.Shape())
+    background.graphics.beginFill("darkblue").drawRect(0, 0, SIDEBAR_WIDTH, 300)
+    background.graphics.beginStroke("white").drawRect(5, 5, SIDEBAR_WIDTH - 10, 300)
+
+    let detailContentsContainer = unitDetailContainer.addChild(new createjs.Container())
+    
+    const contentX = 40
+    const contentX2 = 113
+    let contentY = 0
+    let name = detailContentsContainer.addChild(new createjs.Text("ファイアジャイアント", "15px arial", "white"))
+    name.x = 45
+    name.y = contentY += 8
+
+    let species = detailContentsContainer.addChild(new createjs.Text("人間系", "14px arial", "white"))
+    species.x = 50
+    species.y = contentY += 20
+
+    let named = detailContentsContainer.addChild(new createjs.Text("（人材）", "14px arial", "white"))
+    named.x = 120
+    named.y = contentY
+
+    let rank = detailContentsContainer.addChild(new createjs.Text("Rank S", "14px arial", "white"))
+    rank.x = 50
+    rank.y = contentY += 15
+
+    let experience = detailContentsContainer.addChild(new createjs.Text("Exp 100", "14px arial", "white"))
+    experience.x = 120
+    experience.y = contentY
+
+    let lHP = detailContentsContainer.addChild(new createjs.Text("HP", "14px arial", "white"))
+    let HP = detailContentsContainer.addChild(new createjs.Text("100 / 100", "14px arial", "white"))
+    lHP.x = contentX
+    HP.x = contentX2
+    lHP.y = HP.y = contentY += 20
+
+    let lMP = detailContentsContainer.addChild(new createjs.Text("MP", "14px arial", "white"))
+    let MP = detailContentsContainer.addChild(new createjs.Text("100 / 100", "14px arial", "white"))
+    lMP.x = contentX
+    MP.x = contentX2
+    lMP.y = MP.y = contentY += 15
+
+    let lphysicalStrength = detailContentsContainer.addChild(new createjs.Text("攻撃力", "14px arial", "white"))
+    let physicalStrength = detailContentsContainer.addChild(new createjs.Text("100 / 100", "14px arial", "white"))
+    lphysicalStrength.x = contentX
+    physicalStrength.x = contentX2
+    lphysicalStrength.y = physicalStrength.y = contentY += 15
+
+    let lphysicalResistance = detailContentsContainer.addChild(new createjs.Text("防御力", "14px arial", "white"))
+    let physicalResistance = detailContentsContainer.addChild(new createjs.Text("100 / 100", "14px arial", "white"))
+    lphysicalResistance.x = contentX
+    physicalResistance.x = contentX2
+    lphysicalResistance.y = physicalResistance.y = contentY += 15
+
+    let ltechnique = detailContentsContainer.addChild(new createjs.Text("技量", "14px arial", "white"))
+    let technique = detailContentsContainer.addChild(new createjs.Text("100 / 100", "14px arial", "white"))
+    ltechnique.x = contentX
+    technique.x = contentX2
+    ltechnique.y = technique.y = contentY += 15
+
+    let lagility = detailContentsContainer.addChild(new createjs.Text("素早さ", "14px arial", "white"))
+    let agility = detailContentsContainer.addChild(new createjs.Text("100 / 100", "14px arial", "white"))
+    lagility.x = contentX
+    agility.x = contentX2
+    lagility.y = agility.y = contentY += 15
+
+    let lmagicalStrength = detailContentsContainer.addChild(new createjs.Text("魔力", "14px arial", "white"))
+    let magicalStrength = detailContentsContainer.addChild(new createjs.Text("100 / 100", "14px arial", "white"))
+    lmagicalStrength.x = contentX
+    magicalStrength.x = contentX2
+    lmagicalStrength.y = magicalStrength.y = contentY += 15
+
+    let lmagicalResistance = detailContentsContainer.addChild(new createjs.Text("抵抗力", "14px arial", "white"))
+    let magicalResistance = detailContentsContainer.addChild(new createjs.Text("100 / 100", "14px arial", "white"))
+    lmagicalResistance.x = contentX
+    magicalResistance.x = contentX2
+    lmagicalResistance.y = magicalResistance.y = contentY += 15
+  }
+
+  formatDetail(status, basicStatus) {
+    let formattedStatus = " ".repeat(-(status.toString().length - 3)) + status
+    let formattedBasicStatus = " ".repeat(-(basicStatus.toString().length - 3)) + basicStatus
+    return formattedStatus + " / " + formattedBasicStatus
   }
 
 }

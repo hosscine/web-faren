@@ -25,6 +25,7 @@ class Unit {
 
   resetBuff() {
     for (let key in this.base) this.buff[key] = 1
+    this.buff.nattack = 1
   }
 
   get faceBitmap() {
