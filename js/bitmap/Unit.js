@@ -1,6 +1,12 @@
 const STRING_MAP_SPECIES = ["人間系", "エルフ", "悪魔", "ドワーフ", "リザードマン", "ゴブリン", "アイスマン", "モンスター"]
 const STRING_MAP_RANK = ["E", "D", "C", "B", "A", "S"]
 const STRING_MAP_MAGIC = ["✖", "Ｄ", "Ｃ", "Ｂ", "Ａ", "Ｓ"]
+const STRING_MAP_ATTACK = ["", "通常", "毒", "石化", "麻痺", "眠り", "幻想", "即死", "吸収"]
+const STRING_MAP_MOVE = ["草原", "鈍足", "海上", "砂漠", "沼地", "山地", "森林", "雪原", "騎馬", "飛行"]
+const STRING_MAP_RESIST = {
+  physical: "通常", poison: "毒", stone: "石化", paralyze: "麻痺", sleep: "眠り", illusion: "幻想", death: "即死",
+  absorb: "吸収", holy: "神聖", fire: "火魔法", aqua: "水魔法", wind: "風魔法", earth: "土魔法", light: "光魔法", dark: "闇魔法"
+}
 
 class Unit {
   constructor(id, assets = null) {
@@ -95,6 +101,24 @@ class Unit {
 
   get magicalResistance() {
     return this.basic.magicalResistance * this.buff.magicalResistance
+  }
+
+  get attackPowers() {
+    let d = this.howToAttack
+    return [d.power1st, d.power2nd, d.power3rd, d.power4th, d.power5th]
+  }
+
+  get attackTypes() {
+    let d = this.howToAttack
+    return [d.type1st, d.type2nd, d.type3rd, d.type4th, d.type5th]
+  }
+
+  get moveType() {
+    return this.buff.moveType === 1 ? this.base.moveType : STRING_MAP_MOVE.indexOf("飛行")
+  }
+
+  get killStats() {
+    return 0
   }
 
   // 戦力指数のこと

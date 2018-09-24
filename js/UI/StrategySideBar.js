@@ -60,6 +60,54 @@ class StrategySideBar extends createjs.Container {
     let unitBitmap = this.unitDetailContainer.addChild(new createjs.Bitmap(unit.unitImage.canvas))
     unitBitmap.x = 10
     unitBitmap.y = 17
+
+    this.detailData.name.text = unit.name
+    this.detailData.species.text = unit.strSpecies
+    this.detailData.named.text = unit.isMaster || unit.characterType.named > 0 ? "（人材）" : ""
+    this.detailData.rank.text = "Rank " + unit.strRank
+    this.detailData.experience.text = "Exp " + unit.earnedExperience
+
+    this.detailData.HP.text = this.formatValue(unit.HP) + "/" + this.formatValue(unit.basic.HP)
+    this.detailData.MP.text = this.formatValue(unit.MP) + "/" + this.formatValue(unit.basic.MP)
+    this.detailData.physicalStrength.text = this.formatValue(unit.physicalStrength) + "/" + this.formatValue(unit.basic.physicalStrength)
+    this.detailData.physicalResistance.text = this.formatValue(unit.physicalResistance) + "/" + this.formatValue(unit.basic.physicalResistance)
+    this.detailData.technique.text = this.formatValue(unit.technique) + "/" + this.formatValue(unit.basic.technique)
+    this.detailData.agility.text = this.formatValue(unit.agility) + "/" + this.formatValue(unit.basic.agility)
+    this.detailData.magicalStrength.text = this.formatValue(unit.magicalStrength) + "/" + this.formatValue(unit.basic.magicalStrength)
+    this.detailData.magicalResistance.text = this.formatValue(unit.magicalResistance) + "/" + this.formatValue(unit.basic.magicalResistance)
+
+    this.detailData.magicFire.text = "火\n" + STRING_MAP_MAGIC[unit.magic.fire]
+    this.detailData.magicAqua.text = "水\n" + STRING_MAP_MAGIC[unit.magic.aqua]
+    this.detailData.magicWind.text = "風\n" + STRING_MAP_MAGIC[unit.magic.wind]
+    this.detailData.magicEarth.text = "土\n" + STRING_MAP_MAGIC[unit.magic.earth]
+    this.detailData.magicLight.text = "光\n" + STRING_MAP_MAGIC[unit.magic.light]
+    this.detailData.magicDark.text = "闇\n" + STRING_MAP_MAGIC[unit.magic.dark]
+
+    this.detailData.attackTimes.text = "攻撃 × " + unit.attackTypes.reduce((a, x) => a += x !== 0, 0)
+    this.detailData.attackTypes.text = "（" + unit.attackTypes.reduce((a, x) => a += x !== 0 ? STRING_MAP_ATTACK[x] + " " : "", "") + "）"
+    // this.detailData.uniqueSkil.text = ""
+
+    this.detailData.moveType.text = "移動タイプ：" + STRING_MAP_MOVE[unit.moveType] + "タイプ"
+    this.detailData.moveRange.text = "　　移動力：" + unit.base.moveRange
+
+    const effect = ["", "弱い", "強い", "吸収"]
+    this.detailData.resist.text = Object.keys(unit.resist).reduce((a, x) =>
+      a += unit.resist[x] === 0 ? "" : STRING_MAP_RESIST[x] + "攻撃に" + effect[parseInt(unit.resist[x])] + "\n", "")
+
+    this.detailFoot.y = this.detailFoot.offset + this.detailData.resist.getMeasuredHeight() + 5
+    this.detailData.killStats.text = this.formatValue(unit.killStats)
+    this.detailData.cost.text = unit.isMaster || unit.characterType.named > 0 ? this.formatValue(unit.cost) : this.formatValue(0)
+
+    // this.detailData = {
+    //   name: name, species: species, named: named, rank: rank, experience: experience,
+    //   HP: HP, MP: MP, physicalStrength: physicalStrength, physicalResistance: physicalResistance,
+    //   technique: technique, agility: agility, magicalStrength: magicalStrength,
+    //   magicalResistance: magicalResistance, HPrecover: HPrecover, MPrecover: MPrecover,
+    //   magicFire: magicFire, magicAqua: magicAqua, magicWind: magicWind, magicEarth: magicEarth,
+    //   magicLight: magicLight, magicDark: magicDark, attackTimes: attackTimes, attackTypes: attackTypes,
+    //   uniqueSkil: uniqueSkil, moveType: moveType, moveRange: moveRange, resist: resist,
+    //   killStats: killStats, cost: cost
+    // }
   }
 
   undisplayUnitDetauil() {
@@ -271,11 +319,11 @@ class StrategySideBar extends createjs.Container {
     this.unitDetailContainer = unitDetailContainer
 
     let background = unitDetailContainer.addChild(new createjs.Shape())
-    background.graphics.beginFill("darkblue").drawRect(0, 0, SIDEBAR_WIDTH, 500)
-    background.graphics.beginStroke("white").drawRect(5, 5, SIDEBAR_WIDTH - 10, 500)
+    background.graphics.beginFill("darkblue").drawRect(0, 0, SIDEBAR_WIDTH, 650)
+    background.graphics.beginStroke("white").drawRect(5, 5, SIDEBAR_WIDTH - 10, 650)
 
     let detailContentsContainer = unitDetailContainer.addChild(new createjs.Container())
-    
+
     let contentY = 0
     let name = detailContentsContainer.addChild(new createjs.Text("ファイアジャイアント", "15px arial", "white"))
     name.x = 45
@@ -408,17 +456,33 @@ class StrategySideBar extends createjs.Container {
     resist.x = 50
     resist.y = contentY += 30
 
-    let lkillStats = detailContentsContainer.addChild(new createjs.Text("撃破数", "14px arial", "white"))
-    let killStats = detailContentsContainer.addChild(new createjs.Text("100", "14px Courier New", "white"))
+    let detailFoot = detailContentsContainer.addChild(new createjs.Container())
+    this.detailFoot = detailFoot
+    detailFoot.offset = contentY
+    detailFoot.y = contentY += resist.getMeasuredHeight() + 17
+    contentY = 0
+
+    let lkillStats = detailFoot.addChild(new createjs.Text("撃破数", "14px arial", "white"))
+    let killStats = detailFoot.addChild(new createjs.Text("100", "14px Courier New", "white"))
     lkillStats.x = 45
     killStats.x = 125
-    lkillStats.y = killStats.y = contentY += resist.getMeasuredHeight() + 17
-    
-    let lcost = detailContentsContainer.addChild(new createjs.Text("人材費", "14px arial", "white"))
-    let cost = detailContentsContainer.addChild(new createjs.Text("  5", "14px Courier New", "white"))
+
+    let lcost = detailFoot.addChild(new createjs.Text("人件費", "14px arial", "white"))
+    let cost = detailFoot.addChild(new createjs.Text("  5", "14px Courier New", "white"))
     lcost.x = 45
     cost.x = 125
     lcost.y = cost.y = contentY += 15
+
+    this.detailData = {
+      name: name, species: species, named: named, rank: rank, experience: experience,
+      HP: HP, MP: MP, physicalStrength: physicalStrength, physicalResistance: physicalResistance,
+      technique: technique, agility: agility, magicalStrength: magicalStrength,
+      magicalResistance: magicalResistance, HPrecover: HPrecover, MPrecover: MPrecover,
+      magicFire: magicFire, magicAqua: magicAqua, magicWind: magicWind, magicEarth: magicEarth,
+      magicLight: magicLight, magicDark: magicDark, attackTimes: attackTimes, attackTypes: attackTypes,
+      uniqueSkil: uniqueSkil, moveType: moveType, moveRange: moveRange, resist: resist,
+      killStats: killStats, cost: cost
+    }
   }
 
   formatValue(value) {
