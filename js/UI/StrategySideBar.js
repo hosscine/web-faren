@@ -53,10 +53,19 @@ class StrategySideBar extends createjs.Container {
   }
 
   displayUnitDetail(unit) {
-    let unitBitmap = this.unitDetailContainer.addChild(new createjs.Bitmap(unit.unitImage.canvas))
+    if (unit.faceImageID > 0) {
+      let faceBitmap = this.unitDetailContainer.addChild(new createjs.Bitmap(unit.faceImage.canvas))
+      faceBitmap.x = 50
+      faceBitmap.y = 5
+      this.unitDetailContainer.faceBitmap = faceBitmap
+      this.detailContentsContainer.y = 100
+    }
+    else this.detailContentsContainer.y = 0
+
+    let unitBitmap = this.detailContentsContainer.addChild(new createjs.Bitmap(unit.unitImage.canvas))
     unitBitmap.x = 10
     unitBitmap.y = 17
-    this.unitDetailContainer.unitBitmap = unitBitmap
+    this.detailContentsContainer.unitBitmap = unitBitmap
 
     this.detailData.name.text = unit.name
     this.detailData.species.text = unit.strSpecies
@@ -99,7 +108,8 @@ class StrategySideBar extends createjs.Container {
   }
 
   undisplayUnitDetauil() {
-    this.unitDetailContainer.removeChild(this.unitDetailContainer.unitBitmap)
+    this.unitDetailContainer.removeChild(this.unitDetailContainer.faceBitmap)
+    this.detailContentsContainer.removeChild(this.detailContentsContainer.unitBitmap)
     this.unitDetailContainer.visible = false
   }
 
@@ -308,10 +318,11 @@ class StrategySideBar extends createjs.Container {
     this.unitDetailContainer = unitDetailContainer
 
     let background = unitDetailContainer.addChild(new createjs.Shape())
-    background.graphics.beginFill("darkblue").drawRect(0, 0, SIDEBAR_WIDTH, 650)
-    background.graphics.beginStroke("white").drawRect(5, 5, SIDEBAR_WIDTH - 10, 650)
+    background.graphics.beginFill("darkblue").drawRect(0, 0, SIDEBAR_WIDTH, 750)
+    background.graphics.beginStroke("white").drawRect(5, 5, SIDEBAR_WIDTH - 10, 750)
 
     let detailContentsContainer = unitDetailContainer.addChild(new createjs.Container())
+    this.detailContentsContainer = detailContentsContainer
 
     let contentY = 0
     let name = detailContentsContainer.addChild(new createjs.Text("ファイアジャイアント", "15px arial", "white"))
@@ -426,7 +437,7 @@ class StrategySideBar extends createjs.Container {
     attackTimes.y = contentY += 45
 
     let attackTypes = detailContentsContainer.addChild(new createjs.Text("（通常 神聖 毒）", "14px arial", "white"))
-    attackTypes.x = 30
+    attackTypes.x = 20
     attackTypes.y = contentY += 15
 
     let uniqueSkil = detailContentsContainer.addChild(new createjs.Text("弓矢 × 3", "14px arial", "white"))
