@@ -1,6 +1,7 @@
 class StrategySideBar extends SideBar {
-  constructor(playerMaster) {
+  constructor(playerMaster, mainStage) {
     super(playerMaster)
+    this.mainStage = mainStage
 
     this.setup()
   }
@@ -101,6 +102,7 @@ class StrategySideBar extends SideBar {
 
     let turnEnd = turnCommandsContainer.addChild(new Button("😴", buttonSize, buttonSize))
     turnEnd.x = contentX += buttonSize + 4
+    turnEnd.on("click", () => this.mainStage.nextMasterTurn(this.player))
 
     for (let button of turnCommandsContainer.children) {
       button.font = "40px arial"

@@ -12,7 +12,7 @@ class StrategyMapStage extends createjs.Stage {
   setup(assets) {
     this.strategyMap = this.addChild(new StrategyMap(assets.strategyMap, HEADER_HEIGTH))
     this.headerBar = headerStage.addChild(new StrategyHeaderBar())
-    this.sideBar = sidebarStage.addChild(new StrategySideBar(this.playerMaster))
+    this.sideBar = sidebarStage.addChild(new StrategySideBar(this.playerMaster, this))
 
     this.neutralMaster = new NeutralMaster(assets.neutralFlag)
 
@@ -56,7 +56,6 @@ class StrategyMapStage extends createjs.Stage {
       this.masters[i] = this.masters[rand]
       this.masters[rand] = temp
     }
-    console.log(this.masters)
     this.turnRoutine(this.masters[0])
   }
 

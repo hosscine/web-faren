@@ -15,12 +15,6 @@ class Button extends createjs.Container {
   setup(text) {
     this.background = this.addChild(new createjs.Shape())
     this.buttonText = this.addChild(new createjs.Text(text, "15px arial", "black"))
-
-    this.addEventListener("click", e => this.delegateHandleClick())
-  }
-
-  delegateHandleClick() {
-    this.selected = !this._selected
   }
 
   alignText() {
