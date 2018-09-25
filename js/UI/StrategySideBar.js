@@ -7,8 +7,9 @@ class StrategySideBar extends SideBar {
 
   setup() {
     this.setupMasterContainer()
+    this.setupTurnCommandsContainer()
     this.setupAreaInfoContainer()
-    this.setupAreaCommandContainer()
+    this.setupAreaCommandsContainer()
     this.setupStayingUnitsContainer()
     super.setupUnitOverviewContainer()
     super.setupUnitDetailContainer()
@@ -83,9 +84,33 @@ class StrategySideBar extends SideBar {
     }
   }
 
+  setupTurnCommandsContainer() {
+    let turnCommandsContainer = this.addChild(new createjs.Container())
+    turnCommandsContainer.y = 133
+
+    let contentX = 0
+    const buttonSize = 45
+    let war = turnCommandsContainer.addChild(new Button("⚔", buttonSize, buttonSize))
+    war.x = contentX += 4
+
+    let alliance = turnCommandsContainer.addChild(new Button("🤝", buttonSize, buttonSize))
+    alliance.x = contentX += buttonSize + 4
+
+    let extension = turnCommandsContainer.addChild(new Button("👐", buttonSize, buttonSize))
+    extension.x = contentX += buttonSize + 4
+
+    let turnEnd = turnCommandsContainer.addChild(new Button("😴", buttonSize, buttonSize))
+    turnEnd.x = contentX += buttonSize + 4
+
+    for (let button of turnCommandsContainer.children) {
+      button.font = "40px arial"
+      button.alignText()
+    }
+  }
+
   setupAreaInfoContainer() {
     let areaInfoContainer = this.addChild(new createjs.Container())
-    areaInfoContainer.y = 150
+    areaInfoContainer.y = 190
     this.areaInfoContainer = areaInfoContainer
 
     let name = areaInfoContainer.addChild(new createjs.Text("自宅", "15px arial", "white"))
@@ -125,34 +150,34 @@ class StrategySideBar extends SideBar {
     }
   }
 
-  setupAreaCommandContainer() {
-    this.areaCommandContainer = this.addChild(new createjs.Container())
-    this.areaCommandContainer.y = 300
+  setupAreaCommandsContainer() {
+    this.areaCommandsContainer = this.addChild(new createjs.Container())
+    this.areaCommandsContainer.y = 300
     this.stayCommands = {}
 
     const BUTTON_WIDTH = 85
     const LEFT_X = 10
     const RIGHT_X = 110
     let contentY = 0
-    let stayLabel = this.areaCommandContainer.addChild(new createjs.Text("待機時の行動", "15px arial", "white"))
+    let stayLabel = this.areaCommandsContainer.addChild(new createjs.Text("待機時の行動", "15px arial", "white"))
     stayLabel.x = 10
 
-    this.stayCommands.developing = this.areaCommandContainer.addChild(new Button("街開発", BUTTON_WIDTH, 20))
+    this.stayCommands.developing = this.areaCommandsContainer.addChild(new Button("街開発", BUTTON_WIDTH, 20))
     this.stayCommands.developing.x = RIGHT_X
 
-    this.stayCommands.training = this.areaCommandContainer.addChild(new Button("部隊訓練", BUTTON_WIDTH, 20))
+    this.stayCommands.training = this.areaCommandsContainer.addChild(new Button("部隊訓練", BUTTON_WIDTH, 20))
     this.stayCommands.training.x = LEFT_X
     this.stayCommands.training.y = contentY += 23
 
-    this.stayCommands.searching = this.areaCommandContainer.addChild(new Button("人材捜索", BUTTON_WIDTH, 20))
+    this.stayCommands.searching = this.areaCommandsContainer.addChild(new Button("人材捜索", BUTTON_WIDTH, 20))
     this.stayCommands.searching.x = RIGHT_X
     this.stayCommands.searching.y = contentY
 
-    this.stayCommands.laying = this.areaCommandContainer.addChild(new Button("道路建設", BUTTON_WIDTH, 20))
+    this.stayCommands.laying = this.areaCommandsContainer.addChild(new Button("道路建設", BUTTON_WIDTH, 20))
     this.stayCommands.laying.x = LEFT_X
     this.stayCommands.laying.y = contentY += 23
 
-    this.stayCommands.building = this.areaCommandContainer.addChild(new Button("城壁建設", BUTTON_WIDTH, 20))
+    this.stayCommands.building = this.areaCommandsContainer.addChild(new Button("城壁建設", BUTTON_WIDTH, 20))
     this.stayCommands.building.x = RIGHT_X
     this.stayCommands.building.y = contentY
   }

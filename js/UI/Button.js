@@ -6,7 +6,7 @@ class Button extends createjs.Container {
 
     this.width = width
     this.height = height
-    this.fillColor = "darkgray"
+    this.fillColor = "lightgray"
     this.selected = false
 
     this.alignText()
@@ -32,8 +32,8 @@ class Button extends createjs.Container {
 
   set selected(value) {
     this._selected = value
-    if (value) this.fillColor = "lightgray"
-    else this.fillColor = "darkgray"
+    if (value) this.fillColor = "darkgray"
+    else this.fillColor = "lightgray"
   }
 
   set text(value) {
