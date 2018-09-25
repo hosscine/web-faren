@@ -145,28 +145,38 @@ class StrategySideBar extends createjs.Container {
     this.masterContainer = this.addChild(new createjs.Container())
 
     let face = this.masterContainer.addChild(this.player.faceBitmap)
-    face.scaleX = face.scaleY = face.x = face.y = 1
+    face.scaleX = face.scaleY = 1
+    face.y = 5
 
     let contentY = 0
-    this.income = this.masterContainer.addChild(new createjs.Text("収入 0Ley", "15px arial", "white"))
-    this.income.x = 100
-    this.income.y = contentY += 5
+    let flag = this.masterContainer.addChild(this.player.flagBitmap)
+    flag.x = 110
+    flag.y = 7
 
-    this.salary = this.masterContainer.addChild(new createjs.Text("人材費 0Ley", "15px arial", "white"))
-    this.salary.x = 100
-    this.salary.y = contentY += 20
+    let income = this.masterContainer.addChild(new createjs.Text("収入 0Ley", "15px arial", "white"))
+    income.x = 100
+    income.y = contentY += 45
 
-    this.fund = this.masterContainer.addChild(new createjs.Text("軍資金 0Ley", "15px arial", "white"))
-    this.fund.x = 100
-    this.fund.y = contentY += 20
+    let salary = this.masterContainer.addChild(new createjs.Text("人材費 0Ley", "15px arial", "white"))
+    salary.x = 100
+    salary.y = contentY += 20
 
-    this.revenue = this.masterContainer.addChild(new createjs.Text("( +0Ley )", "15px arial", "white"))
-    this.revenue.x = 100
-    this.revenue.y = contentY += 20
+    let fund = this.masterContainer.addChild(new createjs.Text("軍資金 0Ley", "15px arial", "white"))
+    fund.x = 100
+    fund.y = contentY += 20
 
-    // let flag = this.masterContainer.addChild(new MotionBitmap(this.player.flag.canvas, FLAG_SIZE, FLAG_SIZE, FLAG_MOTION_INTERVAL))
-    // flag.x = 125
-    // flag.y = 60
+    let revenue = this.masterContainer.addChild(new createjs.Text("( +0Ley )", "15px arial", "white"))
+    revenue.x = 100
+    revenue.y = contentY += 20
+
+    let name = this.masterContainer.addChild(new createjs.Text(this.player.name, "15px arial", "white"))
+    name.textAlign = "center"
+    name.x = 50
+    name.y = 105
+
+    this.masterData = {
+      income: income, salary: salary, fund: fund, revenue: revenue, name: name
+    }
   }
 
   setupAreaInfoContainer() {
