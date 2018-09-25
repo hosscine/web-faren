@@ -1,4 +1,4 @@
-const STRING_MAP_SPECIES = ["人間系", "エルフ", "悪魔", "ドワーフ", "リザードマン", "ゴブリン", "アイスマン", "モンスター"]
+const STRING_MAP_SPECIES = ["人間系", "リザードマン", "ゴブリン", "エルフ", "ドワーフ", "悪魔", "アイスマン", "モンスター"]
 const STRING_MAP_RANK = ["E", "D", "C", "B", "A", "S"]
 const STRING_MAP_MAGIC = ["✖", "Ｄ", "Ｃ", "Ｂ", "Ａ", "Ｓ"]
 const STRING_MAP_ATTACK = ["", "通常", "毒", "石化", "麻痺", "眠り", "幻想", "即死", "吸収", "神聖"]
