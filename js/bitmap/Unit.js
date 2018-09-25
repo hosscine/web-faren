@@ -1,7 +1,7 @@
 const STRING_MAP_SPECIES = ["人間系", "エルフ", "悪魔", "ドワーフ", "リザードマン", "ゴブリン", "アイスマン", "モンスター"]
 const STRING_MAP_RANK = ["E", "D", "C", "B", "A", "S"]
 const STRING_MAP_MAGIC = ["✖", "Ｄ", "Ｃ", "Ｂ", "Ａ", "Ｓ"]
-const STRING_MAP_ATTACK = ["", "通常", "毒", "石化", "麻痺", "眠り", "幻想", "即死", "吸収"]
+const STRING_MAP_ATTACK = ["", "通常", "毒", "石化", "麻痺", "眠り", "幻想", "即死", "吸収", "神聖"]
 const STRING_MAP_MOVE = ["草原", "鈍足", "海上", "砂漠", "沼地", "山地", "森林", "雪原", "騎馬", "飛行"]
 const STRING_MAP_RESIST = {
   physical: "通常", poison: "毒", stone: "石化", paralyze: "麻痺", sleep: "眠り", illusion: "幻想", death: "即死",

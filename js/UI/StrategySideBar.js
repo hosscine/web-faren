@@ -1,5 +1,4 @@
 const SIDEBAR_WIDTH = 200
-// const SIDEBAR_MARGINE = 5
 
 class StrategySideBar extends createjs.Container {
   constructor(playerMaster) {
@@ -54,12 +53,10 @@ class StrategySideBar extends createjs.Container {
   }
 
   displayUnitDetail(unit) {
-    if (this.flag) this.undisplayUnitDetauil()
-    this.flag = true
-
     let unitBitmap = this.unitDetailContainer.addChild(new createjs.Bitmap(unit.unitImage.canvas))
     unitBitmap.x = 10
     unitBitmap.y = 17
+    this.unitDetailContainer.unitBitmap = unitBitmap
 
     this.detailData.name.text = unit.name
     this.detailData.species.text = unit.strSpecies
@@ -98,20 +95,12 @@ class StrategySideBar extends createjs.Container {
     this.detailData.killStats.text = this.formatValue(unit.killStats)
     this.detailData.cost.text = unit.isMaster || unit.characterType.named > 0 ? this.formatValue(unit.cost) : this.formatValue(0)
 
-    // this.detailData = {
-    //   name: name, species: species, named: named, rank: rank, experience: experience,
-    //   HP: HP, MP: MP, physicalStrength: physicalStrength, physicalResistance: physicalResistance,
-    //   technique: technique, agility: agility, magicalStrength: magicalStrength,
-    //   magicalResistance: magicalResistance, HPrecover: HPrecover, MPrecover: MPrecover,
-    //   magicFire: magicFire, magicAqua: magicAqua, magicWind: magicWind, magicEarth: magicEarth,
-    //   magicLight: magicLight, magicDark: magicDark, attackTimes: attackTimes, attackTypes: attackTypes,
-    //   uniqueSkil: uniqueSkil, moveType: moveType, moveRange: moveRange, resist: resist,
-    //   killStats: killStats, cost: cost
-    // }
+    this.unitDetailContainer.visible = true
   }
 
   undisplayUnitDetauil() {
-    this.unitDetailContainer.removeChildAt(this.unitDetailContainer.children.length - 1)
+    this.unitDetailContainer.removeChild(this.unitDetailContainer.unitBitmap)
+    this.unitDetailContainer.visible = false
   }
 
   displayUnitOverview(unit) {
@@ -472,6 +461,15 @@ class StrategySideBar extends createjs.Container {
     lcost.x = 45
     cost.x = 125
     lcost.y = cost.y = contentY += 15
+
+    let button = detailFoot.addChild(new Button("閉じる", 100, 20))
+    button.regX = this.getBounds().width / 4
+    button.x = 100
+    button.y = contentY += 40
+
+    unitDetailContainer.on("click", () => this.undisplayUnitDetauil())
+    button.on("click", () => this.undisplayUnitDetauil())
+    unitDetailContainer.visible = false
 
     this.detailData = {
       name: name, species: species, named: named, rank: rank, experience: experience,
