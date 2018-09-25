@@ -23,12 +23,13 @@ class StrategySideBar extends createjs.Container {
   }
 
   displayArea(area) {
-    this.areaIncome.text = "収入  " + area.income
-    this.nfamily.text = "同種族  " + 0 + "人"
-    this.transportation.text = "交通  " + (area.isBestTransport ? "〇" : "×")
-    this.wall.text = "城壁 " + area.wall + "/" + area.maxWall
-    this.city.text = "街 " + area.city + "/" + area.maxCity
-    this.road.text = "道路 " + area.road + "/" + area.maxRoad
+    this.areaData.name.text = area.name
+    this.areaData.income.text = "収入  " + area.income
+    this.areaData.nfamily.text = "同種族  " + 0 + "人"
+    this.areaData.transportation.text = "交通  " + (area.isBestTransport ? "〇" : "×")
+    this.areaData.wall.text = "城壁 " + area.wall + "/" + area.maxWall
+    this.areaData.city.text = "街 " + area.city + "/" + area.maxCity
+    this.areaData.road.text = "道路 " + area.road + "/" + area.maxRoad
 
     this.displayUnits(area.stayingUnits)
   }
@@ -169,38 +170,45 @@ class StrategySideBar extends createjs.Container {
   }
 
   setupAreaInfoContainer() {
-    this.areaInfoContainer = this.addChild(new createjs.Container())
-    this.areaInfoContainer.y = 150
+    let areaInfoContainer = this.addChild(new createjs.Container())
+    areaInfoContainer.y = 150
+    this.areaInfoContainer = areaInfoContainer
 
-    let infoLabel = this.areaInfoContainer.addChild(new createjs.Text("エリア情報", "15px arial", "white"))
+    let name = areaInfoContainer.addChild(new createjs.Text("自宅", "15px arial", "white"))
+    name.x = 10
     let contentY = 0
 
-    let rect = this.areaInfoContainer.addChild(new createjs.Shape())
+    let rect = areaInfoContainer.addChild(new createjs.Shape())
     rect.graphics.beginStroke("white").drawRoundRect(5, contentY += 18, SIDEBAR_WIDTH - 10, 80, 5)
 
-    this.areaIncome = this.areaInfoContainer.addChild(new createjs.Text("収入  0", "15px arial", "white"))
-    this.areaIncome.x = 20
-    this.areaIncome.y = contentY += 10
+    let income = areaInfoContainer.addChild(new createjs.Text("収入  0", "15px arial", "white"))
+    income.x = 20
+    income.y = contentY += 10
 
-    this.nfamily = this.areaInfoContainer.addChild(new createjs.Text("同種族  0人", "15px arial", "white"))
-    this.nfamily.x = 100
-    this.nfamily.y = contentY
+    let nfamily = areaInfoContainer.addChild(new createjs.Text("同種族  0人", "15px arial", "white"))
+    nfamily.x = 100
+    nfamily.y = contentY
 
-    this.transportation = this.areaInfoContainer.addChild(new createjs.Text("交通  ×", "15px arial", "white"))
-    this.transportation.x = 20
-    this.transportation.y = contentY += 25
+    let transportation = areaInfoContainer.addChild(new createjs.Text("交通  ×", "15px arial", "white"))
+    transportation.x = 20
+    transportation.y = contentY += 25
 
-    this.wall = this.areaInfoContainer.addChild(new createjs.Text("城壁 100/100", "15px arial", "white"))
-    this.wall.x = 100
-    this.wall.y = contentY
+    let wall = areaInfoContainer.addChild(new createjs.Text("城壁 100/100", "15px arial", "white"))
+    wall.x = 100
+    wall.y = contentY
 
-    this.city = this.areaInfoContainer.addChild(new createjs.Text("街 100/100", "15px arial", "white"))
-    this.city.x = 20
-    this.city.y = contentY += 20
+    let city = areaInfoContainer.addChild(new createjs.Text("街 100/100", "15px arial", "white"))
+    city.x = 20
+    city.y = contentY += 20
 
-    this.road = this.areaInfoContainer.addChild(new createjs.Text("道路 100/100", "15px arial", "white"))
-    this.road.x = 100
-    this.road.y = contentY
+    let road = areaInfoContainer.addChild(new createjs.Text("道路 100/100", "15px arial", "white"))
+    road.x = 100
+    road.y = contentY
+
+    this.areaData = {
+      name: name, income: income, nfamily: nfamily,
+      transportation: transportation, wall: wall, city: city, road: road
+    }
   }
 
   setupAreaCommandContainer() {
@@ -249,6 +257,7 @@ class StrategySideBar extends createjs.Container {
     let unitOverviewContainer = this.addChild(new createjs.Container())
     this.unitOverviewContainer = unitOverviewContainer
     unitOverviewContainer.y = 600
+    unitOverviewContainer.visible = false
 
     let rect = unitOverviewContainer.addChild(new createjs.Shape())
     rect.graphics.beginStroke("white").drawRect(5, 0, SIDEBAR_WIDTH - 10, 118)
@@ -316,6 +325,7 @@ class StrategySideBar extends createjs.Container {
   setupUnitDetailContainer() {
     let unitDetailContainer = this.addChild(new createjs.Container())
     this.unitDetailContainer = unitDetailContainer
+    unitDetailContainer.visible = false
 
     let background = unitDetailContainer.addChild(new createjs.Shape())
     background.graphics.beginFill("darkblue").drawRect(0, 0, SIDEBAR_WIDTH, 750)
@@ -480,7 +490,6 @@ class StrategySideBar extends createjs.Container {
 
     unitDetailContainer.on("click", () => this.undisplayUnitDetauil())
     button.on("click", () => this.undisplayUnitDetauil())
-    unitDetailContainer.visible = false
 
     this.detailData = {
       name: name, species: species, named: named, rank: rank, experience: experience,

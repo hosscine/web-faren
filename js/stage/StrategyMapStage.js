@@ -22,7 +22,10 @@ class StrategyMapStage extends createjs.Stage {
     this.setupAreas(assets) // this.areas を作る
     this.placeUniqueUnits(assets)
     this.strategyMap.setupAreaFlag(this.areas)
-    for (let area of this.areas) area.initialEmployment()
+    for (let area of this.areas) {
+      area.initialEmployment()
+      if (area.owner.isPlayer && area.stayMaster) this.sideBar.displayArea(area)
+    }
   }
 
   placeUniqueUnits(assets) {
@@ -41,7 +44,7 @@ class StrategyMapStage extends createjs.Stage {
       const gameLevel = 4
       if (ownerID > 0)
         this.areas.push(new Area(this.areaData.data[i], this.masters[ownerID - 1], this.areas, assets, this.sideBar, gameLevel))
-      else 
+      else
         this.areas.push(new Area(this.areaData.data[i], this.neutralMaster, this.areas, assets, this.sideBar, gameLevel))
     }
   }
