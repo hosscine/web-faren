@@ -16,6 +16,13 @@ class StrategySideBar extends SideBar {
     super.setupUnitDetailContainer()
   }
 
+  displayMaster() {
+    this.masterData.income.text = "収入 " + this.player.income + "Ley"
+    this.masterData.salary.text = "人材費 " + this.player.outgo + "Ley"
+    this.masterData.fund.text = "軍資金 " + this.player.fund + "Ley"
+    this.masterData.revenue.text = "( +" + (this.player.income - this.player.outgo) + "Ley )"
+  }
+
   displayArea(area) {
     this.areaData.name.text = area.name
     this.areaData.income.text = "収入  " + area.income

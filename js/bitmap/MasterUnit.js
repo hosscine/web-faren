@@ -12,6 +12,9 @@ class MasterUnit extends Unit {
     this.name = name
     this.difficulty = difficulty
     this.explanation = explanation
+    this._fund = 0
+
+    this.dominatingAreas = []
   }
 
   setup(assets) {
@@ -63,5 +66,28 @@ class MasterUnit extends Unit {
         }
         
     return units
+  }
+
+  dominateArea(area) {
+    this.dominatingAreas.push(area)
+  }
+
+  releaseArea(area) {
+    this.dominatingAreas.splice(this.dominatingAreas.indexOf(area), 1)
+  }
+
+  get income() {
+    return this.dominatingAreas.reduce((a, x) => a + x.income, 0)
+  }
+
+  get outgo() {
+    return this.dominatingAreas.reduce((a, x) => a + x.outgo, 0)
+  }
+
+  get fund() {
+    return this._fund
+  }
+  set fund(value) {
+    this._fund = value
   }
 }

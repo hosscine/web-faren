@@ -60,7 +60,9 @@ class StrategyMapStage extends createjs.Stage {
   }
 
   turnRoutine(master) {
+    master.fund += master.income - master.outgo
     if (master.isPlayer) {
+      this.sideBar.displayMaster()
       return 0
     }
     else {

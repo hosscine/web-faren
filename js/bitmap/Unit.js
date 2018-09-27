@@ -126,4 +126,8 @@ class Unit {
     return Math.floor((this.experience + 20) * 1.6 ** this.rank)
   }
 
+  get salary() {
+    return this.characterType.named === 1 ? this.cost : 0
+  }
+
 }

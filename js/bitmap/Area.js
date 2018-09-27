@@ -4,6 +4,7 @@ const LEVEL_INITIAL_FUND_MAGNIFICATION = [3, 5, 7, 10, 14]
 class Area {
   constructor(data, owner, allAreas, assets, sidebar, gameLevel) {
     this.owner = owner
+    owner.dominateArea(this)
     this.allAreas = allAreas
     this.assets = assets
     this.stayingUnits = []
@@ -60,6 +61,10 @@ class Area {
 
   get income() {
     return Math.round((this.basicIncome + (this.city / 4)) * (this.isBestTransport ? 2 : 1))
+  }
+
+  get outgo() {
+    return this.stayingUnits.reduce((a, x) => a + x.salary, 0)
   }
 
   get ownerNameFlag() {
