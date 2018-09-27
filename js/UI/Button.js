@@ -29,6 +29,9 @@ class Button extends createjs.Container {
     if (value) this.fillColor = "darkgray"
     else this.fillColor = "lightgray"
   }
+  get selected() {
+    return this._selected
+  }
 
   set text(value) {
     this.buttonText.text = value

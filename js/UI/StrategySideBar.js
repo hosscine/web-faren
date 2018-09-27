@@ -11,6 +11,7 @@ class StrategySideBar extends SideBar {
     this.setupTurnCommandsContainer()
     this.setupAreaInfoContainer()
     this.setupAreaCommandsContainer()
+    this.setupUnitCommandsContainer()
     this.setupStayingUnitsContainer()
     super.setupUnitOverviewContainer()
     super.setupUnitDetailContainer()
@@ -24,6 +25,7 @@ class StrategySideBar extends SideBar {
   }
 
   displayArea(area) {
+    this.displayingArea = area
     this.areaData.name.text = area.name
     this.areaData.income.text = "収入  " + area.income
     this.areaData.nfamily.text = "同種族  " + 0 + "人"
@@ -32,16 +34,16 @@ class StrategySideBar extends SideBar {
     this.areaData.city.text = "街 " + area.city + "/" + area.maxCity
     this.areaData.road.text = "道路 " + area.road + "/" + area.maxRoad
 
-    this.displayUnits(area.stayingUnits)
+    this.displayUnits(area.stayingUnits, this.displayUnitDetail)
   }
 
-  displayUnits(units) {
+  displayUnits(units, handleClick) {
     this.stayingUnitsContainer.removeAllChildren()
     let x = 12
     let y = 10
 
     for (let unit of units) {
-      let bitmap = unit.getUnitBitmap(this)
+      let bitmap = unit.getUnitBitmap(handleClick, this.displayUnitOverview, this.undisplayUnitOverview)
       bitmap.x = x
       bitmap.y = y
       this.stayingUnitsContainer.addChild(bitmap)
@@ -52,6 +54,14 @@ class StrategySideBar extends SideBar {
         y += 40
       }
     }
+  }
+
+  toggleEmployMode() {
+
+  }
+
+  toggleUnemployMode() {
+
   }
 
   setupMasterContainer() {
@@ -199,5 +209,29 @@ class StrategySideBar extends SideBar {
     rect.graphics.beginStroke("white").drawRoundRect(5, 0, SIDEBAR_WIDTH - 10, 175, 5)
 
     this.stayingUnitsContainer = stayingParent.addChild(new createjs.Container())
+  }
+
+  setupUnitCommandsContainer() {
+    //👍👎📥📤🕺🚶🤑	😱
+    let unitCommandsContainer = this.addChild(new createjs.Container())
+    unitCommandsContainer.y = 370
+
+    let contentX = 7
+    const buttonSize = 25
+    let move = unitCommandsContainer.addChild(new Button("🚶", buttonSize, buttonSize))
+    move.x = contentX += 4
+
+    let employ = unitCommandsContainer.addChild(new Button("📥", buttonSize, buttonSize))
+    employ.x = contentX += buttonSize + 4
+    employ.on(this.displayingArea, this.toggleEmployMode)
+    
+    let unemploy = unitCommandsContainer.addChild(new Button("📤", buttonSize, buttonSize))
+    unemploy.x = contentX += buttonSize + 4
+    unemploy.on(this.displayingArea, this.toggleUnemployMode)
+
+    for (let button of unitCommandsContainer.children) {
+      button.font = "20px arial"
+      button.alignText()
+    }
   }
 }
