@@ -34,16 +34,23 @@ class StrategySideBar extends SideBar {
     this.areaData.city.text = "街 " + area.city + "/" + area.maxCity
     this.areaData.road.text = "道路 " + area.road + "/" + area.maxRoad
 
-    this.displayUnits(area.stayingUnits, this.displayUnitDetail)
+    let callbacks = {
+      click: "displayUnitDetail",
+      mouseover: "displayUnitOverview",
+      mouseout: "undisplayUnitOverview"
+    }
+    this.displayUnits(area.stayingUnits, callbacks)
   }
 
-  displayUnits(units, handleClick) {
+  displayUnits(units, callbacks, color = "white") {
     this.stayingUnitsContainer.removeAllChildren()
+    let rect = this.stayingUnitsContainer.addChild(new createjs.Shape())
+    rect.graphics.beginStroke(color).drawRoundRect(5, 0, SIDEBAR_WIDTH - 10, 175, 5)
+
     let x = 12
     let y = 10
-
     for (let unit of units) {
-      let bitmap = unit.getUnitBitmap(handleClick, this.displayUnitOverview, this.undisplayUnitOverview)
+      let bitmap = unit.getUnitBitmap(this, callbacks)
       bitmap.x = x
       bitmap.y = y
       this.stayingUnitsContainer.addChild(bitmap)
@@ -56,11 +63,16 @@ class StrategySideBar extends SideBar {
     }
   }
 
-  toggleEmployMode() {
-
+  switchEmployMode() {
+    let callbacks = { click: "displayEmployCandidates" }
+    this.displayUnits(this.displayingArea.stayingUnits, callbacks, "red")
   }
 
-  toggleUnemployMode() {
+  displayEmployCandidates(unit) {
+    console.log(this, unit)
+  }
+
+  switchUnemployMode() {
 
   }
 
@@ -202,13 +214,8 @@ class StrategySideBar extends SideBar {
   }
 
   setupStayingUnitsContainer() {
-    let stayingParent = this.addChild(new createjs.Container())
-    stayingParent.y = 400
-
-    let rect = stayingParent.addChild(new createjs.Shape())
-    rect.graphics.beginStroke("white").drawRoundRect(5, 0, SIDEBAR_WIDTH - 10, 175, 5)
-
-    this.stayingUnitsContainer = stayingParent.addChild(new createjs.Container())
+    this.stayingUnitsContainer = this.addChild(new createjs.Container())
+    this.stayingUnitsContainer.y = 400
   }
 
   setupUnitCommandsContainer() {
@@ -223,11 +230,11 @@ class StrategySideBar extends SideBar {
 
     let employ = unitCommandsContainer.addChild(new Button("📥", buttonSize, buttonSize))
     employ.x = contentX += buttonSize + 4
-    employ.on(this.displayingArea, this.toggleEmployMode)
-    
+    employ.on("click", () => this.switchEmployMode())
+
     let unemploy = unitCommandsContainer.addChild(new Button("📤", buttonSize, buttonSize))
     unemploy.x = contentX += buttonSize + 4
-    unemploy.on(this.displayingArea, this.toggleUnemployMode)
+    unemploy.on("click", () => this.switchUnemployMode())
 
     for (let button of unitCommandsContainer.children) {
       button.font = "20px arial"

@@ -42,12 +42,17 @@ class Unit {
     return new createjs.Bitmap(this.faceImage.canvas)
   }
 
-  getUnitBitmap(handleClick, handleMouseover, handleMouseout) {
+  getUnitBitmap(displayer, callbacks) {
+    this.displayer = displayer
     let bitmap = new createjs.Bitmap(this.unitImage.canvas)
-    if (handleClick) bitmap.on("click", () => handleClick(this))
-    if (handleMouseover) bitmap.on("mouseover", () => handleMouseover(this))
-    if (handleMouseout) bitmap.on("mouseout", () => handleMouseout(this))
+    if (callbacks.click) bitmap.on("click", () => this.sendCallback(callbacks.click))
+    if (callbacks.mouseover) bitmap.on("mouseover", () => this.sendCallback(callbacks.mouseover))
+    if (callbacks.mouseout) bitmap.on("mouseout", () => this.sendCallback(callbacks.mouseout))
     return bitmap
+  }
+
+  sendCallback(methodName) {
+    this.displayer[methodName](this)
   }
 
   get strSpecies() {
