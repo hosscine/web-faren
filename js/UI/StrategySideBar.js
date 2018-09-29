@@ -1,7 +1,8 @@
 class StrategySideBar extends SideBar {
-  constructor(playerMaster, mainStage) {
+  constructor(playerMaster, mainStage, assets) {
     super(playerMaster)
     this.mainStage = mainStage
+    this.assets = assets
 
     this.setup()
   }
@@ -64,12 +65,39 @@ class StrategySideBar extends SideBar {
   }
 
   switchEmployMode() {
-    let callbacks = { click: "displayEmployCandidates" }
+    let callbacks = { 
+      click: "displayEmployCandidates",
+      mouseover: "displayUnitOverview",
+      mouseout: "undisplayUnitOverview"
+    }
     this.displayUnits(this.displayingArea.stayingUnits, callbacks, "red")
   }
 
   displayEmployCandidates(unit) {
-    console.log(this, unit)
+    let candidates1 = unit.employable.concat()
+    let candidates2 = this.displayingArea.employable.concat()
+    for (let i in candidates1) candidates1[i] = new Unit(candidates1[i], this.assets)
+    for (let i in candidates2) candidates2[i] = new Unit(candidates2[i], this.assets)
+    candidates1.sort((a, b) => -(a.cost - b.cost))
+    candidates2.sort((a, b) => -(a.cost - b.cost))
+    let candidates = candidates1.concat(candidates2)
+
+    let callbacks = {
+      click: "employUnit",
+      mouseover: "displayUnitOverview",
+      mouseout: "undisplayUnitOverview"
+    }
+    this.displayUnits(candidates, callbacks, "red")
+  }
+
+  employUnit(unit) {
+    if (this.player.pay(unit.cost)) {
+      this.displayingArea.placeUnits(unit)
+      this.displayingArea.sortStayingUnits()
+      this.displayMaster(this.player)
+    }
+    else alert("ユニットの雇用費を払えません")
+    this.displayArea(this.displayingArea)
   }
 
   switchUnemployMode() {

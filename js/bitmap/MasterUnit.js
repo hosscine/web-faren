@@ -90,4 +90,10 @@ class MasterUnit extends Unit {
   set fund(value) {
     this._fund = value
   }
+
+  pay(value) {
+    if (this.fund < value) return false
+    this.fund -= value
+    return true
+  }
 }
