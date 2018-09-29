@@ -48,8 +48,8 @@ class SideBar extends createjs.Container {
     this.detailData.magicLight.text = "光\n" + STRING_MAP_MAGIC[unit.magic.light]
     this.detailData.magicDark.text = "闇\n" + STRING_MAP_MAGIC[unit.magic.dark]
 
-    this.detailData.attackTimes.text = "攻撃 × " + unit.attackTypes.reduce((a, x) => a + x !== 0, 0)
-    this.detailData.attackTypes.text = "（" + unit.attackTypes.reduce((a, x) => a + x !== 0 ? STRING_MAP_ATTACK[x] + " " : "", "") + "）"
+    this.detailData.attackTimes.text = "攻撃 × " + unit.attackTypes.reduce((a, x) => a + (x !== 0), 0)
+    this.detailData.attackTypes.text = "（" + unit.attackTypes.reduce((a, x) => a + (x !== 0 ? STRING_MAP_ATTACK[x] + " " : ""), "") + "）"
     // this.detailData.uniqueSkil.text = ""
 
     this.detailData.moveType.text = "移動タイプ：" + STRING_MAP_MOVE[unit.moveType] + "タイプ"
@@ -57,7 +57,7 @@ class SideBar extends createjs.Container {
 
     const effect = ["", "弱い", "強い", "吸収"]
     this.detailData.resist.text = Object.keys(unit.resist).reduce((a, x) =>
-      a + unit.resist[x] === 0 ? "" : STRING_MAP_RESIST[x] + "攻撃に" + effect[parseInt(unit.resist[x])] + "\n", "")
+      a + (unit.resist[x] === 0 ? "" : STRING_MAP_RESIST[x] + "攻撃に" + effect[parseInt(unit.resist[x])] + "\n"), "")
 
     this.detailFoot.y = this.detailFoot.offset + this.detailData.resist.getMeasuredHeight() + 5
     this.detailData.killStats.text = this.formatValue(unit.killStats)

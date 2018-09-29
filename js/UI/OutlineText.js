@@ -6,19 +6,10 @@ class OutlineText extends createjs.Container {
     let outlineText = frontText.clone()
     outlineText.color = "black"
     outlineText.outline = 2
-
-    this.setup()
+    this.addChild(outlineText, frontText)
   }
 
-  set text(text) {
-    for (let child of this.children) child.text = value
-  }
-  get text() {
-    return (this.children[0].text)
-  }
-
-  set textAlign(value) {
-    for (let child of this.children) child.textAlign = value
-  }
-
+  set text(value) { for (let child of this.children) child.text = value }
+  get text() { return (this.children[0].text) }
+  set textAlign(value) { for (let child of this.children) child.textAlign = value }
 }

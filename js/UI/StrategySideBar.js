@@ -43,7 +43,7 @@ class StrategySideBar extends SideBar {
     this.displayUnits(area.stayingUnits, callbacks)
   }
 
-  displayUnits(units, callbacks, color = "white") {
+  displayUnits(units, callbacks, color = "white", badge) {
     this.stayingUnitsContainer.removeAllChildren()
     let rect = this.stayingUnitsContainer.addChild(new createjs.Shape())
     rect.graphics.beginStroke(color).drawRoundRect(5, 0, SIDEBAR_WIDTH - 10, 175, 5)
@@ -51,7 +51,7 @@ class StrategySideBar extends SideBar {
     let x = 12
     let y = 10
     for (let unit of units) {
-      let bitmap = unit.getUnitBitmap(this, callbacks)
+      let bitmap = unit.getUnitBitmap(this, callbacks, badge)
       bitmap.x = x
       bitmap.y = y
       this.stayingUnitsContainer.addChild(bitmap)
@@ -87,7 +87,7 @@ class StrategySideBar extends SideBar {
       mouseover: "displayUnitOverview",
       mouseout: "undisplayUnitOverview"
     }
-    this.displayUnits(candidates, callbacks, "red")
+    this.displayUnits(candidates, callbacks, "red", "cost")
   }
 
   employUnit(unit) {

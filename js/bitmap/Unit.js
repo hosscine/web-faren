@@ -26,6 +26,7 @@ class Unit {
     this.calculateBasicStatus()
   }
 
+  // ランクによって変動するステータスに修正をかける
   calculateBasicStatus() {
     for (let key in this.base) this.basic[key] = this.base[key] * 1.08 ** this.rank
   }
@@ -42,84 +43,56 @@ class Unit {
     return new createjs.Bitmap(this.faceImage.canvas)
   }
 
-  getUnitBitmap(displayer, callbacks) {
+  getUnitBitmap(displayer, callbacks, badge) {
     this.displayer = displayer
     let bitmap = new createjs.Bitmap(this.unitImage.canvas)
     if (callbacks.click) bitmap.on("click", () => this.sendCallback(callbacks.click))
     if (callbacks.mouseover) bitmap.on("mouseover", () => this.sendCallback(callbacks.mouseover))
     if (callbacks.mouseout) bitmap.on("mouseout", () => this.sendCallback(callbacks.mouseout))
-    return bitmap
+
+    let badgeText
+    if (badge === "end") badgeText = new OutlineText("End")
+    else if (badge === "cost") badgeText = new OutlineText(this.cost)
+    else if (badge === "red" || badge === "blue") badgeText = new createjs.Text("♦", "15px arial", badge)
+    if (badge === "end" || badge === "cost"){
+      badgeText.textAlign = "right"
+      badgeText.x = 32
+      badgeText.y = 20
+    } 
+
+    let container = new createjs.Container()
+    container.addChild(bitmap, badgeText)
+    return container
   }
 
   sendCallback(methodName) {
     this.displayer[methodName](this)
   }
 
-  get strSpecies() {
-    return STRING_MAP_SPECIES[this.species]
-  }
+  get strSpecies() { return STRING_MAP_SPECIES[this.species] }
+  get strRank() { return STRING_MAP_RANK[this.rank] }
 
-  get strRank() {
-    return STRING_MAP_RANK[this.rank]
-  }
-
-  get HP() {
-    return this.basic.HP * this.buff.HP
-  }
-
-  get MP() {
-    return this.basic.MP * this.buff.MP
-  }
-
-  get physicalStrength() {
-    return this.basic.physicalStrength * this.buff.physicalStrength
-  }
-
-  get physicalResistance() {
-    return this.basic.physicalResistance * this.buff.physicalResistance
-  }
-
-  get technique() {
-    return this.basic.technique * this.buff.technique
-  }
-
-  get agility() {
-    return this.basic.agility * this.buff.agility
-  }
-
-  get magicalStrength() {
-    return this.basic.magicalStrength * this.buff.magicalStrength
-  }
-
-  get magicalResistance() {
-    return this.basic.magicalResistance * this.buff.magicalResistance
-  }
+  get HP() { return this.basic.HP * this.buff.HP }
+  get MP() { return this.basic.MP * this.buff.MP }
+  get physicalStrength() { return this.basic.physicalStrength * this.buff.physicalStrength }
+  get physicalResistance() { return this.basic.physicalResistance * this.buff.physicalResistance }
+  get technique() { return this.basic.technique * this.buff.technique }
+  get agility() { return this.basic.agility * this.buff.agility }
+  get magicalStrength() { return this.basic.magicalStrength * this.buff.magicalStrength }
+  get magicalResistance() { return this.basic.magicalResistance * this.buff.magicalResistance }
 
   get attackPowers() {
     let d = this.howToAttack
     return [d.power1st, d.power2nd, d.power3rd, d.power4th, d.power5th]
   }
-
   get attackTypes() {
     let d = this.howToAttack
     return [d.type1st, d.type2nd, d.type3rd, d.type4th, d.type5th]
   }
+  get moveType() { return this.buff.moveType === 1 ? this.base.moveType : STRING_MAP_MOVE.indexOf("飛行") }
 
-  get moveType() {
-    return this.buff.moveType === 1 ? this.base.moveType : STRING_MAP_MOVE.indexOf("飛行")
-  }
-
-  get killStats() {
-    return 0
-  }
-
-  // 戦力指数のこと
-  get competence() {
-    return Math.floor((this.experience + 20) * 1.6 ** this.rank)
-  }
-
-  get salary() {
-    return this.characterType.named === 1 ? this.cost : 0
-  }
+  get killStats() { return 0 }
+  get competence() { return Math.floor((this.experience + 20) * 1.6 ** this.rank) } // 戦力指数のこと
+  get salary() { return this.characterType.named === 1 ? this.cost : 0 }
 
 }
