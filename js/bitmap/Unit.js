@@ -51,15 +51,15 @@ class Unit {
     if (callbacks.mouseout) bitmap.on("mouseout", () => this.sendCallback(callbacks.mouseout))
 
     let badgeText
-    if (badge === "end") badgeText = new OutlineText("End")
+    if (badge === "end" && this.active) badgeText = new OutlineText("End")
     else if (badge === "cost") badgeText = new OutlineText(this.cost)
     else if (badge === "red" || badge === "blue") badgeText = new createjs.Text("♦", "15px arial", badge)
-    if (badge === "end" || badge === "cost"){
+    if ((badge === "end" && this.active) || badge === "cost"){
       badgeText.textAlign = "right"
       badgeText.x = 32
       badgeText.y = 20
-    } 
-
+    }
+  
     let container = new createjs.Container()
     container.addChild(bitmap, badgeText)
     return container

@@ -64,32 +64,23 @@ class MasterUnit extends Unit {
           priority += 1
           break
         }
-        
+
     return units
   }
 
-  dominateArea(area) {
-    this.dominatingAreas.push(area)
+  dominateArea(area) { this.dominatingAreas.push(area) }
+  releaseArea(area) { this.dominatingAreas.splice(this.dominatingAreas.indexOf(area), 1) }
+
+  activateFollowingUnits() {
+    for (let area of this.dominatingAreas)
+      for (let unit of area.stayingUnits)
+        unit.active = true
   }
 
-  releaseArea(area) {
-    this.dominatingAreas.splice(this.dominatingAreas.indexOf(area), 1)
-  }
-
-  get income() {
-    return this.dominatingAreas.reduce((a, x) => a + x.income, 0)
-  }
-
-  get outgo() {
-    return this.dominatingAreas.reduce((a, x) => a + x.outgo, 0)
-  }
-
-  get fund() {
-    return this._fund
-  }
-  set fund(value) {
-    this._fund = value
-  }
+  get income() { return this.dominatingAreas.reduce((a, x) => a + x.income, 0) }
+  get outgo() { return this.dominatingAreas.reduce((a, x) => a + x.outgo, 0) }
+  get fund() { return this._fund }
+  set fund(value) { this._fund = value }
 
   pay(value) {
     if (this.fund < value) return false

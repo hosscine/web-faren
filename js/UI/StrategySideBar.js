@@ -95,6 +95,7 @@ class StrategySideBar extends SideBar {
       this.displayingArea.placeUnits(unit)
       this.displayingArea.sortStayingUnits()
       this.displayMaster(this.player)
+      unit.active = true  
     }
     else alert("ユニットの雇用費を払えません")
     this.displayArea(this.displayingArea)
