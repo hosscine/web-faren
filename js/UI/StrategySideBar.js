@@ -35,12 +35,8 @@ class StrategySideBar extends SideBar {
     this.areaData.city.text = "街 " + area.city + "/" + area.maxCity
     this.areaData.road.text = "道路 " + area.road + "/" + area.maxRoad
 
-    let callbacks = {
-      click: "displayUnitDetail",
-      mouseover: "displayUnitOverview",
-      mouseout: "undisplayUnitOverview"
-    }
-    this.displayUnits(area.stayingUnits, callbacks)
+    this.unitCallbacks.click = "displayUnitDetail"
+    this.displayUnits(area.stayingUnits, this.unitCallbacks)
   }
 
   displayUnits(units, callbacks, color = "white", badge = "end") {
@@ -65,12 +61,13 @@ class StrategySideBar extends SideBar {
   }
 
   switchEmployMode() {
-    let callbacks = {
-      click: "displayEmployCandidates",
-      mouseover: "displayUnitOverview",
-      mouseout: "undisplayUnitOverview"
-    }
-    this.displayUnits(this.displayingArea.stayingUnits, callbacks, "red")
+    this.unitCallbacks.click = "displayEmployCandidates"
+    this.displayUnits(this.displayingArea.stayingUnits, this.unitCallbacks, "red")
+  }
+
+  switchUnemployMode() {
+    this.unitCallbacks.click = "commandUnemployUnit"
+    this.displayUnits(this.displayingArea.stayingUnits, this.unitCallbacks, "red")
   }
 
   displayEmployCandidates(unit) {
@@ -88,16 +85,8 @@ class StrategySideBar extends SideBar {
     candidates2.sort((a, b) => -(a.cost - b.cost))
     let candidates = candidates1.concat(candidates2)
 
-    let callbacks = {
-      click: "commandEmployUnit",
-      mouseover: "displayUnitOverview",
-      mouseout: "undisplayUnitOverview"
-    }
-    this.displayUnits(candidates, callbacks, "red", "cost")
-  }
-
-  switchUnemployMode() {
-
+    this.unitCallbacks.click = "commandEmployUnit"
+    this.displayUnits(candidates, this.unitCallbacks, "red", "cost")
   }
 
   commandEmployUnit(unit) {
@@ -109,6 +98,16 @@ class StrategySideBar extends SideBar {
       this.commandingUnit.active = false
     }
     else alert("ユニットの雇用費を払えません")
+    this.displayArea(this.displayingArea)
+  }
+
+  commandUnemployUnit(unit) {
+    if (!unit.active) alert("既に行動済みのユニットです")
+    else if (unit.isMaster) alert("マスターは解雇できません")
+    else {
+      let go = window.confirm("この部隊を解雇してよろしいですか？")
+      if (go) this.displayingArea.unemployUnit(unit)
+    }
     this.displayArea(this.displayingArea)
   }
 
@@ -252,6 +251,11 @@ class StrategySideBar extends SideBar {
   setupStayingUnitsContainer() {
     this.stayingUnitsContainer = this.addChild(new createjs.Container())
     this.stayingUnitsContainer.y = 400
+    this.unitCallbacks = {
+      click: "displayUnitDetail",
+      mouseover: "displayUnitOverview",
+      mouseout: "undisplayUnitOverview"
+    }
   }
 
   setupUnitCommandsContainer() {

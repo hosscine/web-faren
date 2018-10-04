@@ -108,7 +108,7 @@ class Area {
     if (this.isStayingMaster) fund += 150 // 本拠地補正
     if (this.isSafetyArea) fund -= 250 // 安全地帯補正
     if (this.owner.isPlayer) fund += 320 + Math.random() * 80
-    else if(this.owner.isMaster) fund += 350 + Math.random() * 50
+    else if (this.owner.isMaster) fund += 350 + Math.random() * 50
     else fund += (this.guardsMagnification * this.levelMagnification * (35 + Math.random() * 90)) / 100
 
     this.placeUnits(this.owner.initialEmploy(
@@ -124,23 +124,17 @@ class Area {
     })
   }
 
-  get employable() {
-    return this.assets.callable.employable[this.type]
-  }
+  unemployUnit(unit) { this.stayingUnits.splice(this.stayingUnits.indexOf(unit), 1) }
 
-  get initialEmployable() {
-    return this.assets.callable.initialEmployable[this.type]
-  }
+  get employable() { return this.assets.callable.employable[this.type] }
+  get initialEmployable() { return this.assets.callable.initialEmployable[this.type] }
 
-  get levelMagnification() {
-    return LEVEL_INITIAL_FUND_MAGNIFICATION[this.gameLevel]
-  }
+  get levelMagnification() { return LEVEL_INITIAL_FUND_MAGNIFICATION[this.gameLevel] }
 
   get isStayingMaster() {
     for (let unit of this.stayingUnits) if (unit.isMaster) return true
     return false
   }
-
   get isSafetyArea() {
     for (let adjacent of this.adjacency) if (this.allAreas[adjacent - 1].owner !== this.owner) return false
     return true
