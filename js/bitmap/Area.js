@@ -15,7 +15,7 @@ class Area {
   }
 
   setupAreaStatus() {
-    if (this.stayMaster) {
+    if (this.isStayingMaster) {
       this.city = this.maxCity / 3
       this.road = this.maxRoad / 3
       this.wall = this.maxWall
@@ -105,7 +105,7 @@ class Area {
 
   initialEmployment() {
     let fund = 0
-    if (this.stayMaster) fund += 150 // 本拠地補正
+    if (this.isStayingMaster) fund += 150 // 本拠地補正
     if (this.isSafetyArea) fund -= 250 // 安全地帯補正
     if (this.owner.isPlayer) fund += 320 + Math.random() * 80
     else if(this.owner.isMaster) fund += 350 + Math.random() * 50
@@ -136,7 +136,7 @@ class Area {
     return LEVEL_INITIAL_FUND_MAGNIFICATION[this.gameLevel]
   }
 
-  get stayMaster() {
+  get isStayingMaster() {
     for (let unit of this.stayingUnits) if (unit.isMaster) return true
     return false
   }

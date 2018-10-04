@@ -43,7 +43,7 @@ class StrategySideBar extends SideBar {
     this.displayUnits(area.stayingUnits, callbacks)
   }
 
-  displayUnits(units, callbacks, color = "white", badge) {
+  displayUnits(units, callbacks, color = "white", badge = "end") {
     this.stayingUnitsContainer.removeAllChildren()
     let rect = this.stayingUnitsContainer.addChild(new createjs.Shape())
     rect.graphics.beginStroke(color).drawRoundRect(5, 0, SIDEBAR_WIDTH - 10, 175, 5)
@@ -65,7 +65,7 @@ class StrategySideBar extends SideBar {
   }
 
   switchEmployMode() {
-    let callbacks = { 
+    let callbacks = {
       click: "displayEmployCandidates",
       mouseover: "displayUnitOverview",
       mouseout: "undisplayUnitOverview"
@@ -74,6 +74,12 @@ class StrategySideBar extends SideBar {
   }
 
   displayEmployCandidates(unit) {
+    if (!unit.active) {
+      alert("既に行動済みのユニットです")
+      return 0
+    }
+    this.commandingUnit = unit
+
     let candidates1 = unit.employable.concat()
     let candidates2 = this.displayingArea.employable.concat()
     for (let i in candidates1) candidates1[i] = new Unit(candidates1[i], this.assets)
@@ -83,26 +89,27 @@ class StrategySideBar extends SideBar {
     let candidates = candidates1.concat(candidates2)
 
     let callbacks = {
-      click: "employUnit",
+      click: "commandEmployUnit",
       mouseover: "displayUnitOverview",
       mouseout: "undisplayUnitOverview"
     }
     this.displayUnits(candidates, callbacks, "red", "cost")
   }
 
-  employUnit(unit) {
+  switchUnemployMode() {
+
+  }
+
+  commandEmployUnit(unit) {
     if (this.player.pay(unit.cost)) {
       this.displayingArea.placeUnits(unit)
       this.displayingArea.sortStayingUnits()
       this.displayMaster(this.player)
-      unit.active = true  
+      unit.active = false
+      this.commandingUnit.active = false
     }
     else alert("ユニットの雇用費を払えません")
     this.displayArea(this.displayingArea)
-  }
-
-  switchUnemployMode() {
-
   }
 
   setupMasterContainer() {

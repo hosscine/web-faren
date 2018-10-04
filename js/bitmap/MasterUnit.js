@@ -70,8 +70,9 @@ class MasterUnit extends Unit {
 
   dominateArea(area) { this.dominatingAreas.push(area) }
   releaseArea(area) { this.dominatingAreas.splice(this.dominatingAreas.indexOf(area), 1) }
+  get stayingArea() { for (let area of this.dominatingAreas) if (area.isStayingMaster) return area }
 
-  activateFollowingUnits() {
+  activateFollowerUnits() {
     for (let area of this.dominatingAreas)
       for (let unit of area.stayingUnits)
         unit.active = true

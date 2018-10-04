@@ -20,6 +20,7 @@ class Unit {
 
     this.rank = 0
     this.earnedExperience = 0
+    this.active = false
     this.buff = {}
     this.basic = {}
     this.resetBuff()
@@ -51,15 +52,15 @@ class Unit {
     if (callbacks.mouseout) bitmap.on("mouseout", () => this.sendCallback(callbacks.mouseout))
 
     let badgeText
-    if (badge === "end" && this.active) badgeText = new OutlineText("End")
+    if (badge === "end" && !this.active) badgeText = new OutlineText("End")
     else if (badge === "cost") badgeText = new OutlineText(this.cost)
     else if (badge === "red" || badge === "blue") badgeText = new createjs.Text("♦", "15px arial", badge)
-    if ((badge === "end" && this.active) || badge === "cost"){
+    if ((badge === "end" && !this.active) || badge === "cost") {
       badgeText.textAlign = "right"
       badgeText.x = 32
       badgeText.y = 20
     }
-  
+
     let container = new createjs.Container()
     container.addChild(bitmap, badgeText)
     return container
@@ -94,5 +95,4 @@ class Unit {
   get killStats() { return 0 }
   get competence() { return Math.floor((this.experience + 20) * 1.6 ** this.rank) } // 戦力指数のこと
   get salary() { return this.characterType.named === 1 ? this.cost : 0 }
-
 }

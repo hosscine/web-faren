@@ -19,10 +19,7 @@ class StrategyMapStage extends createjs.Stage {
     this.setupAreas(assets) // this.areas を作る
     this.placeUniqueUnits(assets)
     this.strategyMap.setupAreaFlag(this.areas)
-    for (let area of this.areas) {
-      area.initialEmployment()
-      if (area.owner.isPlayer && area.stayMaster) this.sideBar.displayArea(area)
-    }
+    for (let area of this.areas) area.initialEmployment()
 
     this.initializeTurn()
   }
@@ -61,7 +58,9 @@ class StrategyMapStage extends createjs.Stage {
 
   turnRoutine(master) {
     master.fund += master.income - master.outgo
+    master.activateFollowerUnits()
     if (master.isPlayer) {
+      this.sideBar.displayArea(master.stayingArea)
       this.sideBar.displayMaster()
       return 0
     }
