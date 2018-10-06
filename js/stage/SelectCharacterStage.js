@@ -49,6 +49,7 @@ class SelectCharacterStage extends createjs.Stage {
     playerMaster.isPlayer = true
     this.mastersEnable = false
     stage = new StrategyMapStage(this.canvas, this.assets, this.masters, this.mastersDic, playerMaster)
+    if (createjs.Touch.isSupported()) createjs.Touch.enable(stage)
     createjs.Ticker.addEventListener("tick", stage)
     createjs.Ticker.setFPS(60)
   }
