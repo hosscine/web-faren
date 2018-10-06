@@ -53,10 +53,12 @@ class StrategySideBar extends SideBar {
     let x = 12
     let y = 10
     for (let unit of units) {
-      let bitmap = unit.getUnitBitmap(this, callbacks, badge)
-      bitmap.x = x
-      bitmap.y = y
-      container.addChild(bitmap)
+      if (unit !== 0) {
+        let bitmap = unit.getUnitBitmap(this, callbacks, badge)
+        bitmap.x = x
+        bitmap.y = y
+        container.addChild(bitmap)
+      }
 
       x += 36
       if (x > SIDEBAR_WIDTH - 35) {
@@ -67,7 +69,8 @@ class StrategySideBar extends SideBar {
   }
 
   displayUnitOverview(unit) {
-    super.displayUnitOverview(unit, this.displayingArea.stayingUnits.indexOf(unit) >= 0 ? 600 : 400)
+    let y = unit.onMove ? { under: 400, above: 600 } : { under: 600, above: 400 }
+    super.displayUnitOverview(unit, this.displayingArea.stayingUnits.includes(unit) ? y.under : y.above)
   }
 
   switchMoveMode() {
@@ -91,28 +94,54 @@ class StrategySideBar extends SideBar {
   }
 
   displayMoveCandidates(area) {
+    if (area === this.displayingArea) return
+    // else if (area.owner !== this.player) return
     this.destinationArea = area
-    this.displayUnits(this.displayingArea.stayingUnits, this.unitCallbacks, "cyan")
-    this.displayUnits(area.stayingUnits, this.unitCallbacks, "cyan", null, "destination")
+
+    this.moveFromUnits = this.displayingArea.stayingUnits.slice()
+    this.moveToUnits = this.destinationArea.stayingUnits.slice()
+    this.moveFromUnits = this.moveFromUnits.concat(Array(20 - this.moveFromUnits.length).fill(0))
+    this.moveToUnits = this.moveToUnits.concat(Array(20 - this.moveToUnits.length).fill(0))
+
+    this.unitCallbacks.click = "commandUnitMove"
+    this.displayUnits(this.moveFromUnits, this.unitCallbacks, "cyan")
+    this.displayUnits(this.moveToUnits, this.unitCallbacks, "cyan", "end", "destination")
   }
 
   displayEmployCandidates(unit) {
-    if (!unit.active) {
-      alert("既に行動済みのユニットです")
-      return 0
+    if (!unit.active) alert("既に行動済みのユニットです")
+    else {
+      let candidates1 = unit.employable.concat()
+      let candidates2 = this.displayingArea.employable.concat()
+      for (let i in candidates1) candidates1[i] = new Unit(candidates1[i], this.assets)
+      for (let i in candidates2) candidates2[i] = new Unit(candidates2[i], this.assets)
+      candidates1.sort((a, b) => -(a.cost - b.cost))
+      candidates2.sort((a, b) => -(a.cost - b.cost))
+      let candidates = candidates1.concat(candidates2)
+
+      this.commandingUnit = unit
+      this.unitCallbacks.click = "commandEmployUnit"
+      this.displayUnits(candidates, this.unitCallbacks, "red", "cost")
     }
-    this.commandingUnit = unit
+  }
 
-    let candidates1 = unit.employable.concat()
-    let candidates2 = this.displayingArea.employable.concat()
-    for (let i in candidates1) candidates1[i] = new Unit(candidates1[i], this.assets)
-    for (let i in candidates2) candidates2[i] = new Unit(candidates2[i], this.assets)
-    candidates1.sort((a, b) => -(a.cost - b.cost))
-    candidates2.sort((a, b) => -(a.cost - b.cost))
-    let candidates = candidates1.concat(candidates2)
+  commandUnitMove(unit) {
+    if (!unit.active) return false
+    let to = this.moveFromUnits.includes(unit) ? this.moveToUnits : this.moveFromUnits
+    let from = this.moveToUnits.includes(unit) ? this.moveToUnits : this.moveFromUnits
+    if (to.includes(0)) {
+      to[to.indexOf(0)] = unit
+      from[from.indexOf(unit)] = 0
+      unit.onMove = !unit.onMove
+      this.displayUnits(this.moveFromUnits, this.unitCallbacks, "cyan", "move")
+      this.displayUnits(this.moveToUnits, this.unitCallbacks, "cyan", "move", "destination")
+      return true
+    }
+    return false
+  }
 
-    this.unitCallbacks.click = "commandEmployUnit"
-    this.displayUnits(candidates, this.unitCallbacks, "red", "cost")
+  commandMoveSubmit() {
+    
   }
 
   commandEmployUnit(unit) {
@@ -280,6 +309,25 @@ class StrategySideBar extends SideBar {
     this.stayingUnitsContainer.y = 400
     this.destinationUnitsContainer = this.addChild(new createjs.Container())
     this.destinationUnitsContainer.y = 600
+
+    let moveCommandsContainer = this.addChild(new createjs.Container())
+    moveCommandsContainer.y = 577
+    this.moveCommandsContainer = moveCommandsContainer
+
+    let contentX = 5
+    const buttonSize = 60
+    let under = moveCommandsContainer.addChild(new Button("全て下へ", buttonSize + 10, 20))
+    under.x = contentX
+    // under.on("click", () => this.switchMoveMode())
+
+    let submit = moveCommandsContainer.addChild(new Button("確定", buttonSize - 20, 20))
+    submit.x = contentX += buttonSize + 15
+    // submit.on("click", () => this.switchEmployMode())
+
+    let above = moveCommandsContainer.addChild(new Button("全て上へ", buttonSize + 10, 20))
+    above.x = contentX += buttonSize - 15
+    // above.on("click", () => this.switchUnemployMode())
+
 
     this.unitCallbacks = {
       click: "displayUnitDetail",

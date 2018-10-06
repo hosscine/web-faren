@@ -51,9 +51,11 @@ class Unit {
 
     let badgeText
     if (badge === "end" && !this.active) badgeText = new OutlineText("End")
+    else if (badge === "move" && !this.active) badgeText = new OutlineText("End")
+    else if (badge === "move" && this.onMove) badgeText = new OutlineText("Move")
     else if (badge === "cost") badgeText = new OutlineText(this.cost)
     else if (badge === "red" || badge === "blue") badgeText = new createjs.Text("♦", "15px arial", badge)
-    if ((badge === "end" && !this.active) || badge === "cost") {
+    if (badgeText) {
       badgeText.textAlign = "right"
       badgeText.x = 32
       badgeText.y = 20
