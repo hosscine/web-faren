@@ -36,7 +36,8 @@ class StrategySideBar extends SideBar {
     this.areaData.road.text = "道路 " + area.road + "/" + area.maxRoad
 
     this.unitCallbacks.click = "displayUnitDetail"
-    this.displayUnits(area.stayingUnits, this.unitCallbacks)
+    this.displayUnits(area.stayingUnits, this.unitCallbacks, "white", area.owner === this.player ? "end" : null)
+    this.areaCommandsContainer.visible = this.unitCommandsContainer.visible = area.owner === this.player
   }
 
   displayUnits(units, callbacks, color = "white", badge = "end") {
@@ -214,6 +215,7 @@ class StrategySideBar extends SideBar {
       name: name, income: income, nfamily: nfamily,
       transportation: transportation, wall: wall, city: city, road: road
     }
+    this.areaCallbacks = { click: "displayArea" }
   }
 
   setupAreaCommandsContainer() {
@@ -259,9 +261,9 @@ class StrategySideBar extends SideBar {
   }
 
   setupUnitCommandsContainer() {
-    //👍👎📥📤🕺🚶🤑	😱
     let unitCommandsContainer = this.addChild(new createjs.Container())
     unitCommandsContainer.y = 370
+    this.unitCommandsContainer = unitCommandsContainer
 
     let contentX = 7
     const buttonSize = 25
@@ -276,9 +278,6 @@ class StrategySideBar extends SideBar {
     unemploy.x = contentX += buttonSize + 4
     unemploy.on("click", () => this.switchUnemployMode())
 
-    for (let button of unitCommandsContainer.children) {
-      button.font = "20px arial"
-      button.alignText()
-    }
+    for (let button of unitCommandsContainer.children) button.font = "20px arial"
   }
 }

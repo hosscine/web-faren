@@ -52,6 +52,7 @@ class Button extends createjs.Container {
 
   set font(value) {
     this.buttonText.font = value
+    this.alignText()
   }
 
   set textColor(value) {

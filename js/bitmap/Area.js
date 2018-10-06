@@ -82,13 +82,9 @@ class Area {
 
     container.addChild(outlineText, text)
     container.addChild(this.owner.flagBitmap)
-    container.on("click", () => this.handleClick())
+    container.on("click", () => this.sidebar[this.sidebar.areaCallbacks.click](this))
 
     return container
-  }
-
-  handleClick() {
-    this.sidebar.displayArea(this)
   }
 
   getLineTo(targetArea) {
