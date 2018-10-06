@@ -94,9 +94,11 @@ class StrategySideBar extends SideBar {
   }
 
   displayMoveCandidates(area) {
+    if (this.moveFromUnits) this.commandMoveSubmit()
     if (area === this.displayingArea) return
-    // else if (area.owner !== this.player) return
+    else if (area.owner !== this.player) return
     this.destinationArea = area
+    this.moveCommandsContainer.visible = true
 
     this.moveFromUnits = this.displayingArea.stayingUnits.slice()
     this.moveToUnits = this.destinationArea.stayingUnits.slice()
@@ -106,6 +108,7 @@ class StrategySideBar extends SideBar {
     this.unitCallbacks.click = "commandUnitMove"
     this.displayUnits(this.moveFromUnits, this.unitCallbacks, "cyan")
     this.displayUnits(this.moveToUnits, this.unitCallbacks, "cyan", "end", "destination")
+    this.areaCallbacks.click = "displayMoveCandidates"
   }
 
   displayEmployCandidates(unit) {
@@ -126,7 +129,7 @@ class StrategySideBar extends SideBar {
   }
 
   commandUnitMove(unit) {
-    if (!unit.active) return false
+    if (!unit.active) return true
     let to = this.moveFromUnits.includes(unit) ? this.moveToUnits : this.moveFromUnits
     let from = this.moveToUnits.includes(unit) ? this.moveToUnits : this.moveFromUnits
     if (to.includes(0)) {
@@ -135,13 +138,26 @@ class StrategySideBar extends SideBar {
       unit.onMove = !unit.onMove
       this.displayUnits(this.moveFromUnits, this.unitCallbacks, "cyan", "move")
       this.displayUnits(this.moveToUnits, this.unitCallbacks, "cyan", "move", "destination")
-      return true
+      this.areaCallbacks.click = "displayMoveCandidates"
+      return false
     }
-    return false
+    return true
+  }
+
+  commandAllMoveTo(destination) {
+    for (let unit of destination) if (unit.active) if (this.commandUnitMove(unit)) break
   }
 
   commandMoveSubmit() {
-    
+    this.displayingArea.stayingUnits = this.moveFromUnits.filter(unit => unit !== 0)
+    this.destinationArea.stayingUnits = this.moveToUnits.filter(unit => unit !== 0)
+    this.moveFromUnits = this.moveToUnits = undefined
+    this.displayingArea.stayingUnits.forEach(unit => { if (unit.onMove) unit.onMove = unit.active = false })
+    this.destinationArea.stayingUnits.forEach(unit => { if (unit.onMove) unit.onMove = unit.active = false })
+    this.displayingArea.sortStayingUnits()
+    this.destinationArea.sortStayingUnits()
+    this.displayArea(this.displayingArea)
+    this.moveCommandsContainer.visible = false
   }
 
   commandEmployUnit(unit) {
@@ -312,22 +328,22 @@ class StrategySideBar extends SideBar {
 
     let moveCommandsContainer = this.addChild(new createjs.Container())
     moveCommandsContainer.y = 577
+    moveCommandsContainer.visible = false
     this.moveCommandsContainer = moveCommandsContainer
 
     let contentX = 5
     const buttonSize = 60
     let under = moveCommandsContainer.addChild(new Button("全て下へ", buttonSize + 10, 20))
     under.x = contentX
-    // under.on("click", () => this.switchMoveMode())
+    under.on("click", () => this.commandAllMoveTo(this.moveFromUnits))
 
     let submit = moveCommandsContainer.addChild(new Button("確定", buttonSize - 20, 20))
     submit.x = contentX += buttonSize + 15
-    // submit.on("click", () => this.switchEmployMode())
+    submit.on("click", () => this.commandMoveSubmit())
 
     let above = moveCommandsContainer.addChild(new Button("全て上へ", buttonSize + 10, 20))
     above.x = contentX += buttonSize - 15
-    // above.on("click", () => this.switchUnemployMode())
-
+    above.on("click", () => this.commandAllMoveTo(this.moveToUnits))
 
     this.unitCallbacks = {
       click: "displayUnitDetail",
