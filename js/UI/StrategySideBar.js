@@ -170,6 +170,7 @@ class StrategySideBar extends SideBar {
     }
     else alert("ユニットの雇用費を払えません")
     this.displayArea(this.displayingArea)
+    if (this.displayingArea.hasSpace) this.switchEmployMode()
   }
 
   commandUnemployUnit(unit) {
@@ -180,6 +181,7 @@ class StrategySideBar extends SideBar {
       if (go) this.displayingArea.unemployUnit(unit)
     }
     this.displayArea(this.displayingArea)
+    this.switchUnemployMode()
   }
 
   setupMasterContainer() {
@@ -370,6 +372,10 @@ class StrategySideBar extends SideBar {
     let unemploy = unitCommandsContainer.addChild(new Button("📤", buttonSize, buttonSize))
     unemploy.x = contentX += buttonSize + 4
     unemploy.on("click", () => this.switchUnemployMode())
+
+    let cancel = unitCommandsContainer.addChild(new Button("🏸", buttonSize, buttonSize))
+    cancel.x = contentX += buttonSize + 16
+    cancel.on("click", () => this.displayArea(this.displayingArea))
 
     for (let button of unitCommandsContainer.children) button.font = "20px arial"
   }
