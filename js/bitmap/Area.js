@@ -135,4 +135,5 @@ class Area {
     for (let adjacent of this.adjacency) if (this.allAreas[adjacent - 1].owner !== this.owner) return false
     return true
   }
+  get hasSpace() { return this.stayingUnits.length < 20 }
 }

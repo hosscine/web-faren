@@ -13,7 +13,7 @@ class StrategySideBar extends SideBar {
     this.setupAreaInfoContainer()
     this.setupAreaCommandsContainer()
     this.setupUnitCommandsContainer()
-    this.setupStayingUnitsContainer()
+    this.setupUnitsContainer()
     super.setupUnitOverviewContainer()
     super.setupUnitDetailContainer()
   }
@@ -40,18 +40,23 @@ class StrategySideBar extends SideBar {
     this.areaCommandsContainer.visible = this.unitCommandsContainer.visible = area.owner === this.player
   }
 
-  displayUnits(units, callbacks, color = "white", badge = "end") {
-    this.stayingUnitsContainer.removeAllChildren()
-    let rect = this.stayingUnitsContainer.addChild(new createjs.Shape())
-    rect.graphics.beginStroke(color).drawRoundRect(5, 0, SIDEBAR_WIDTH - 10, 175, 5)
+  displayUnits(units, callbacks, color = "white", badge = "end", target = "staying") {
+    let container = this[target + "UnitsContainer"]
+    container.removeAllChildren()
+    let rect = container.addChild(new createjs.Shape())
+    rect.graphics.beginStroke(color).setStrokeStyle(color === "white" ? 1 : 4).drawRoundRect(5, 0, SIDEBAR_WIDTH - 10, 175, 5)
 
+    this.areaCallbacks.click = "displayArea"
+    this.destinationUnitsContainer.visible = target === "destination"
+
+    if (units === null) return
     let x = 12
     let y = 10
     for (let unit of units) {
       let bitmap = unit.getUnitBitmap(this, callbacks, badge)
       bitmap.x = x
       bitmap.y = y
-      this.stayingUnitsContainer.addChild(bitmap)
+      container.addChild(bitmap)
 
       x += 36
       if (x > SIDEBAR_WIDTH - 35) {
@@ -61,14 +66,31 @@ class StrategySideBar extends SideBar {
     }
   }
 
+  switchMoveMode() {
+    this.unitCallbacks.click = "displayUnitDetail"
+    this.displayUnits(this.displayingArea.stayingUnits, this.unitCallbacks)
+    this.displayUnits(null, this.unitCallbacks, "yellow", null, "destination")
+    this.areaCallbacks.click = "displayMoveCandidates"
+  }
+
   switchEmployMode() {
-    this.unitCallbacks.click = "displayEmployCandidates"
-    this.displayUnits(this.displayingArea.stayingUnits, this.unitCallbacks, "red")
+    console.log(this.displayingArea.stayingUnits.length)
+    if (!this.displayingArea.hasSpace) alert("エリアに空きがありません")
+    else {
+      this.unitCallbacks.click = "displayEmployCandidates"
+      this.displayUnits(this.displayingArea.stayingUnits, this.unitCallbacks, "limegreen")
+    }
   }
 
   switchUnemployMode() {
     this.unitCallbacks.click = "commandUnemployUnit"
     this.displayUnits(this.displayingArea.stayingUnits, this.unitCallbacks, "red")
+  }
+
+  displayMoveCandidates(area) {
+    this.destinationArea = area
+    this.displayUnits(this.displayingArea.stayingUnits, this.unitCallbacks, "cyan")
+    this.displayUnits(area.stayingUnits, this.unitCallbacks, "cyan", null, "destination")
   }
 
   displayEmployCandidates(unit) {
@@ -250,9 +272,12 @@ class StrategySideBar extends SideBar {
     this.stayCommands.building.y = contentY
   }
 
-  setupStayingUnitsContainer() {
+  setupUnitsContainer() {
     this.stayingUnitsContainer = this.addChild(new createjs.Container())
     this.stayingUnitsContainer.y = 400
+    this.destinationUnitsContainer = this.addChild(new createjs.Container())
+    this.destinationUnitsContainer.y = 600
+
     this.unitCallbacks = {
       click: "displayUnitDetail",
       mouseover: "displayUnitOverview",
@@ -269,6 +294,7 @@ class StrategySideBar extends SideBar {
     const buttonSize = 25
     let move = unitCommandsContainer.addChild(new Button("🚶", buttonSize, buttonSize))
     move.x = contentX += 4
+    move.on("click", () => this.switchMoveMode())
 
     let employ = unitCommandsContainer.addChild(new Button("📥", buttonSize, buttonSize))
     employ.x = contentX += buttonSize + 4
