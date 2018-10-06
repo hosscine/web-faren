@@ -47,9 +47,7 @@ class Unit {
   getUnitBitmap(displayer, callbacks, badge) {
     this.displayer = displayer
     let bitmap = new createjs.Bitmap(this.unitImage.canvas)
-    if (callbacks.click) bitmap.on("click", () => this.sendCallback(callbacks.click))
-    if (callbacks.mouseover) bitmap.on("mouseover", () => this.sendCallback(callbacks.mouseover))
-    if (callbacks.mouseout) bitmap.on("mouseout", () => this.sendCallback(callbacks.mouseout))
+    for (let key in callbacks) bitmap.on(key, () => this.sendCallback(callbacks[key]))
 
     let badgeText
     if (badge === "end" && !this.active) badgeText = new OutlineText("End")

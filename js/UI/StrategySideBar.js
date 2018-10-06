@@ -66,6 +66,10 @@ class StrategySideBar extends SideBar {
     }
   }
 
+  displayUnitOverview(unit) {
+    super.displayUnitOverview(unit, this.displayingArea.stayingUnits.indexOf(unit) >= 0 ? 600 : 400)
+  }
+
   switchMoveMode() {
     this.unitCallbacks.click = "displayUnitDetail"
     this.displayUnits(this.displayingArea.stayingUnits, this.unitCallbacks)
@@ -74,7 +78,6 @@ class StrategySideBar extends SideBar {
   }
 
   switchEmployMode() {
-    console.log(this.displayingArea.stayingUnits.length)
     if (!this.displayingArea.hasSpace) alert("エリアに空きがありません")
     else {
       this.unitCallbacks.click = "displayEmployCandidates"

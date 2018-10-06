@@ -72,7 +72,7 @@ class SideBar extends createjs.Container {
     this.unitDetailContainer.visible = false
   }
 
-  displayUnitOverview(unit) {
+  displayUnitOverview(unit, y) {
     this.overviewData.name.text = unit.name
     this.overviewData.species.text = unit.strSpecies
     this.overviewData.rank.text = "Rank " + unit.strRank
@@ -92,10 +92,12 @@ class SideBar extends createjs.Container {
     unitBitmap.y = 3
 
     this.unitOverviewContainer.visible = true
+    this.unitOverviewContainer.y = y
   }
 
   undisplayUnitOverview() {
     this.unitOverviewContainer.visible = false
+    this.unitOverviewContainer.y = 600
     this.unitOverviewContainer.removeChildAt(this.unitOverviewContainer.children.length - 1)
   }
 
@@ -106,7 +108,7 @@ class SideBar extends createjs.Container {
     unitOverviewContainer.visible = false
 
     let rect = unitOverviewContainer.addChild(new createjs.Shape())
-    rect.graphics.beginStroke("white").drawRect(5, 0, SIDEBAR_WIDTH - 10, 118)
+    rect.graphics.beginStroke("white").beginFill("darkblue").drawRect(5, 0, SIDEBAR_WIDTH - 10, 118)
 
     let contentY = 0
     let name = unitOverviewContainer.addChild(new createjs.Text("ファイアジャイアント", "15px arial", "white"))
