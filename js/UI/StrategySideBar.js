@@ -29,7 +29,7 @@ class StrategySideBar extends SideBar {
     this.displayingArea = area
     this.areaData.name.text = area.name
     this.areaData.income.text = "収入  " + area.income
-    this.areaData.nfamily.text = "同種族  " + 0 + "人"
+    this.areaData.nFamily.text = "同種族  " + area.nFamily + "人"
     this.areaData.transportation.text = "交通  " + (area.isBestTransport ? "〇" : "×")
     this.areaData.wall.text = "城壁 " + area.wall + "/" + area.maxWall
     this.areaData.city.text = "街 " + area.city + "/" + area.maxCity
@@ -69,12 +69,14 @@ class StrategySideBar extends SideBar {
   }
 
   displayUnitOverview(unit) {
-    let y = unit.onMove ? { under: 400, above: 600 } : { under: 600, above: 400 }
+    let y = unit.onMove || this.unitCallbacks.click === "commandEmployUnit" ?
+      { under: 400, above: 600 } : { under: 600, above: 400 }
     super.displayUnitOverview(unit, this.displayingArea.stayingUnits.includes(unit) ? y.under : y.above)
   }
 
   selectAreaCommand(selected) {
     for (let key in this.areaCommands) this.areaCommands[key].selected = key === selected ? true : false
+    this.displayingArea.command = selected
   }
 
   switchMoveMode() {
@@ -117,6 +119,7 @@ class StrategySideBar extends SideBar {
 
   displayEmployCandidates(unit) {
     if (!unit.active) alert("既に行動済みのユニットです")
+    else if (!unit.isFamily(this.player)) alert("マスターと同種族でないユニットは雇用に従事できません")
     else {
       let candidates1 = unit.employable.concat()
       let candidates2 = this.displayingArea.employable.concat()
@@ -267,9 +270,9 @@ class StrategySideBar extends SideBar {
     income.x = 20
     income.y = contentY += 10
 
-    let nfamily = areaInfoContainer.addChild(new createjs.Text("同種族  0人", "15px arial", "white"))
-    nfamily.x = 100
-    nfamily.y = contentY
+    let nFamily = areaInfoContainer.addChild(new createjs.Text("同種族  0人", "15px arial", "white"))
+    nFamily.x = 100
+    nFamily.y = contentY
 
     let transportation = areaInfoContainer.addChild(new createjs.Text("交通  ×", "15px arial", "white"))
     transportation.x = 20
@@ -288,7 +291,7 @@ class StrategySideBar extends SideBar {
     road.y = contentY
 
     this.areaData = {
-      name: name, income: income, nfamily: nfamily,
+      name: name, income: income, nFamily: nFamily,
       transportation: transportation, wall: wall, city: city, road: road
     }
     this.areaCallbacks = { click: "displayArea" }
@@ -308,6 +311,7 @@ class StrategySideBar extends SideBar {
 
     let developing = areaCommandsContainer.addChild(new Button("街開発", BUTTON_WIDTH, 20))
     developing.x = RIGHT_X
+    developing.selected = true
 
     let training = areaCommandsContainer.addChild(new Button("部隊訓練", BUTTON_WIDTH, 20))
     training.x = LEFT_X

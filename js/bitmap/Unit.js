@@ -19,7 +19,7 @@ class Unit {
     for (let i in data) this[i] = data[i]
 
     this.rank = 0
-    this.earnedExperience = 0
+    this._earnedExperience = 0
     this.active = false
     this.buff = {}
     this.basic = {}
@@ -95,4 +95,9 @@ class Unit {
   get killStats() { return 0 }
   get competence() { return Math.floor((this.experience + 20) * 1.6 ** this.rank) } // 戦力指数のこと
   get salary() { return this.characterType.named === 1 ? this.cost : 0 }
+
+  get earnedExperience() { return this._earnedExperience }
+  set earnedExperience(value) { this._earnedExperience = Math.round(value) }
+
+  isFamily(unit) { return unit.species === this.species }
 }

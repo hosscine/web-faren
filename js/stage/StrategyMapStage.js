@@ -59,6 +59,7 @@ class StrategyMapStage extends createjs.Stage {
   turnRoutine(master) {
     master.fund += master.income - master.outgo
     master.activateFollowerUnits()
+    for (let area of master.dominatingAreas) area.executeAreaCommand()
     if (master.isPlayer) {
       this.sideBar.displayArea(master.stayingArea)
       this.sideBar.displayMaster()

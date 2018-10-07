@@ -32,40 +32,18 @@ class Area {
       this.road = this.maxRoad / 10
       this.wall = (this.maxWall * this.initialWall) / 100
     }
+    this.stayingCommand = { developing: true, training: false, searching: false, laying: false, building: false }
   }
 
-  set city(value) {
-    this._city = value > this.maxCity ? this.maxCity : Math.round(value)
-  }
-  get city() {
-    return this._city
-  }
-
-  set road(value) {
-    this._road = value > this.maxRoad ? this.maxRoad : Math.round(value)
-  }
-  get road() {
-    return this._road
-  }
-
-  set wall(value) {
-    this._wall = value > this.maxWall ? this.maxWall : Math.round(value)
-  }
-  get wall() {
-    return this._wall
-  }
-
-  get isBestTransport() {
-    return this._road === this.maxRoad
-  }
-
-  get income() {
-    return Math.round((this.basicIncome + (this.city / 4)) * (this.isBestTransport ? 2 : 1))
-  }
-
-  get outgo() {
-    return this.stayingUnits.reduce((a, x) => a + x.salary, 0)
-  }
+  set city(value) { this._city = value > this.maxCity ? this.maxCity : value }
+  get city() { return Math.round(this._city) }
+  set road(value) { this._road = value > this.maxRoad ? this.maxRoad : value }
+  get road() { return Math.round(this._road) }
+  set wall(value) { this._wall = value > this.maxWall ? this.maxWall : value }
+  get wall() { return Math.round(this._wall) }
+  get isBestTransport() { return this._road === this.maxRoad }
+  get income() { return Math.round((this.basicIncome + (this.city / 4)) * (this.isBestTransport ? 2 : 1)) }
+  get outgo() { return this.stayingUnits.reduce((a, x) => a + x.salary, 0) }
 
   get ownerNameFlag() {
     let container = new createjs.Container()
@@ -120,6 +98,18 @@ class Area {
     })
   }
 
+  executeAreaCommand() {
+    if (this.command === "developing") this.city += this.nActiveFamily / 4
+    else if (this.command === "training") {
+      for (let unit of this.stayingUnits)
+        if (unit.active) unit.earnedExperience += 8 - unit.rank + Math.random() * (12 - this.gameLevel * 2)
+    }
+    else if (this.command === "searching") return 0
+    else if (this.command === "laying") this.road += this.nActiveFamily * 0.4
+    else if (this.command === "building") this.wall += this.nActiveFamily
+    else console.log(this, このエリアではコマンドが指定されていません)
+  }
+
   unemployUnit(unit) { this.stayingUnits.splice(this.stayingUnits.indexOf(unit), 1) }
 
   get employable() { return this.assets.callable.employable[this.type] }
@@ -136,4 +126,11 @@ class Area {
     return true
   }
   get hasSpace() { return this.stayingUnits.length < 20 }
+  get nFamily() { return this.stayingUnits.reduce((a, unit) => a + (unit.species === this.owner.species ? 1 : 0), 0) }
+  get nActiveFamily() {
+    return this.stayingUnits.reduce((a, unit) => a + (unit.species === this.owner.species && unit.active ? 1 : 0), 0)
+  }
+
+  set command(command) { for (let key in this.stayingCommand) this.stayingCommand[key] = key === command ? true : false }
+  get command() { for (let key in this.stayingCommand) if (this.stayingCommand[key]) return key }
 }
