@@ -40,6 +40,8 @@ class SideBar extends createjs.Container {
     this.detailData.agility.text = this.formatValue(unit.agility) + "/" + this.formatValue(unit.basic.agility)
     this.detailData.magicalStrength.text = this.formatValue(unit.magicalStrength) + "/" + this.formatValue(unit.basic.magicalStrength)
     this.detailData.magicalResistance.text = this.formatValue(unit.magicalResistance) + "/" + this.formatValue(unit.basic.magicalResistance)
+    this.detailData.HPrecover.text = this.formatValue(unit.HPrecover) + "/" + this.formatValue(unit.basic.HPrecover)
+    this.detailData.MPrecover.text = this.formatValue(unit.MPrecover) + "/" + this.formatValue(unit.basic.MPrecover)
 
     this.detailData.magicFire.text = "火\n" + STRING_MAP_MAGIC[unit.magic.fire]
     this.detailData.magicAqua.text = "水\n" + STRING_MAP_MAGIC[unit.magic.aqua]

@@ -18,6 +18,7 @@ class Unit {
     let data = assets.charadata.characters[this.id]
     for (let i in data) this[i] = data[i]
 
+    this.assets = assets
     this.rank = 0
     this._earnedExperience = 0
     this.active = false
@@ -29,7 +30,11 @@ class Unit {
 
   // ランクによって変動するステータスに修正をかける
   calculateBasicStatus() {
-    for (let key in this.base) this.basic[key] = this.base[key] * 1.08 ** this.rank
+    for (let key in this.base) this.basic[key] = Math.round(this.base[key] * 1.08 ** this.rank)
+    this.basic.HP = this.base.HP
+    this.basic.HPrecover = this.base.HPrecover
+    this.basic.MP = this.base.MP
+    this.basic.MPrecover = this.base.MPrecover
   }
 
   resetBuff() {
@@ -73,14 +78,16 @@ class Unit {
   get strSpecies() { return STRING_MAP_SPECIES[this.species] }
   get strRank() { return STRING_MAP_RANK[this.rank] }
 
-  get HP() { return this.basic.HP * this.buff.HP }
-  get MP() { return this.basic.MP * this.buff.MP }
-  get physicalStrength() { return this.basic.physicalStrength * this.buff.physicalStrength }
-  get physicalResistance() { return this.basic.physicalResistance * this.buff.physicalResistance }
-  get technique() { return this.basic.technique * this.buff.technique }
-  get agility() { return this.basic.agility * this.buff.agility }
-  get magicalStrength() { return this.basic.magicalStrength * this.buff.magicalStrength }
-  get magicalResistance() { return this.basic.magicalResistance * this.buff.magicalResistance }
+  get HP() { return Math.round(this.basic.HP * this.buff.HP) }
+  get MP() { return Math.round(this.basic.MP * this.buff.MP) }
+  get physicalStrength() { return Math.round(this.basic.physicalStrength * this.buff.physicalStrength) }
+  get physicalResistance() { return Math.round(this.basic.physicalResistance * this.buff.physicalResistance) }
+  get technique() { return Math.round(this.basic.technique * this.buff.technique) }
+  get agility() { return Math.round(this.basic.agility * this.buff.agility) }
+  get magicalStrength() { return Math.round(this.basic.magicalStrength * this.buff.magicalStrength) }
+  get magicalResistance() { return Math.round(this.basic.magicalResistance * this.buff.magicalResistance) }
+  get HPrecover() { return Math.round(this.basic.HPrecover * this.buff.HPrecover) }
+  get MPrecover() { return Math.round(this.basic.MPrecover * this.buff.MPrecover) }
 
   get attackPowers() {
     let d = this.howToAttack
@@ -93,11 +100,35 @@ class Unit {
   get moveType() { return this.buff.moveType === 1 ? this.base.moveType : STRING_MAP_MOVE.indexOf("飛行") }
 
   get killStats() { return 0 }
-  get competence() { return Math.floor((this.experience + 20) * 1.6 ** this.rank) } // 戦力指数のこと
+  get competence() { return Math.floor((this.experience + 20) * 1.06 ** this.rank) } // 戦力指数のこと
   get salary() { return this.characterType.named === 1 ? this.cost : 0 }
 
-  get earnedExperience() { return this._earnedExperience }
-  set earnedExperience(value) { this._earnedExperience = Math.round(value) }
+  get earnedExperience() { return Math.floor(this._earnedExperience) }
+  set earnedExperience(value) {
+    this._earnedExperience = value
+    if (this._earnedExperience > 100) this.rankUp()
+  }
+
+  rankUp() {
+    if (this.strRank === "S") this.earnedExperience = 100
+    else if (this.strRank === "A" && this.higherClass) {
+      this.classChange(this.higherClass)
+      this.rank = 0
+      this.earnedExperience -= 100
+    }
+    else {
+      this.rank += 1
+      this.earnedExperience -= 100
+    }
+    this.calculateBasicStatus()
+  }
+
+  classChange(id) {
+    this.id = id
+    let data = assets.charadata.characters[this.id]
+    for (let i in data) this[i] = data[i]
+    this.calculateBasicStatus()
+  }
 
   isFamily(unit) { return unit.species === this.species }
 }

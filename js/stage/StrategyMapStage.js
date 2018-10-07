@@ -61,6 +61,7 @@ class StrategyMapStage extends createjs.Stage {
     master.activateFollowerUnits()
     for (let area of master.dominatingAreas) area.executeAreaCommand()
     if (master.isPlayer) {
+      master.stayingArea.sortStayingUnits()
       this.sideBar.displayArea(master.stayingArea)
       this.sideBar.displayMaster()
       return 0

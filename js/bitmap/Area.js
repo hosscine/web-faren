@@ -38,7 +38,7 @@ class Area {
   set city(value) { this._city = value > this.maxCity ? this.maxCity : value }
   get city() { return Math.round(this._city) }
   set road(value) { this._road = value > this.maxRoad ? this.maxRoad : value }
-  get road() { return Math.round(this._road) }
+  get road() { return Math.floor(this._road) }
   set wall(value) { this._wall = value > this.maxWall ? this.maxWall : value }
   get wall() { return Math.round(this._wall) }
   get isBestTransport() { return this._road === this.maxRoad }

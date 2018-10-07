@@ -47,8 +47,8 @@ const CHARACTER_DATA = {
     magicalResistance: 2,
     passion: 2,
     braveness: 2,
-    HPrecover: 2,
-    MPrecover: 2
+    MPrecover: 2,
+    HPrecover: 2
   },
   uniqueSkill: {
     skillID: 2,
@@ -126,7 +126,7 @@ class CharacterDataReader extends BinaryReader {
 
     while (this.offset + CHARACTER_DATA_LENGTH <= this.data.byteLength) this.parseCharacter()
 
-    this.parseEmployable()
+    this.parseCharacterNo()
     this.setupImageManifest()
   }
 
@@ -188,12 +188,13 @@ class CharacterDataReader extends BinaryReader {
     }
   }
 
-  parseEmployable() {
+  parseCharacterNo() {
     for (let id in this.characters) {
       let emp = this.characters[id].employable
       let newEmployable = []
       for (let no in emp) if (emp[no] !== 0) newEmployable.push(this.no2id(emp[no]))
       this.characters[id].employable = newEmployable
+      this.characters[id].higherClass = this.no2id(this.characters[id].higherClass)
     }
   }
 
