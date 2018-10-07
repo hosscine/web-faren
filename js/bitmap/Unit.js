@@ -125,7 +125,7 @@ class Unit {
 
   classChange(id) {
     this.id = id
-    let data = assets.charadata.characters[this.id]
+    let data = this.assets.charadata.characters[this.id]
     for (let i in data) this[i] = data[i]
     this.calculateBasicStatus()
   }

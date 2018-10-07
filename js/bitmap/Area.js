@@ -133,4 +133,7 @@ class Area {
 
   set command(command) { for (let key in this.stayingCommand) this.stayingCommand[key] = key === command ? true : false }
   get command() { for (let key in this.stayingCommand) if (this.stayingCommand[key]) return key }
+
+  get adjacentAreas() { return this.adjacency.map(x => this.allAreas[x - 1]) }
+  isAdjacent(area) { return this.adjacency.includes(this.allAreas.indexOf(area) + 1) }
 }

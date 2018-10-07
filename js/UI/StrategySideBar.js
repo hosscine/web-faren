@@ -79,6 +79,47 @@ class StrategySideBar extends SideBar {
     this.displayingArea.command = selected
   }
 
+  switchWarMode() {
+    this.unitCallbacks.click = "displayUnitDetail"
+    this.displayUnits(this.displayingArea.stayingUnits, this.unitCallbacks)
+    this.displayUnits(null, this.unitCallbacks, "ivory", null, "destination")
+    this.areaCallbacks.click = "displayWarTarget"
+  }
+
+  displayWarTarget(area) {
+    if (area.owner === this.player) {
+      this.displayArea(area)
+
+    }
+    else if (this.displayingArea.isAdjacent(area) && !this.warTargetArea) {
+      this.moveFromUnits = this.displayingArea.stayingUnits.slice()
+      this.moveFromUnits = this.moveFromUnits.concat(Array(20 - this.moveFromUnits.length).fill(0))
+      this.moveToUnits = Array(20).fill(0)
+      this.warTargetArea = area
+    }
+    else {
+      alert("対象のエリアは自軍のエリアと隣接していません")
+      return
+    }
+
+    if (this.warTargetArea) {
+      this.moveCommandsContainer.visible = true
+      this.unitCallbacks.click = "commandUnitAdvancement"
+      this.displayUnits(this.moveFromUnits, this.unitCallbacks, "pink")
+      this.displayUnits(this.moveToUnits, this.unitCallbacks, "pink", "end", "destination")
+      this.areaCallbacks.click = "displayWarTarget"
+    }
+    else this.switchWarMode()
+  }
+
+  commandUnitAdvancement(unit) {
+    this.commandUnitMove(unit, true)
+  }
+
+  commandWarfare() {
+    console.log("開戦!")
+  }
+
   switchMoveMode() {
     this.unitCallbacks.click = "displayUnitDetail"
     this.displayUnits(this.displayingArea.stayingUnits, this.unitCallbacks)
@@ -86,23 +127,11 @@ class StrategySideBar extends SideBar {
     this.areaCallbacks.click = "displayMoveCandidates"
   }
 
-  switchEmployMode() {
-    if (!this.displayingArea.hasSpace) alert("エリアに空きがありません")
-    else {
-      this.unitCallbacks.click = "displayEmployCandidates"
-      this.displayUnits(this.displayingArea.stayingUnits, this.unitCallbacks, "limegreen")
-    }
-  }
-
-  switchUnemployMode() {
-    this.unitCallbacks.click = "commandUnemployUnit"
-    this.displayUnits(this.displayingArea.stayingUnits, this.unitCallbacks, "red")
-  }
-
   displayMoveCandidates(area) {
     if (this.moveFromUnits) this.commandMoveSubmit()
     if (area === this.displayingArea) return
-    else if (area.owner !== this.player) return
+    // else if (area.owner !== this.player) return
+
     this.destinationArea = area
     this.moveCommandsContainer.visible = true
 
@@ -115,6 +144,48 @@ class StrategySideBar extends SideBar {
     this.displayUnits(this.moveFromUnits, this.unitCallbacks, "cyan")
     this.displayUnits(this.moveToUnits, this.unitCallbacks, "cyan", "end", "destination")
     this.areaCallbacks.click = "displayMoveCandidates"
+  }
+
+  commandUnitMove(unit, isWar = false) {
+    if (!unit.active) return true
+    let to = this.moveFromUnits.includes(unit) ? this.moveToUnits : this.moveFromUnits
+    let from = this.moveToUnits.includes(unit) ? this.moveToUnits : this.moveFromUnits
+    if (to.includes(0)) {
+      to[to.indexOf(0)] = unit
+      from[from.indexOf(unit)] = 0
+      unit.onMove = !unit.onMove
+
+      let option = isWar ? { color: "pink", badge: "" } : { color: "cyan", badge: "move" }
+      this.displayUnits(this.moveFromUnits, this.unitCallbacks, option.color, option.badge)
+      this.displayUnits(this.moveToUnits, this.unitCallbacks, option.color, option.badge, "destination")
+      this.areaCallbacks.click = isWar ? "displayWarTarget" : "displayMoveCandidates"
+      return false
+    }
+    return true
+  }
+
+  commandAllMoveTo(destination) {
+    for (let unit of destination) if (unit.active) if (this.commandUnitMove(unit, this.warTargetArea)) break
+  }
+
+  commandMoveSubmit() {
+    this.displayingArea.stayingUnits = this.moveFromUnits.filter(unit => unit !== 0)
+    this.destinationArea.stayingUnits = this.moveToUnits.filter(unit => unit !== 0)
+    this.moveFromUnits = this.moveToUnits = undefined
+    this.displayingArea.stayingUnits.forEach(unit => { if (unit.onMove) unit.onMove = unit.active = false })
+    this.destinationArea.stayingUnits.forEach(unit => { if (unit.onMove) unit.onMove = unit.active = false })
+    this.displayingArea.sortStayingUnits()
+    this.destinationArea.sortStayingUnits()
+    this.displayArea(this.displayingArea)
+    this.moveCommandsContainer.visible = false
+  }
+
+  switchEmployMode() {
+    if (!this.displayingArea.hasSpace) alert("エリアに空きがありません")
+    else {
+      this.unitCallbacks.click = "displayEmployCandidates"
+      this.displayUnits(this.displayingArea.stayingUnits, this.unitCallbacks, "limegreen")
+    }
   }
 
   displayEmployCandidates(unit) {
@@ -135,38 +206,6 @@ class StrategySideBar extends SideBar {
     }
   }
 
-  commandUnitMove(unit) {
-    if (!unit.active) return true
-    let to = this.moveFromUnits.includes(unit) ? this.moveToUnits : this.moveFromUnits
-    let from = this.moveToUnits.includes(unit) ? this.moveToUnits : this.moveFromUnits
-    if (to.includes(0)) {
-      to[to.indexOf(0)] = unit
-      from[from.indexOf(unit)] = 0
-      unit.onMove = !unit.onMove
-      this.displayUnits(this.moveFromUnits, this.unitCallbacks, "cyan", "move")
-      this.displayUnits(this.moveToUnits, this.unitCallbacks, "cyan", "move", "destination")
-      this.areaCallbacks.click = "displayMoveCandidates"
-      return false
-    }
-    return true
-  }
-
-  commandAllMoveTo(destination) {
-    for (let unit of destination) if (unit.active) if (this.commandUnitMove(unit)) break
-  }
-
-  commandMoveSubmit() {
-    this.displayingArea.stayingUnits = this.moveFromUnits.filter(unit => unit !== 0)
-    this.destinationArea.stayingUnits = this.moveToUnits.filter(unit => unit !== 0)
-    this.moveFromUnits = this.moveToUnits = undefined
-    this.displayingArea.stayingUnits.forEach(unit => { if (unit.onMove) unit.onMove = unit.active = false })
-    this.destinationArea.stayingUnits.forEach(unit => { if (unit.onMove) unit.onMove = unit.active = false })
-    this.displayingArea.sortStayingUnits()
-    this.destinationArea.sortStayingUnits()
-    this.displayArea(this.displayingArea)
-    this.moveCommandsContainer.visible = false
-  }
-
   commandEmployUnit(unit) {
     if (this.player.pay(unit.cost)) {
       this.displayingArea.placeUnits(unit)
@@ -178,6 +217,11 @@ class StrategySideBar extends SideBar {
     else alert("ユニットの雇用費を払えません")
     this.displayArea(this.displayingArea)
     if (this.displayingArea.hasSpace) this.switchEmployMode()
+  }
+
+  switchUnemployMode() {
+    this.unitCallbacks.click = "commandUnemployUnit"
+    this.displayUnits(this.displayingArea.stayingUnits, this.unitCallbacks, "red")
   }
 
   commandUnemployUnit(unit) {
@@ -237,6 +281,7 @@ class StrategySideBar extends SideBar {
     const buttonSize = 45
     let war = turnCommandsContainer.addChild(new Button("⚔", buttonSize, buttonSize))
     war.x = contentX += 4
+    war.on("click", () => this.switchWarMode())
 
     let alliance = turnCommandsContainer.addChild(new Button("🤝", buttonSize, buttonSize))
     alliance.x = contentX += buttonSize + 4
@@ -354,7 +399,7 @@ class StrategySideBar extends SideBar {
 
     let submit = moveCommandsContainer.addChild(new Button("確定", buttonSize - 20, 20))
     submit.x = contentX += buttonSize + 15
-    submit.on("click", () => this.commandMoveSubmit())
+    submit.on("click", () => this.warTargetArea ? this.commandWarfare() : this.commandMoveSubmit())
 
     let above = moveCommandsContainer.addChild(new Button("全て上へ", buttonSize + 10, 20))
     above.x = contentX += buttonSize - 15
