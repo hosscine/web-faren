@@ -68,6 +68,14 @@ class StrategySideBar extends SideBar {
     }
   }
 
+  displayUnitsBoth({ unitClick, areaClick, unitsFrom, colorFrom, badgeFrom,
+    unitsTo = unitsFrom, colorTo = colorFrom, badgeTo = badgeFrom } = {}) {
+    this.unitCallbacks.click = unitClick
+    this.displayUnits(unitsFrom, this.unitCallbacks, colorFrom, badgeFrom)
+    this.displayUnits(unitsTo, this.unitCallbacks, colorTo, badgeTo, "destination")
+    this.areaCallbacks.click = areaClick
+  }
+
   displayUnitOverview(unit) {
     let y = unit.onMove || this.unitCallbacks.click === "commandEmployUnit" ?
       { under: 400, above: 600 } : { under: 600, above: 400 }
@@ -80,10 +88,10 @@ class StrategySideBar extends SideBar {
   }
 
   switchWarMode() {
-    this.unitCallbacks.click = "displayUnitDetail"
-    this.displayUnits(this.displayingArea.stayingUnits, this.unitCallbacks)
-    this.displayUnits(null, this.unitCallbacks, "ivory", null, "destination")
-    this.areaCallbacks.click = "displayWarTarget"
+    this.displayUnitsBoth({
+      unitClick: "diplayUnitDetail", areaClick: "displayWarTarget", unitsFrom: this.displayingArea.stayingUnits,
+      colorFrom: "white", badgeFrom: "end", unitsTo: null, colorTo: "ivory"
+    })
   }
 
   displayWarTarget(area) {
@@ -104,10 +112,10 @@ class StrategySideBar extends SideBar {
 
     if (this.warTargetArea) {
       this.moveCommandsContainer.visible = true
-      this.unitCallbacks.click = "commandUnitAdvancement"
-      this.displayUnits(this.moveFromUnits, this.unitCallbacks, "pink")
-      this.displayUnits(this.moveToUnits, this.unitCallbacks, "pink", "end", "destination")
-      this.areaCallbacks.click = "displayWarTarget"
+      this.displayUnitsBoth({
+        unitClick: "commandUnitAdvancement", areaClick: "displayWarTarget", unitsFrom: this.moveFromUnits,
+        colorFrom: "pink", badgeFrom: "", unitsTo: this.moveToUnits
+      })
     }
     else this.switchWarMode()
   }
@@ -126,10 +134,10 @@ class StrategySideBar extends SideBar {
   }
 
   switchMoveMode() {
-    this.unitCallbacks.click = "displayUnitDetail"
-    this.displayUnits(this.displayingArea.stayingUnits, this.unitCallbacks)
-    this.displayUnits(null, this.unitCallbacks, "yellow", null, "destination")
-    this.areaCallbacks.click = "displayMoveCandidates"
+    this.displayUnitsBoth({
+      unitClick: "displayUnitDetail", areaClick: "displayMoveCandidates", unitsFrom: this.displayingArea.stayingUnits,
+      colorFrom: "white", badgeFrom: "end", unitsTo: null, colorTo: "yellow"
+    })
   }
 
   displayMoveCandidates(area) {
@@ -145,10 +153,10 @@ class StrategySideBar extends SideBar {
     this.moveFromUnits = this.moveFromUnits.concat(Array(20 - this.moveFromUnits.length).fill(0))
     this.moveToUnits = this.moveToUnits.concat(Array(20 - this.moveToUnits.length).fill(0))
 
-    this.unitCallbacks.click = "commandUnitMove"
-    this.displayUnits(this.moveFromUnits, this.unitCallbacks, "cyan")
-    this.displayUnits(this.moveToUnits, this.unitCallbacks, "cyan", "end", "destination")
-    this.areaCallbacks.click = "displayMoveCandidates"
+    this.displayUnitsBoth({
+      unitClick: "commandUnitMove", areaClick: "displayMoveCandidates", unitsFrom: this.moveFromUnits,
+      colorFrom: "cyan", badgeFrom: "end", unitsTo: this.moveToUnits
+    })
   }
 
   commandUnitMove(unit, isWar = false) {
@@ -161,9 +169,10 @@ class StrategySideBar extends SideBar {
       unit.onMove = !unit.onMove
 
       let option = isWar ? { color: "pink", badge: "" } : { color: "cyan", badge: "move" }
-      this.displayUnits(this.moveFromUnits, this.unitCallbacks, option.color, option.badge)
-      this.displayUnits(this.moveToUnits, this.unitCallbacks, option.color, option.badge, "destination")
-      this.areaCallbacks.click = isWar ? "displayWarTarget" : "displayMoveCandidates"
+      this.displayUnitsBoth({
+        unitClick: "commandUnitMove", areaClick: isWar ? "displayWarTarget" : "displayMoveCandidates",
+        unitsFrom: this.moveFromUnits, colorFrom: option.color, badgeFrom: badge.color, unitsTo: this.moveToUnits
+      })
       return false
     }
     return true
