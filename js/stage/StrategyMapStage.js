@@ -77,6 +77,14 @@ class StrategyMapStage extends createjs.Stage {
     if (order === this.masters.length - 1) this.initializeTurn()
     else this.turnRoutine(this.masters[order + 1])
   }
+
+  gotoBattleMap(target, attackMaster, attackUnits, attackFrom) {
+    target.conquered(attackMaster, attackUnits)
+    this.strategyMap.setupAreaFlag(this.areas)
+    if (attackFrom.length)
+      for (let area of attackFrom) attackUnits = area.removeUnits(attackUnits)
+    else attackFrom.removeUnits(attackUnits)
+  }
 }
 
 window.StrategyMapStage = createjs.promote(StrategyMapStage, "Stage")

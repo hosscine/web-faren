@@ -23,6 +23,9 @@ class StrategyMap extends ScrollContainer {
   }
 
   setupAreaFlag(areas) {
+    this.removeAllChildren()
+    this.addChild(this.mapBitmap)
+
     // 先にエリア間の接続を描画
     for (let i in areas) {
       let adjacency = areas[i].adjacency

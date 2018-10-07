@@ -118,6 +118,11 @@ class StrategySideBar extends SideBar {
 
   commandWarfare() {
     console.log("開戦!")
+    this.moveToUnits = this.moveToUnits.filter(unit => unit !== 0)
+    this.mainStage.gotoBattleMap(this.warTargetArea, this.player, this.moveToUnits, this.displayingArea)
+    this.moveCommandsContainer.visible = false
+    this.moveFromUnits = this.moveToUnits = this.warTargetArea = undefined
+    this.displayArea(this.displayingArea)
   }
 
   switchMoveMode() {

@@ -76,6 +76,16 @@ class Area {
   placeUnits(units) {
     return this.stayingUnits = this.stayingUnits.concat(units)
   }
+  removeUnits(units) {
+    let notStay = []
+    for (let key in units) {
+      let i = this.stayingUnits.indexOf(units[key])
+      if (i >= 0) this.stayingUnits.splice(i, 1)
+      else notStay.push(units[key])
+    }
+    this.sortStayingUnits()
+    return notStay
+  }
 
   initialEmployment() {
     let fund = 0
@@ -108,6 +118,11 @@ class Area {
     else if (this.command === "laying") this.road += this.nActiveFamily * 0.4
     else if (this.command === "building") this.wall += this.nActiveFamily
     else console.log(this, このエリアではコマンドが指定されていません)
+  }
+
+  conquered(newOwner, stayingUnits) {
+    this.owner = newOwner
+    this.stayingUnits = stayingUnits
   }
 
   unemployUnit(unit) { this.stayingUnits.splice(this.stayingUnits.indexOf(unit), 1) }
