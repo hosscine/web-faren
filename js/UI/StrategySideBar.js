@@ -73,6 +73,10 @@ class StrategySideBar extends SideBar {
     super.displayUnitOverview(unit, this.displayingArea.stayingUnits.includes(unit) ? y.under : y.above)
   }
 
+  selectAreaCommand(selected) {
+    for (let key in this.areaCommands) this.areaCommands[key].selected = key === selected ? true : false
+  }
+
   switchMoveMode() {
     this.unitCallbacks.click = "displayUnitDetail"
     this.displayUnits(this.displayingArea.stayingUnits, this.unitCallbacks)
@@ -291,35 +295,40 @@ class StrategySideBar extends SideBar {
   }
 
   setupAreaCommandsContainer() {
-    this.areaCommandsContainer = this.addChild(new createjs.Container())
-    this.areaCommandsContainer.y = 300
-    this.stayCommands = {}
+    let areaCommandsContainer = this.addChild(new createjs.Container())
+    areaCommandsContainer.y = 300
+    this.areaCommandsContainer = areaCommandsContainer
 
     const BUTTON_WIDTH = 85
     const LEFT_X = 10
     const RIGHT_X = 110
     let contentY = 0
-    let stayLabel = this.areaCommandsContainer.addChild(new createjs.Text("待機時の行動", "15px arial", "white"))
+    let stayLabel = areaCommandsContainer.addChild(new createjs.Text("待機時の行動", "15px arial", "white"))
     stayLabel.x = 10
 
-    this.stayCommands.developing = this.areaCommandsContainer.addChild(new Button("街開発", BUTTON_WIDTH, 20))
-    this.stayCommands.developing.x = RIGHT_X
+    let developing = areaCommandsContainer.addChild(new Button("街開発", BUTTON_WIDTH, 20))
+    developing.x = RIGHT_X
 
-    this.stayCommands.training = this.areaCommandsContainer.addChild(new Button("部隊訓練", BUTTON_WIDTH, 20))
-    this.stayCommands.training.x = LEFT_X
-    this.stayCommands.training.y = contentY += 23
+    let training = areaCommandsContainer.addChild(new Button("部隊訓練", BUTTON_WIDTH, 20))
+    training.x = LEFT_X
+    training.y = contentY += 23
 
-    this.stayCommands.searching = this.areaCommandsContainer.addChild(new Button("人材捜索", BUTTON_WIDTH, 20))
-    this.stayCommands.searching.x = RIGHT_X
-    this.stayCommands.searching.y = contentY
+    let searching = areaCommandsContainer.addChild(new Button("人材捜索", BUTTON_WIDTH, 20))
+    searching.x = RIGHT_X
+    searching.y = contentY
 
-    this.stayCommands.laying = this.areaCommandsContainer.addChild(new Button("道路建設", BUTTON_WIDTH, 20))
-    this.stayCommands.laying.x = LEFT_X
-    this.stayCommands.laying.y = contentY += 23
+    let laying = areaCommandsContainer.addChild(new Button("道路建設", BUTTON_WIDTH, 20))
+    laying.x = LEFT_X
+    laying.y = contentY += 23
 
-    this.stayCommands.building = this.areaCommandsContainer.addChild(new Button("城壁建設", BUTTON_WIDTH, 20))
-    this.stayCommands.building.x = RIGHT_X
-    this.stayCommands.building.y = contentY
+    let building = areaCommandsContainer.addChild(new Button("城壁建設", BUTTON_WIDTH, 20))
+    building.x = RIGHT_X
+    building.y = contentY
+
+    this.areaCommands = {
+      developing: developing, training: training, searching: searching, laying: laying, building: building
+    }
+    for (let key in this.areaCommands) this.areaCommands[key].on("click", () => this.selectAreaCommand(key))
   }
 
   setupUnitsContainer() {
