@@ -132,6 +132,8 @@ class Area {
   }
 
   conquered(newOwner, stayingUnits) {
+    this.owner.releaseArea(this)
+    newOwner.dominateArea(this)
     this.owner = newOwner
     this.stayingUnits = stayingUnits
     this.sortStayingUnits()

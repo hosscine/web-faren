@@ -99,13 +99,15 @@ class StrategySideBar extends SideBar {
     this.resetMode()
     if (this.displayingArea.owner !== this.player) return alert("先に侵攻元の自軍のエリアを選択してください")
     this.displayUnitsBoth({
-      unitClick: "diplayUnitDetail", areaClick: "displayWarTarget", unitsFrom: this.displayingArea.stayingUnits,
+      unitClick: "displayUnitDetail", areaClick: "displayWarTarget", unitsFrom: this.displayingArea.stayingUnits,
       colorFrom: "white", badgeFrom: "end", unitsTo: null, colorTo: "ivory"
     })
   }
 
   displayWarTarget(area) {
     if (area.owner === this.player) { // 侵攻元のエリアを再設定
+      if (this.warTargetArea) if (!this.warTargetArea.isAdjacent(area))
+        return alert("対象のエリアは侵攻先のエリアと隣接していません")
       this.displayArea(area)
       this.moveFromUnits = this.displayingArea.getStayingUnits20Bins()
     }
@@ -120,7 +122,7 @@ class StrategySideBar extends SideBar {
         this.warTargetArea = area
       }
     }
-    else alert("対象のエリアは自軍のエリアと隣接していません")
+    else alert("対象のエリアは侵攻元のエリアと隣接していません")
 
     if (this.warTargetArea) {
       this.moveCommandsContainer.visible = true
@@ -138,7 +140,9 @@ class StrategySideBar extends SideBar {
 
   commandWarfare() {
     if (this.moveToUnits.every(unit => unit === 0)) return alert("侵攻するユニットが一体もいません")
-    console.log("開戦!")
+    let go = window.confirm(this.warTargetArea.name + "に侵攻します")
+    if (!go) return
+
     this.moveToUnits = this.moveToUnits.filter(unit => unit !== 0)
     this.mainStage.gotoBattleMap(this.warTargetArea, this.player, this.moveToUnits, this.displayingArea)
     this.resetMode()
@@ -154,8 +158,8 @@ class StrategySideBar extends SideBar {
 
   displayMoveCandidates(area) {
     if (this.destinationArea) this.commandMoveSubmit() // 移動先エリアを切り替える前に移動を確定
-    if (area === this.displayingArea) return
-    else if (area.owner !== this.player) return
+    if (area === this.displayingArea) return alert("移動元と同じエリアです")
+    else if (area.owner !== this.player) return alert("移動先は自軍のエリアを選択してください")
 
     this.destinationArea = area
     this.moveCommandsContainer.visible = true
@@ -227,12 +231,12 @@ class StrategySideBar extends SideBar {
       this.displayingArea.placeUnits(unit)
       this.displayingArea.sortStayingUnits()
       this.displayMaster(this.player)
-      unit.active = false
-      this.commandingUnit.active = false
+      unit.active = this.commandingUnit.active = false
     }
     else alert("ユニットの雇用費を払えません")
-    this.displayArea(this.displayingArea)
+
     if (this.displayingArea.hasSpace) this.switchEmployMode()
+    else this.resetMode()
   }
 
   switchUnemployMode() {
@@ -242,13 +246,11 @@ class StrategySideBar extends SideBar {
   }
 
   commandUnemployUnit(unit) {
-    if (!unit.active) alert("既に行動済みのユニットです")
-    else if (unit.isMaster) alert("マスターは解雇できません")
-    else {
-      let go = window.confirm("この部隊を解雇してよろしいですか？")
-      if (go) this.displayingArea.unemployUnit(unit)
-    }
-    this.displayArea(this.displayingArea)
+    if (!unit.active) return alert("既に行動済みのユニットです")
+    else if (unit.isMaster) return alert("マスターは解雇できません")
+
+    let go = window.confirm("この部隊を解雇してよろしいですか？")
+    if (go) this.displayingArea.unemployUnit(unit)
     this.switchUnemployMode()
   }
 
