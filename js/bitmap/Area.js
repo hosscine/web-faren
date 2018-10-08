@@ -108,6 +108,11 @@ class Area {
     })
   }
 
+  getStayingUnits20Bins() {
+    let bins = this.stayingUnits.slice()
+    return bins.concat(Array(20 - bins.length).fill(0))
+  }
+
   executeAreaCommand() {
     if (this.command === "developing") this.city += this.nActiveFamily / 4
     else if (this.command === "training") {
@@ -123,6 +128,7 @@ class Area {
   conquered(newOwner, stayingUnits) {
     this.owner = newOwner
     this.stayingUnits = stayingUnits
+    this.sortStayingUnits()
   }
 
   unemployUnit(unit) { this.stayingUnits.splice(this.stayingUnits.indexOf(unit), 1) }

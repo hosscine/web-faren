@@ -87,28 +87,40 @@ class StrategySideBar extends SideBar {
     this.displayingArea.command = selected
   }
 
+  resetMode() {
+    if (this.moveFromUnits) this.moveFromUnits.forEach(unit => { if (unit !== 0) unit.onMove = false })
+    if (this.moveToUnits) this.moveToUnits.forEach(unit => { if (unit !== 0) unit.onMove = false })
+    this.destinationArea = this.warTargetArea = this.moveFromUnits = this.moveToUnits = undefined
+    this.displayArea(this.displayingArea)
+    this.moveCommandsContainer.visible = false
+  }
+
   switchWarMode() {
-    this.displayUnitsBoth({
+    this.resetMode()
+    if (this.displayingArea.owner !== this.player) alert("先に侵攻元の自軍のエリアを選択してください")
+    else this.displayUnitsBoth({
       unitClick: "diplayUnitDetail", areaClick: "displayWarTarget", unitsFrom: this.displayingArea.stayingUnits,
       colorFrom: "white", badgeFrom: "end", unitsTo: null, colorTo: "ivory"
     })
   }
 
   displayWarTarget(area) {
-    if (area.owner === this.player) {
+    if (area.owner === this.player) { // 侵攻元のエリアを再設定
       this.displayArea(area)
-
+      this.moveFromUnits = this.displayingArea.getStayingUnits20Bins()
     }
-    else if (this.displayingArea.isAdjacent(area) && !this.warTargetArea) {
-      this.moveFromUnits = this.displayingArea.stayingUnits.slice()
-      this.moveFromUnits = this.moveFromUnits.concat(Array(20 - this.moveFromUnits.length).fill(0))
-      this.moveToUnits = Array(20).fill(0)
-      this.warTargetArea = area
+    else if (this.displayingArea.isAdjacent(area)) {
+      if (this.warTargetArea) { // 侵攻先のエリアを再設定
+        this.warTargetArea = undefined
+        this.displayWarTarget(area)
+      }
+      else { // 侵攻先のエリアに設定
+        this.moveFromUnits = this.displayingArea.getStayingUnits20Bins()
+        this.moveToUnits = Array(20).fill(0)
+        this.warTargetArea = area
+      }
     }
-    else {
-      alert("対象のエリアは自軍のエリアと隣接していません")
-      return
-    }
+    else alert("対象のエリアは自軍のエリアと隣接していません")
 
     if (this.warTargetArea) {
       this.moveCommandsContainer.visible = true
@@ -130,10 +142,11 @@ class StrategySideBar extends SideBar {
     this.mainStage.gotoBattleMap(this.warTargetArea, this.player, this.moveToUnits, this.displayingArea)
     this.moveCommandsContainer.visible = false
     this.moveFromUnits = this.moveToUnits = this.warTargetArea = undefined
-    this.displayArea(this.displayingArea)
+    this.resetMode()
   }
 
   switchMoveMode() {
+    this.resetMode()
     this.displayUnitsBoth({
       unitClick: "displayUnitDetail", areaClick: "displayMoveCandidates", unitsFrom: this.displayingArea.stayingUnits,
       colorFrom: "white", badgeFrom: "end", unitsTo: null, colorTo: "yellow"
@@ -141,7 +154,7 @@ class StrategySideBar extends SideBar {
   }
 
   displayMoveCandidates(area) {
-    if (this.moveFromUnits) this.commandMoveSubmit()
+    if (this.destinationArea) this.commandMoveSubmit()
     if (area === this.displayingArea) return
     // else if (area.owner !== this.player) return
 
@@ -170,8 +183,9 @@ class StrategySideBar extends SideBar {
 
       let option = isWar ? { color: "pink", badge: "" } : { color: "cyan", badge: "move" }
       this.displayUnitsBoth({
-        unitClick: "commandUnitMove", areaClick: isWar ? "displayWarTarget" : "displayMoveCandidates",
-        unitsFrom: this.moveFromUnits, colorFrom: option.color, badgeFrom: badge.color, unitsTo: this.moveToUnits
+        unitClick: isWar ? "commandUnitAdvancement" : "commandUnitMove",
+        areaClick: isWar ? "displayWarTarget" : "displayMoveCandidates",
+        unitsFrom: this.moveFromUnits, colorFrom: option.color, badgeFrom: option.badge, unitsTo: this.moveToUnits
       })
       return false
     }
@@ -195,6 +209,7 @@ class StrategySideBar extends SideBar {
   }
 
   switchEmployMode() {
+    this.resetMode()
     if (!this.displayingArea.hasSpace) alert("エリアに空きがありません")
     else {
       this.unitCallbacks.click = "displayEmployCandidates"
