@@ -231,7 +231,7 @@ class StrategySideBar extends SideBar {
 
   commandEmployUnit(unit) {
     if (this.player.pay(unit.cost)) {
-      this.displayingArea.placeUnits(unit)
+      unit.moveToArea(this.displayingArea)
       this.displayingArea.sortStayingUnits()
       this.displayMaster(this.player)
       unit.active = this.commandingUnit.active = false

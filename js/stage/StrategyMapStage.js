@@ -28,7 +28,7 @@ class StrategyMapStage extends createjs.Stage {
     for (let locate of assets.scenario.initialLocation) {
       let id = locate.unitID
       let unit = assets.charadata.characters[id].isMaster ? this.mastersDic[id] : new Unit(id, assets)
-      this.areas[locate.areaID - 1].placeUnits(unit)
+      unit.moveToArea(this.areas[locate.areaID - 1])
       unit.rank = locate.unitRank
     }
   }
@@ -80,11 +80,9 @@ class StrategyMapStage extends createjs.Stage {
 
   gotoBattleMap(target, attackMaster, attackUnits, attackFrom) {
     for (let unit of attackUnits) unit.active = false
-    target.conquered(attackMaster, attackUnits)
+    for (let unit of target.stayingUnits) unit.die()
+    target.occupied(attackMaster, attackUnits)
     this.strategyMap.setupAreaFlag(this.areas)
-    if (attackFrom.length)
-      for (let area of attackFrom) attackUnits = area.removeUnits(attackUnits)
-    else attackFrom.removeUnits(attackUnits)
   }
 }
 

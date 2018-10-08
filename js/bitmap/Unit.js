@@ -75,6 +75,16 @@ class Unit {
     this.displayer[methodName](this)
   }
 
+  get stayingArea() { return this._stayingArea }
+  set stayingArea(area) { this.moveToArea(area) }
+  moveToArea(area) {
+    if (this._stayingArea) this._stayingArea.releaseUnit(this)
+    this._stayingArea = area
+    area.registerUnit(this)
+  }
+
+  die() { this._stayingArea.releaseUnit(this) }
+
   get strSpecies() { return STRING_MAP_SPECIES[this.species] }
   get strRank() { return STRING_MAP_RANK[this.rank] }
 

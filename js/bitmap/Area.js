@@ -74,33 +74,19 @@ class Area {
   }
 
   get stayingUnits() { return this._stayingUnits.slice() }
-  set stayingUnits(units) {
-    this.removeAllUnits()
-    this.placeUnits(units)
+
+  registerUnit(unit) {
+    if (unit.stayingArea === this) this._stayingUnits.push(unit)
+    else if (!unit.stayingArea) unit.moveToArea(this)
+    else throw new Error("this method cannot overwrite the location of a unit")
   }
 
-  placeUnits(units) {
-    if (units.length) for (let unit of units) unit.stayingArea = this
-    else units.stayingArea = this
-    return this._stayingUnits = this._stayingUnits.concat(units)
-  }
-
-  removeAllUnits() {
-    for (let unit of this._stayingUnits) unit.stayingArea = null
-    this._stayingUnits = []
-  }
-
-  removeUnits(units) {
-    let notStaying = []
-    for (let unit of units)
-      if (unit.stayingArea === this) {
-        unit.stayingArea = null
-        let i = this._stayingUnits.indexOf(units[key])
-        this._stayingUnits.splice(i, 1)
-      }
-      else notStaying.push(unit)
-    this.sortStayingUnits()
-    return notStaying
+  releaseUnit(unit) {
+    if (unit.stayingArea === this) {
+      let i = this._stayingUnits.indexOf(unit)
+      this._stayingUnits.splice(i, 1)
+    }
+    else throw new Error("the unit is not staying in this area")
   }
 
   sortStayingUnits() {
@@ -128,9 +114,8 @@ class Area {
     else if (this.owner.isMaster) fund += 350 + Math.random() * 50
     else fund += (this.guardsMagnification * this.levelMagnification * (35 + Math.random() * 90)) / 100
 
-    this.placeUnits(this.owner.initialEmploy(
-      fund, this.stayingUnits.length, this.assets, this.initialEmployable))
-
+    let newUnits = this.owner.initialEmploy(fund, this.stayingUnits.length, this.assets, this.initialEmployable)
+    for (let unit of newUnits) unit.moveToArea(this)
     this.sortStayingUnits()
     this.setupAreaStatus()
   }
@@ -147,11 +132,11 @@ class Area {
     else console.log(this, このエリアではコマンドが指定されていません)
   }
 
-  conquered(newOwner, stayingUnits) {
+  occupied(newOwner, newUnits) {
     this.owner.releaseArea(this)
     newOwner.dominateArea(this)
     this.owner = newOwner
-    this.stayingUnits = stayingUnits
+    for (let unit of newUnits) unit.moveToArea(this)
     this.sortStayingUnits()
   }
 
