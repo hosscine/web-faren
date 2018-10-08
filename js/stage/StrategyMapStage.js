@@ -83,6 +83,7 @@ class StrategyMapStage extends createjs.Stage {
     for (let unit of target.stayingUnits) unit.die()
     target.occupied(attackMaster, attackUnits)
     this.strategyMap.setupAreaFlag(this.areas)
+    this.sidebar.displayMaster()
   }
 }
 

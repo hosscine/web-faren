@@ -140,7 +140,7 @@ class Area {
     this.sortStayingUnits()
   }
 
-  unemployUnit(unit) { this.stayingUnits.splice(this.stayingUnits.indexOf(unit), 1) }
+  unemployUnit(unit) { this._stayingUnits.splice(this._stayingUnits.indexOf(unit), 1) }
 
   get employable() { return this.assets.callable.employable[this.type] }
   get initialEmployable() { return this.assets.callable.initialEmployable[this.type] }

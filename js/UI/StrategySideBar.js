@@ -34,6 +34,7 @@ class StrategySideBar extends SideBar {
     this.areaData.wall.text = "城壁 " + area.wall + "/" + area.maxWall
     this.areaData.city.text = "街 " + area.city + "/" + area.maxCity
     this.areaData.road.text = "道路 " + area.road + "/" + area.maxRoad
+    this.selectAreaCommand(this.displayingArea.command)
 
     this.unitCallbacks.click = "displayUnitDetail"
     this.displayUnits(area.stayingUnits, this.unitCallbacks, "white", area.owner === this.player ? "end" : null)
@@ -265,7 +266,10 @@ class StrategySideBar extends SideBar {
     else if (unit.isMaster) return alert("マスターは解雇できません")
 
     let go = window.confirm("この部隊を解雇してよろしいですか？")
-    if (go) this.displayingArea.unemployUnit(unit)
+    if (go) {
+      this.displayingArea.unemployUnit(unit)
+      this.displayMaster()
+    }
     this.switchUnemployMode()
   }
 
