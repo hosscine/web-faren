@@ -111,7 +111,7 @@ class StrategySideBar extends SideBar {
 
     this.displayUnitsBoth({
       unitClick: "displayUnitDetail", areaClick: "displayWarTarget", unitsFrom: this.binsSet[this.displayingArea.name],
-      colorFrom: "white", badgeFrom: "end", unitsTo: this.moveToUnits, colorTo: "ivory"
+      colorFrom: "white", badgeFrom: "end", unitsTo: this.moveToUnits, colorTo: "red"
     })
   }
 
@@ -133,7 +133,7 @@ class StrategySideBar extends SideBar {
       this.moveCommandsContainer.visible = true
       this.displayUnitsBoth({
         unitClick: "commandUnitAdvancement", areaClick: "displayWarTarget",
-        unitsFrom: this.binsSet[this.displayingArea.name], colorFrom: "pink", badgeFrom: "end", unitsTo: this.moveToUnits
+        unitsFrom: this.binsSet[this.displayingArea.name], colorFrom: "red", badgeFrom: "end", unitsTo: this.moveToUnits
       })
     }
     else this.switchWarMode()
@@ -157,7 +157,7 @@ class StrategySideBar extends SideBar {
     this.resetMode()
     this.displayUnitsBoth({
       unitClick: "displayUnitDetail", areaClick: "displayMoveCandidates", unitsFrom: this.displayingArea.stayingUnits,
-      colorFrom: "white", badgeFrom: "end", unitsTo: null, colorTo: "yellow"
+      colorFrom: "white", badgeFrom: "end", unitsTo: null, colorTo: "cyan"
     })
   }
 
@@ -196,7 +196,7 @@ class StrategySideBar extends SideBar {
       from[from.indexOf(unit)] = 0
       unit.onMove = !unit.onMove
 
-      let option = isWar ? { color: "pink", badge: "" } : { color: "cyan", badge: "move" }
+      let option = isWar ? { color: "red", badge: "end" } : { color: "cyan", badge: "move" }
       this.displayUnitsBoth({
         unitClick: isWar ? "commandUnitAdvancement" : "commandUnitMove",
         areaClick: isWar ? "displayWarTarget" : "displayMoveCandidates",
@@ -239,7 +239,7 @@ class StrategySideBar extends SideBar {
 
     this.commandingUnit = unit
     this.unitCallbacks.click = "commandEmployUnit"
-    this.displayUnits(candidates, this.unitCallbacks, "red", "cost")
+    this.displayUnits(candidates, this.unitCallbacks, "limegreen", "cost")
   }
 
   commandEmployUnit(unit) {
@@ -258,7 +258,7 @@ class StrategySideBar extends SideBar {
   switchUnemployMode() {
     this.resetMode()
     this.unitCallbacks.click = "commandUnemployUnit"
-    this.displayUnits(this.displayingArea.stayingUnits, this.unitCallbacks, "red")
+    this.displayUnits(this.displayingArea.stayingUnits, this.unitCallbacks, "yellow")
   }
 
   commandUnemployUnit(unit) {
