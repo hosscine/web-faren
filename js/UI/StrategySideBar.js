@@ -429,7 +429,8 @@ class StrategySideBar extends SideBar {
     const buttonSize = 60
     let under = moveCommandsContainer.addChild(new Button("全て下へ", buttonSize + 10, 20))
     under.x = contentX
-    under.on("click", () => this.commandAllMoveTo(this.moveFromUnits))
+    under.on("click", () => this.warTargetArea ?
+      this.commandAllMoveTo(this.binsSet[this.displayingArea.name]) : this.commandAllMoveTo(this.moveFromUnits))
 
     let submit = moveCommandsContainer.addChild(new Button("確定", buttonSize - 20, 20))
     submit.x = contentX += buttonSize + 15
