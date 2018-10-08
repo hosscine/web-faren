@@ -77,9 +77,8 @@ class StrategySideBar extends SideBar {
   }
 
   displayUnitOverview(unit) {
-    let y = unit.onMove || this.unitCallbacks.click === "commandEmployUnit" ?
-      { under: 400, above: 600 } : { under: 600, above: 400 }
-    super.displayUnitOverview(unit, this.displayingArea.stayingUnits.includes(unit) ? y.under : y.above)
+    if (this.moveToUnits) if (this.moveToUnits.includes(unit)) return super.displayUnitOverview(unit, 400)
+    super.displayUnitOverview(unit, 600)
   }
 
   selectAreaCommand(selected) {
@@ -90,7 +89,7 @@ class StrategySideBar extends SideBar {
   resetMode() {
     if (this.moveFromUnits) this.moveFromUnits.forEach(unit => { if (unit !== 0) unit.onMove = false })
     if (this.moveToUnits) this.moveToUnits.forEach(unit => { if (unit !== 0) unit.onMove = false })
-    this.destinationArea = this.warTargetArea = this.moveFromUnits = this.moveToUnits = this.moveFromAreas = undefined
+    this.destinationArea = this.warTargetArea = this.moveFromUnits = this.moveToUnits = undefined
     this.displayArea(this.displayingArea)
     this.moveCommandsContainer.visible = false
   }
@@ -100,7 +99,6 @@ class StrategySideBar extends SideBar {
     if (this.displayingArea.owner !== this.player) return alert("先に侵攻元の自軍のエリアを選択してください")
     this.moveFromUnits = this.displayingArea.getStayingUnits20Bins()
     this.moveToUnits = Array(20).fill(0)
-    this.moveFromAreas = []
     this.displayUnitsBoth({
       unitClick: "displayUnitDetail", areaClick: "displayWarTarget", unitsFrom: this.displayingArea.stayingUnits,
       colorFrom: "white", badgeFrom: "end", unitsTo: null, colorTo: "ivory"
@@ -142,7 +140,7 @@ class StrategySideBar extends SideBar {
     if (!go) return
 
     this.moveToUnits = this.moveToUnits.filter(unit => unit !== 0)
-    this.mainStage.gotoBattleMap(this.warTargetArea, this.player, this.moveToUnits, this.moveFromAreas)
+    this.mainStage.gotoBattleMap(this.warTargetArea, this.player, this.moveToUnits)
     this.resetMode()
   }
 
@@ -174,15 +172,13 @@ class StrategySideBar extends SideBar {
     if (!unit.active) return true
     let from = this.moveToUnits.includes(unit) ? this.moveToUnits : this.moveFromUnits
     let to = this.moveFromUnits.includes(unit) ? this.moveToUnits : this.moveFromUnits
-    if (isWar && this.moveToUnits.includes(unit))
-      if (unit.stayingArea !== this.displayingArea)
+    if (isWar && this.moveToUnits.includes(unit) && unit.stayingArea !== this.displayingArea)
         return alert(unit.name + "は" + this.displayingArea.name + "から出撃していません")
 
     if (to.includes(0)) {
       to[to.indexOf(0)] = unit
       from[from.indexOf(unit)] = 0
       unit.onMove = !unit.onMove
-      if (isWar) if (!this.moveFromAreas.includes(this.displayingArea)) this.moveFromAreas.push(this.displayingArea)
 
       let option = isWar ? { color: "pink", badge: "" } : { color: "cyan", badge: "move" }
       this.displayUnitsBoth({

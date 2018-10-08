@@ -78,7 +78,7 @@ class StrategyMapStage extends createjs.Stage {
     else this.turnRoutine(this.masters[order + 1])
   }
 
-  gotoBattleMap(target, attackMaster, attackUnits, attackFrom) {
+  gotoBattleMap(target, attackMaster, attackUnits) {
     for (let unit of attackUnits) unit.active = false
     for (let unit of target.stayingUnits) unit.die()
     target.occupied(attackMaster, attackUnits)
