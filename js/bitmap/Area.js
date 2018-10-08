@@ -7,7 +7,7 @@ class Area {
     owner.dominateArea(this)
     this.allAreas = allAreas
     this.assets = assets
-    this.stayingUnits = []
+    this._stayingUnits = []
     this.sidebar = sidebar
     this.gameLevel = gameLevel
 
@@ -73,18 +73,51 @@ class Area {
     return line
   }
 
-  placeUnits(units) {
-    return this.stayingUnits = this.stayingUnits.concat(units)
+  get stayingUnits() { return this._stayingUnits.slice() }
+  set stayingUnits(units) {
+    this.removeAllUnits()
+    this.placeUnits(units)
   }
+
+  placeUnits(units) {
+    if (units.length) for (let unit of units) unit.stayingArea = this
+    else units.stayingArea = this
+    return this._stayingUnits = this._stayingUnits.concat(units)
+  }
+
+  removeAllUnits() {
+    for (let unit of this._stayingUnits) unit.stayingArea = null
+    this._stayingUnits = []
+  }
+
   removeUnits(units) {
-    let notStay = []
-    for (let key in units) {
-      let i = this.stayingUnits.indexOf(units[key])
-      if (i >= 0) this.stayingUnits.splice(i, 1)
-      else notStay.push(units[key])
-    }
+    let notStaying = []
+    for (let unit of units)
+      if (unit.stayingArea === this) {
+        unit.stayingArea = null
+        let i = this._stayingUnits.indexOf(units[key])
+        this._stayingUnits.splice(i, 1)
+      }
+      else notStaying.push(unit)
     this.sortStayingUnits()
-    return notStay
+    return notStaying
+  }
+
+  sortStayingUnits() {
+    this._stayingUnits.sort((a, b) => { // 戦力指数, 獲得経験値でソート
+      return -(a.competence - b.competence + (a.earnedExperience - b.earnedExperience) * 0.001)
+    })
+  }
+
+  getStayingUnits20Bins() {
+    let bins = this.stayingUnits.slice()
+    return bins.concat(Array(20 - bins.length).fill(0))
+  }
+  setStayingUnits20Bins(bins) {
+    let units = bins.filter(unit => unit !== 0)
+    this.stayingUnits = units
+    units.forEach(unit => { if (unit.onMove) unit.onMove = unit.active = false })
+    this.sortStayingUnits()
   }
 
   initialEmployment() {
@@ -100,23 +133,6 @@ class Area {
 
     this.sortStayingUnits()
     this.setupAreaStatus()
-  }
-
-  sortStayingUnits() {
-    this.stayingUnits.sort((a, b) => { // 戦力指数, 獲得経験値でソート
-      return -(a.competence - b.competence + (a.earnedExperience - b.earnedExperience) * 0.001)
-    })
-  }
-
-  getStayingUnits20Bins() {
-    let bins = this.stayingUnits.slice()
-    return bins.concat(Array(20 - bins.length).fill(0))
-  }
-  setStayingUnits20Bins(bins) {
-    let units = bins.filter(unit => unit !== 0)
-    this.stayingUnits = units
-    units.forEach(unit => { if (unit.onMove) unit.onMove = unit.active = false })
-    this.sortStayingUnits()
   }
 
   executeAreaCommand() {

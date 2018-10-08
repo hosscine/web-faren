@@ -175,7 +175,7 @@ class StrategySideBar extends SideBar {
     let from = this.moveToUnits.includes(unit) ? this.moveToUnits : this.moveFromUnits
     let to = this.moveFromUnits.includes(unit) ? this.moveToUnits : this.moveFromUnits
     if (isWar && this.moveToUnits.includes(unit))
-      if (this.moveFromAreas.find(area => area.stayingUnits.includes(unit)) !== this.displayingArea)
+      if (unit.stayingArea !== this.displayingArea)
         return alert(unit.name + "は" + this.displayingArea.name + "から出撃していません")
 
     if (to.includes(0)) {
