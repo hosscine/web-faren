@@ -112,6 +112,12 @@ class Area {
     let bins = this.stayingUnits.slice()
     return bins.concat(Array(20 - bins.length).fill(0))
   }
+  setStayingUnits20Bins(bins) {
+    let units = bins.filter(unit => unit !== 0)
+    this.stayingUnits = units
+    units.forEach(unit => { if (unit.onMove) unit.onMove = unit.active = false })
+    this.sortStayingUnits()
+  }
 
   executeAreaCommand() {
     if (this.command === "developing") this.city += this.nActiveFamily / 4

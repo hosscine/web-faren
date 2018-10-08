@@ -58,8 +58,8 @@ class StrategyMapStage extends createjs.Stage {
 
   turnRoutine(master) {
     master.fund += master.income - master.outgo
-    master.activateFollowerUnits()
     for (let area of master.dominatingAreas) area.executeAreaCommand()
+    master.activateFollowerUnits()
     if (master.isPlayer) {
       master.stayingArea.sortStayingUnits()
       this.sideBar.displayArea(master.stayingArea)
@@ -79,6 +79,7 @@ class StrategyMapStage extends createjs.Stage {
   }
 
   gotoBattleMap(target, attackMaster, attackUnits, attackFrom) {
+    for (let unit of attackUnits) unit.active = false
     target.conquered(attackMaster, attackUnits)
     this.strategyMap.setupAreaFlag(this.areas)
     if (attackFrom.length)

@@ -97,8 +97,8 @@ class StrategySideBar extends SideBar {
 
   switchWarMode() {
     this.resetMode()
-    if (this.displayingArea.owner !== this.player) alert("先に侵攻元の自軍のエリアを選択してください")
-    else this.displayUnitsBoth({
+    if (this.displayingArea.owner !== this.player) return alert("先に侵攻元の自軍のエリアを選択してください")
+    this.displayUnitsBoth({
       unitClick: "diplayUnitDetail", areaClick: "displayWarTarget", unitsFrom: this.displayingArea.stayingUnits,
       colorFrom: "white", badgeFrom: "end", unitsTo: null, colorTo: "ivory"
     })
@@ -126,7 +126,7 @@ class StrategySideBar extends SideBar {
       this.moveCommandsContainer.visible = true
       this.displayUnitsBoth({
         unitClick: "commandUnitAdvancement", areaClick: "displayWarTarget", unitsFrom: this.moveFromUnits,
-        colorFrom: "pink", badgeFrom: "", unitsTo: this.moveToUnits
+        colorFrom: "pink", badgeFrom: "end", unitsTo: this.moveToUnits
       })
     }
     else this.switchWarMode()
@@ -137,11 +137,10 @@ class StrategySideBar extends SideBar {
   }
 
   commandWarfare() {
+    if (this.moveToUnits.every(unit => unit === 0)) return alert("侵攻するユニットが一体もいません")
     console.log("開戦!")
     this.moveToUnits = this.moveToUnits.filter(unit => unit !== 0)
     this.mainStage.gotoBattleMap(this.warTargetArea, this.player, this.moveToUnits, this.displayingArea)
-    this.moveCommandsContainer.visible = false
-    this.moveFromUnits = this.moveToUnits = this.warTargetArea = undefined
     this.resetMode()
   }
 
@@ -154,17 +153,14 @@ class StrategySideBar extends SideBar {
   }
 
   displayMoveCandidates(area) {
-    if (this.destinationArea) this.commandMoveSubmit()
+    if (this.destinationArea) this.commandMoveSubmit() // 移動先エリアを切り替える前に移動を確定
     if (area === this.displayingArea) return
-    // else if (area.owner !== this.player) return
+    else if (area.owner !== this.player) return
 
     this.destinationArea = area
     this.moveCommandsContainer.visible = true
-
-    this.moveFromUnits = this.displayingArea.stayingUnits.slice()
-    this.moveToUnits = this.destinationArea.stayingUnits.slice()
-    this.moveFromUnits = this.moveFromUnits.concat(Array(20 - this.moveFromUnits.length).fill(0))
-    this.moveToUnits = this.moveToUnits.concat(Array(20 - this.moveToUnits.length).fill(0))
+    this.moveFromUnits = this.displayingArea.getStayingUnits20Bins()
+    this.moveToUnits = this.destinationArea.getStayingUnits20Bins()
 
     this.displayUnitsBoth({
       unitClick: "commandUnitMove", areaClick: "displayMoveCandidates", unitsFrom: this.moveFromUnits,
@@ -197,42 +193,33 @@ class StrategySideBar extends SideBar {
   }
 
   commandMoveSubmit() {
-    this.displayingArea.stayingUnits = this.moveFromUnits.filter(unit => unit !== 0)
-    this.destinationArea.stayingUnits = this.moveToUnits.filter(unit => unit !== 0)
-    this.moveFromUnits = this.moveToUnits = undefined
-    this.displayingArea.stayingUnits.forEach(unit => { if (unit.onMove) unit.onMove = unit.active = false })
-    this.destinationArea.stayingUnits.forEach(unit => { if (unit.onMove) unit.onMove = unit.active = false })
-    this.displayingArea.sortStayingUnits()
-    this.destinationArea.sortStayingUnits()
-    this.displayArea(this.displayingArea)
-    this.moveCommandsContainer.visible = false
+    this.displayingArea.setStayingUnits20Bins(this.moveFromUnits)
+    this.destinationArea.setStayingUnits20Bins(this.moveToUnits)
+    this.resetMode()
   }
 
   switchEmployMode() {
     this.resetMode()
-    if (!this.displayingArea.hasSpace) alert("エリアに空きがありません")
-    else {
-      this.unitCallbacks.click = "displayEmployCandidates"
-      this.displayUnits(this.displayingArea.stayingUnits, this.unitCallbacks, "limegreen")
-    }
+    if (!this.displayingArea.hasSpace) return alert("エリアに空きがありません")
+    this.unitCallbacks.click = "displayEmployCandidates"
+    this.displayUnits(this.displayingArea.stayingUnits, this.unitCallbacks, "limegreen")
   }
 
   displayEmployCandidates(unit) {
-    if (!unit.active) alert("既に行動済みのユニットです")
-    else if (!unit.isFamily(this.player)) alert("マスターと同種族でないユニットは雇用に従事できません")
-    else {
-      let candidates1 = unit.employable.concat()
-      let candidates2 = this.displayingArea.employable.concat()
-      for (let i in candidates1) candidates1[i] = new Unit(candidates1[i], this.assets)
-      for (let i in candidates2) candidates2[i] = new Unit(candidates2[i], this.assets)
-      candidates1.sort((a, b) => -(a.cost - b.cost))
-      candidates2.sort((a, b) => -(a.cost - b.cost))
-      let candidates = candidates1.concat(candidates2)
+    if (!unit.active) return alert("既に行動済みのユニットです")
+    else if (!unit.isFamily(this.player)) return alert("マスターと同種族でないユニットは雇用に従事できません")
 
-      this.commandingUnit = unit
-      this.unitCallbacks.click = "commandEmployUnit"
-      this.displayUnits(candidates, this.unitCallbacks, "red", "cost")
-    }
+    let candidates1 = unit.employable.concat()
+    let candidates2 = this.displayingArea.employable.concat()
+    for (let i in candidates1) candidates1[i] = new Unit(candidates1[i], this.assets)
+    for (let i in candidates2) candidates2[i] = new Unit(candidates2[i], this.assets)
+    candidates1.sort((a, b) => -(a.cost - b.cost))
+    candidates2.sort((a, b) => -(a.cost - b.cost))
+    let candidates = candidates1.concat(candidates2)
+
+    this.commandingUnit = unit
+    this.unitCallbacks.click = "commandEmployUnit"
+    this.displayUnits(candidates, this.unitCallbacks, "red", "cost")
   }
 
   commandEmployUnit(unit) {
@@ -249,6 +236,7 @@ class StrategySideBar extends SideBar {
   }
 
   switchUnemployMode() {
+    this.resetMode()
     this.unitCallbacks.click = "commandUnemployUnit"
     this.displayUnits(this.displayingArea.stayingUnits, this.unitCallbacks, "red")
   }
@@ -462,7 +450,7 @@ class StrategySideBar extends SideBar {
 
     let cancel = unitCommandsContainer.addChild(new Button("🏸", buttonSize, buttonSize))
     cancel.x = contentX += buttonSize + 16
-    cancel.on("click", () => this.displayArea(this.displayingArea))
+    cancel.on("click", () => this.resetMode())
 
     for (let button of unitCommandsContainer.children) button.font = "20px arial"
   }
