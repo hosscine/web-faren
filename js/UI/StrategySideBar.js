@@ -87,21 +87,30 @@ class StrategySideBar extends SideBar {
   }
 
   resetMode() {
+    if (this.binsSet) for (let key in this.binsSet)
+      this.binsSet[key].forEach(unit => { if (unit !== 0) unit.onMove = false })
     if (this.moveFromUnits) this.moveFromUnits.forEach(unit => { if (unit !== 0) unit.onMove = false })
     if (this.moveToUnits) this.moveToUnits.forEach(unit => { if (unit !== 0) unit.onMove = false })
-    this.destinationArea = this.warTargetArea = this.moveFromUnits = this.moveToUnits = undefined
+    this.destinationArea = this.warTargetArea = this.moveFromUnits = this.moveToUnits = this.binsSet = undefined
     this.displayArea(this.displayingArea)
     this.moveCommandsContainer.visible = false
+  }
+
+  initializeBinsSet() {
+    this.binsSet = {}
+    for (let area of this.displayingArea.adjacentAreas) this.binsSet[area.name] = area.getStayingUnits20Bins()
+    this.binsSet[this.displayingArea.name] = this.displayingArea.getStayingUnits20Bins()
   }
 
   switchWarMode() {
     this.resetMode()
     if (this.displayingArea.owner !== this.player) return alert("先に侵攻元の自軍のエリアを選択してください")
-    this.moveFromUnits = this.displayingArea.getStayingUnits20Bins()
+    this.initializeBinsSet()
     this.moveToUnits = Array(20).fill(0)
+
     this.displayUnitsBoth({
-      unitClick: "displayUnitDetail", areaClick: "displayWarTarget", unitsFrom: this.displayingArea.stayingUnits,
-      colorFrom: "white", badgeFrom: "end", unitsTo: null, colorTo: "ivory"
+      unitClick: "displayUnitDetail", areaClick: "displayWarTarget", unitsFrom: this.binsSet[this.displayingArea.name],
+      colorFrom: "white", badgeFrom: "end", unitsTo: this.moveToUnits, colorTo: "ivory"
     })
   }
 
@@ -113,7 +122,6 @@ class StrategySideBar extends SideBar {
       if (this.warTargetArea) if (!this.warTargetArea.isAdjacent(area))
         return alert("対象のエリアは侵攻先のエリアと隣接していません")
       this.displayArea(area)
-      this.moveFromUnits = this.displayingArea.getStayingUnits20Bins()
     }
     else { // 侵攻先のエリアを設定
       this.switchWarMode()
@@ -123,8 +131,8 @@ class StrategySideBar extends SideBar {
     if (this.warTargetArea) {
       this.moveCommandsContainer.visible = true
       this.displayUnitsBoth({
-        unitClick: "commandUnitAdvancement", areaClick: "displayWarTarget", unitsFrom: this.moveFromUnits,
-        colorFrom: "pink", badgeFrom: "end", unitsTo: this.moveToUnits
+        unitClick: "commandUnitAdvancement", areaClick: "displayWarTarget",
+        unitsFrom: this.binsSet[this.displayingArea.name], colorFrom: "pink", badgeFrom: "end", unitsTo: this.moveToUnits
       })
     }
     else this.switchWarMode()
@@ -170,10 +178,17 @@ class StrategySideBar extends SideBar {
 
   commandUnitMove(unit, isWar = false) {
     if (!unit.active) return true
-    let from = this.moveToUnits.includes(unit) ? this.moveToUnits : this.moveFromUnits
-    let to = this.moveFromUnits.includes(unit) ? this.moveToUnits : this.moveFromUnits
-    if (isWar && this.moveToUnits.includes(unit) && unit.stayingArea !== this.displayingArea)
-        return alert(unit.name + "は" + this.displayingArea.name + "から出撃していません")
+    let [from, to] = [,]
+    if (this.moveToUnits.includes(unit)) {
+      from = this.moveToUnits
+      if (isWar) to = this.displayingArea.stayingUnits.includes(unit) ?
+        this.binsSet[this.displayingArea.name] : this.binsSet[unit.stayingArea.name]
+      else to = this.moveFromUnits
+    }
+    else {
+      from = isWar ? this.binsSet[this.displayingArea.name] : this.moveFromUnits
+      to = this.moveToUnits
+    }
 
     if (to.includes(0)) {
       to[to.indexOf(0)] = unit
@@ -184,7 +199,8 @@ class StrategySideBar extends SideBar {
       this.displayUnitsBoth({
         unitClick: isWar ? "commandUnitAdvancement" : "commandUnitMove",
         areaClick: isWar ? "displayWarTarget" : "displayMoveCandidates",
-        unitsFrom: this.moveFromUnits, colorFrom: option.color, badgeFrom: option.badge, unitsTo: this.moveToUnits
+        unitsFrom: isWar ? this.binsSet[this.displayingArea.name] : this.moveFromUnits,
+        colorFrom: option.color, badgeFrom: option.badge, unitsTo: this.moveToUnits
       })
       return false
     }
