@@ -90,7 +90,7 @@ class StrategySideBar extends SideBar {
   resetMode() {
     if (this.moveFromUnits) this.moveFromUnits.forEach(unit => { if (unit !== 0) unit.onMove = false })
     if (this.moveToUnits) this.moveToUnits.forEach(unit => { if (unit !== 0) unit.onMove = false })
-    this.destinationArea = this.warTargetArea = this.moveFromUnits = this.moveToUnits = undefined
+    this.destinationArea = this.warTargetArea = this.moveFromUnits = this.moveToUnits = this.moveFromAreas = undefined
     this.displayArea(this.displayingArea)
     this.moveCommandsContainer.visible = false
   }
@@ -98,6 +98,9 @@ class StrategySideBar extends SideBar {
   switchWarMode() {
     this.resetMode()
     if (this.displayingArea.owner !== this.player) return alert("先に侵攻元の自軍のエリアを選択してください")
+    this.moveFromUnits = this.displayingArea.getStayingUnits20Bins()
+    this.moveToUnits = Array(20).fill(0)
+    this.moveFromAreas = []
     this.displayUnitsBoth({
       unitClick: "displayUnitDetail", areaClick: "displayWarTarget", unitsFrom: this.displayingArea.stayingUnits,
       colorFrom: "white", badgeFrom: "end", unitsTo: null, colorTo: "ivory"
@@ -105,24 +108,19 @@ class StrategySideBar extends SideBar {
   }
 
   displayWarTarget(area) {
+    if (area.owner !== this.player && !this.displayingArea.isAdjacent(area))
+      return alert("対象のエリアは侵攻元のエリアと隣接していません")
+
     if (area.owner === this.player) { // 侵攻元のエリアを再設定
       if (this.warTargetArea) if (!this.warTargetArea.isAdjacent(area))
         return alert("対象のエリアは侵攻先のエリアと隣接していません")
       this.displayArea(area)
       this.moveFromUnits = this.displayingArea.getStayingUnits20Bins()
     }
-    else if (this.displayingArea.isAdjacent(area)) {
-      if (this.warTargetArea) { // 侵攻先のエリアを再設定
-        this.warTargetArea = undefined
-        this.displayWarTarget(area)
-      }
-      else { // 侵攻先のエリアに設定
-        this.moveFromUnits = this.displayingArea.getStayingUnits20Bins()
-        this.moveToUnits = Array(20).fill(0)
-        this.warTargetArea = area
-      }
+    else { // 侵攻先のエリアを設定
+      this.switchWarMode()
+      this.warTargetArea = area
     }
-    else alert("対象のエリアは侵攻元のエリアと隣接していません")
 
     if (this.warTargetArea) {
       this.moveCommandsContainer.visible = true
@@ -144,7 +142,7 @@ class StrategySideBar extends SideBar {
     if (!go) return
 
     this.moveToUnits = this.moveToUnits.filter(unit => unit !== 0)
-    this.mainStage.gotoBattleMap(this.warTargetArea, this.player, this.moveToUnits, this.displayingArea)
+    this.mainStage.gotoBattleMap(this.warTargetArea, this.player, this.moveToUnits, this.moveFromAreas)
     this.resetMode()
   }
 
@@ -174,12 +172,17 @@ class StrategySideBar extends SideBar {
 
   commandUnitMove(unit, isWar = false) {
     if (!unit.active) return true
-    let to = this.moveFromUnits.includes(unit) ? this.moveToUnits : this.moveFromUnits
     let from = this.moveToUnits.includes(unit) ? this.moveToUnits : this.moveFromUnits
+    let to = this.moveFromUnits.includes(unit) ? this.moveToUnits : this.moveFromUnits
+    if (isWar && this.moveToUnits.includes(unit))
+      if (this.moveFromAreas.find(area => area.stayingUnits.includes(unit)) !== this.displayingArea)
+        return alert(unit.name + "は" + this.displayingArea.name + "から出撃していません")
+
     if (to.includes(0)) {
       to[to.indexOf(0)] = unit
       from[from.indexOf(unit)] = 0
       unit.onMove = !unit.onMove
+      if (isWar) if (!this.moveFromAreas.includes(this.displayingArea)) this.moveFromAreas.push(this.displayingArea)
 
       let option = isWar ? { color: "pink", badge: "" } : { color: "cyan", badge: "move" }
       this.displayUnitsBoth({
@@ -310,7 +313,7 @@ class StrategySideBar extends SideBar {
 
     let turnEnd = turnCommandsContainer.addChild(new Button("😴", buttonSize, buttonSize))
     turnEnd.x = contentX += buttonSize + 4
-    turnEnd.on("click", () => this.mainStage.nextMasterTurn(this.player))
+    turnEnd.on("click", () => { this.resetMode(); this.mainStage.nextMasterTurn(this.player) })
 
     for (let button of turnCommandsContainer.children) {
       button.font = "40px arial"
