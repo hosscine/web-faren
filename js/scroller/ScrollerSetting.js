@@ -35,11 +35,22 @@ var reflow = function() {
   // canvasのwidthは自動調節されないのでここで手動調節
   header.setAttribute("width", container.clientWidth)
   header.setAttribute("height", container.clientHeight * 0.1)
-  content.setAttribute("width", container.clientWidth - 200)
-  content.setAttribute("height", container.clientHeight * 0.9)
-  sidebar.setAttribute("height", container.clientHeight * 0.9)
+
+  if (container.clientWidth * 0.2 < 200) {
+    content.setAttribute("width", container.clientWidth)
+    content.setAttribute("height", container.clientHeight * 0.6)
+    sidebar.setAttribute("width", container.clientWidth)
+    sidebar.setAttribute("height", container.clientHeight * 0.3)
+  } else {
+    content.setAttribute("width", container.clientWidth * 0.8)
+    content.setAttribute("height", container.clientHeight * 0.9)
+    sidebar.setAttribute("width", container.clientWidth * 0.2)
+    sidebar.setAttribute("height", container.clientHeight * 0.9)
+  }
 
   scroller.setDimensions(clientWidth, clientHeight, contentWidth, contentHeight)
+
+  for (let s of [stage, sidebarStage, headerStage]) if (s.reflow) s.reflow()
 }
 window.addEventListener("resize", reflow, false)
 reflow()

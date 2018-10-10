@@ -4,21 +4,28 @@ class SidebarStage extends createjs.Stage {
   }
 
   displayScenario(scenarioData) {
+    this.scenarioData = scenarioData
     this.scenarioInfo = this.addChild(new createjs.Container())
 
-    let background = this.scenarioInfo.addChild(new createjs.Shape())
-    background.graphics.beginFill("darkblue").drawRect(0, 0, SIDEBAR_WIDTH, 2000)
+    this.background = this.scenarioInfo.addChild(new createjs.Shape())
+    this.background.graphics.beginFill("darkblue").drawRect(0, 0, this.canvas.clientWidth, 2000)
 
     let name = this.scenarioInfo.addChild(new createjs.Text(scenarioData.Name, "18px arial", "white"))
     name.y = 10
 
-    let explanation = this.scenarioInfo.addChild(new createjs.Text("", "16px arial", "white"))
-    explanation.lineWidth = SIDEBAR_WIDTH
-    explanation.x = 3
-    explanation.y = 40
-    setWrapText(explanation, scenarioData.Explanation.join("\n"))
+    this.explanation = this.scenarioInfo.addChild(new createjs.Text("", "16px arial", "white"))
+    this.explanation.lineWidth = this.canvas.clientWidth
+    this.explanation.x = 3
+    this.explanation.y = 40
+    setWrapText(this.explanation, scenarioData.Explanation.join("\n"))
   }
 
+  reflow() {
+    if (!this.background || !this.explanation) return
+    this.background.graphics.clear().beginFill("darkblue").drawRect(0, 0, this.canvas.clientWidth, 2000)
+    this.explanation.lineWidth = this.canvas.clientWidth
+    setWrapText(this.explanation, this.scenarioData.Explanation.join("\n"))
+  }
 }
 
 /**
