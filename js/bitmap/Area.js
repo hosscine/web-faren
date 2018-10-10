@@ -101,8 +101,10 @@ class Area {
   }
   setStayingUnits20Bins(bins) {
     let units = bins.filter(unit => unit !== 0)
-    this.stayingUnits = units
-    units.forEach(unit => { if (unit.onMove) unit.onMove = unit.active = false })
+    for (let unit of units) {
+      if (unit.onMove) unit.onMove = unit.active = false
+      unit.moveToArea(this)
+    }
     this.sortStayingUnits()
   }
 
