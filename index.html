@@ -53,11 +53,9 @@
 
 <body>
   <div id="container">
-    <canvas id="headerCanvas">hoge</canvas>
-    <div id="main">
-      <canvas id="mainCanvas">hoge</canvas>
-      <canvas id="sidebarCanvas">hoge</canvas>
-    </div>
+    <canvas id="mainCanvas">hoge</canvas>
+    <canvas id="sidebarCanvas">hoge</canvas>
+  </div>
   </div>
 
 </body>
@@ -68,10 +66,10 @@
     stage = new SelectCharacterStage("mainCanvas")
     sidebarStage = new SidebarStage("sidebarCanvas")
 
-    if (createjs.Touch.isSupported()){
+    if (createjs.Touch.isSupported()) {
       createjs.Touch.enable(stage)
       createjs.Touch.enable(sidebarStage)
-    } 
+    }
     stage.enableMouseOver()
     sidebarStage.enableMouseOver()
     createjs.Ticker.addEventListener("tick", headerStage)

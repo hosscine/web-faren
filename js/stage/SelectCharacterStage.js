@@ -41,8 +41,10 @@ class SelectCharacterStage extends createjs.Stage {
     let ncols = this.masters.length / 2 + this.masters.length % 2
     let faceSample = this.faceContainer.children[0]
     let faceWidth = faceSample.getChildAt(0).getBounds().width * faceSample.scaleX // 顔についてる名前テキストの長さ * スケール
-    this.faceContainer.contentWidth = faceWidth * ncols + SELECTABLE_FACE_MARGINE * ncols * 2
-    this.faceContainer.contentHeight = contentHeightDefault - EXPLANATION_HEIGHT
+    this.faceContainer.setContentBounds(faceWidth * ncols + SELECTABLE_FACE_MARGINE * ncols * 2,
+      contentHeightDefault - EXPLANATION_HEIGHT)
+    // this.faceContainer.contentWidth = faceWidth * ncols + SELECTABLE_FACE_MARGINE * ncols * 2
+    // this.faceContainer.contentHeight = contentHeightDefault - EXPLANATION_HEIGHT
   }
 
   gotoStrategyMap(playerMaster) {

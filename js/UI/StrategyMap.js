@@ -8,15 +8,11 @@ class StrategyMap extends ScrollContainer {
 
   setup() {
     this.addChild(this.mapBitmap)
-
-    let width = this.mapBitmap.getBounds().width
-    let height = this.mapBitmap.getBounds().height
-
-    this.contentWidth = width * this.scaleX
-    this.contentHeight = height * this.scaleY
+    let bounds = this.mapBitmap.getBounds()
+    this.setContentBounds(bounds.width, bounds.height)
 
     // マップ全体をキャッシュ
-    this.cache(this.x, this.y, width, height)
+    this.cache(this.x, this.y, bounds.width, bounds.height)
     createjs.Tween.get(this, { loop: -1 })
       .wait(FLAG_MOTION_INTERVAL)
       .call(() => this.updateCache())
@@ -36,5 +32,11 @@ class StrategyMap extends ScrollContainer {
       this.addChild(areas[i].ownerNameFlag)
     }
     this.updateCache()
+  }
+
+  reflow(viewWidth, viewHeight) {
+    let mapHeight = this.mapBitmap.getBounds().height
+    if (mapHeight < viewHeight) this.setScale(viewHeight / mapHeight)
+    else this.setScale(1)
   }
 }

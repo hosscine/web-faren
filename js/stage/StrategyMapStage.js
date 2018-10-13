@@ -85,6 +85,10 @@ class StrategyMapStage extends createjs.Stage {
     this.strategyMap.setupAreaFlag(this.areas)
     this.sideBar.displayMaster()
   }
+
+  reflow(w, h) {
+    this.strategyMap.reflow(w, h)
+  }
 }
 
 window.StrategyMapStage = createjs.promote(StrategyMapStage, "Stage")

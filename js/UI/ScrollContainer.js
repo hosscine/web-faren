@@ -11,6 +11,8 @@ class ScrollContainer extends createjs.Container {
       scroller.scrollTarget = this
       scroller.__callback = this.handleScroll
     }
+    this.contentWidth = 0
+    this.contentHeight = 0
   }
 
   handleScroll(left, top) {
@@ -18,19 +20,26 @@ class ScrollContainer extends createjs.Container {
     scroller.scrollTarget.y = -top
   }
 
-  set contentWidth(width) {
-    contentWidth = width
-    reflow()
-  }
-  get contentWidth() {
-    return contentWidth
-  }
-  set contentHeight(height) {
-    contentHeight = height
-    reflow()
-  }
-  get contentHeight() {
-    return contentWidth
+  setContentBounds(width, height) {
+    this.contentWidth = width * this.scaleX
+    this.contentHeight = height * this.scaleY
+    this.exportContentSize()
   }
 
+  setScale(value) {
+    this.scaleX = this.scaleY = value
+    this.exportContentSize()
+  }
+
+  exportContentSize() {
+    contentWidth = this.contentWidth * this.scaleX
+    contentHeight = this.contentHeight * this.scaleY
+    this.updateScroll()
+  }
+  
+  updateScroll() {
+    let clientWidth = content.clientWidth
+    let clientHeight = content.clientHeight
+    scroller.setDimensions(clientWidth, clientHeight, contentWidth, contentHeight)
+  }
 }
