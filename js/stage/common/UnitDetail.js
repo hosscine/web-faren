@@ -1,4 +1,4 @@
-const SIDEBAR_CONTENT_WIDTH
+const SIDEBAR_CONTENT_WIDTH = 200
 
 class UnitDetail extends createjs.Container {
   constructor() {
@@ -232,7 +232,7 @@ class UnitDetail extends createjs.Container {
     lcost.y = cost.y = contentY += 15
 
     let button = footerContainer.addChild(new Button("閉じる", 100, 20))
-    button.regX = this.getBounds().width / 4
+    button.regX = button.getBounds().width / 4
     button.x = 100
     button.y = contentY += 40
 

@@ -2,8 +2,8 @@ class StrategyView extends createjs.Container {
   constructor(vmodel, playerMaster) {
     super()
     this.vmodel = vmodel
-    this.unitDetail = this.addChild(new unitDetail())
-    this.unitOverview = this.addChild(new unitOverview())
+    this.unitDetail = this.addChild(new UnitDetail())
+    this.unitOverview = this.addChild(new UnitOverview())
     this.setup(playerMaster)
   }
 
@@ -42,7 +42,7 @@ class StrategyView extends createjs.Container {
     let container = this[target + "UnitsContainer"]
     this.destinationUnitsContainer.visible = target === "destination"
     container.removeAllChildren()
-
+                    
     let borderRect = container.addChild(new createjs.Shape())
     borderRect.graphics.beginStroke(color).setStrokeStyle(color === "white" ? 1 : 4)
       .drawRoundRect(5, 0, SIDEBAR_CONTENT_WIDTH - 10, 175, 5)

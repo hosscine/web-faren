@@ -1,6 +1,7 @@
-class StrategySideBar extends SideBar {
+// class StrategySideBar extends SideBar {
+class StrategySideBar {
   constructor(playerMaster, mainStage, assets) {
-    super(playerMaster)
+    // super(playerMaster)
     this.mainStage = mainStage
     this.assets = assets
 

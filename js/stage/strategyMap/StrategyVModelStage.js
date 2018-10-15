@@ -5,7 +5,7 @@ class StrategyVModelStage extends createjs.Stage {
     this.mainStage = mainStage
     this.assets = assets
     this.model = new StrategyModel()
-    this.view = new StrategyView()
+    this.view = new StrategyView(this, playerMaster)
 
     this.areaCallbacks = { click: "displayArea" }
   }
@@ -52,27 +52,13 @@ class StrategyVModelStage extends createjs.Stage {
     if (this.model.state !== STRATEGY_STATE.awaitEmployer) return
     this.view.displayUnits(this.model.employerUnits, this.model.unitCallbacks, "limegreen")
   }
-
-  handleEmployer() {
-
-  }
-
+  
   handleUnemploy() {
 
   }
 
   handleReset() {
 
-  }
-
-  resetMode() {
-    if (this.binsSet) for (let key in this.binsSet)
-      this.binsSet[key].forEach(unit => { if (unit !== 0) unit.onMove = false })
-    if (this.moveFromUnits) this.moveFromUnits.forEach(unit => { if (unit !== 0) unit.onMove = false })
-    if (this.moveToUnits) this.moveToUnits.forEach(unit => { if (unit !== 0) unit.onMove = false })
-    this.destinationArea = this.warTargetArea = this.moveFromUnits = this.moveToUnits = this.binsSet = undefined
-    this.displayArea(this.displayingArea)
-    this.moveCommandsContainer.visible = false
   }
 
   initializeBinsSet() {

@@ -11,7 +11,7 @@ class StrategyMapStage extends createjs.Stage {
 
   setup(assets) {
     this.strategyMap = this.addChild(new StrategyMap(assets.strategyMap))
-    this.sideBar = sidebarStage.addChild(new StrategySideBar(this.playerMaster, this, assets))
+    this.sideBar = sidebar
 
     this.neutralMaster = new NeutralMaster(assets.neutralFlag)
 
@@ -61,8 +61,8 @@ class StrategyMapStage extends createjs.Stage {
     master.activateFollowerUnits()
     if (master.isPlayer) {
       master.stayingArea.sortStayingUnits()
-      this.sideBar.displayArea(master.stayingArea)
-      this.sideBar.displayMaster()
+      this.sideBar.view.displayArea(master.stayingArea)
+      this.sideBar.view.displayMaster(master)
       return 0
     }
     else {
