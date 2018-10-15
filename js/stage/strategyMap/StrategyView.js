@@ -1,22 +1,77 @@
 class StrategyView extends createjs.Container {
-  constructor(vmodel) {
+  constructor(vmodel, playerMaster) {
     super()
-
     this.vmodel = vmodel
     this.unitDetail = this.addChild(new unitDetail())
     this.unitOverview = this.addChild(new unitOverview())
+    this.setup(playerMaster)
   }
 
-  setupMasterView() {
+  setup(master) {
+    this.setupMasterView(master)
+    this.setupTurnCommands()
+    this.setupAreaView()
+    this.setupAreaCommands()
+    this.setupUnitCommands()
+    this.setupUnitsView()
+  }
+
+  displayMaster(master) {
+    this.masterData.income.text = "収入 " + master.income + "Ley"
+    this.masterData.salary.text = "人材費 " + master.outgo + "Ley"
+    this.masterData.fund.text = "軍資金 " + master.fund + "Ley"
+    this.masterData.revenue.text = "( +" + (master.income - master.outgo) + "Ley )"
+  }
+
+  displayArea(area) {
+    this.areaData.name.text = area.name
+    this.areaData.income.text = "収入  " + area.income
+    this.areaData.nFamily.text = "同種族  " + area.nFamily + "人"
+    this.areaData.transportation.text = "交通  " + (area.isBestTransport ? "〇" : "×")
+    this.areaData.wall.text = "城壁 " + area.wall + "/" + area.maxWall
+    this.areaData.city.text = "街 " + area.city + "/" + area.maxCity
+    this.areaData.road.text = "道路 " + area.road + "/" + area.maxRoad
+  }
+
+  displayUnits(units, callbacks, color = "white", badge = "end", target = "staying") {
+    let container = this[target + "UnitsContainer"]
+    this.destinationUnitsContainer.visible = target === "destination"
+    container.removeAllChildren()
+
+    let borderRect = container.addChild(new createjs.Shape())
+    borderRect.graphics.beginStroke(color).setStrokeStyle(color === "white" ? 1 : 4)
+      .drawRoundRect(5, 0, SIDEBAR_CONTENT_WIDTH - 10, 175, 5)
+
+    if (units === null) return
+    let [x, y] = [12, 10]
+    for (let unit of units) {
+      if (unit !== 0) {
+        let bitmap = unit.getUnitBitmap(vmodel, callbacks, badge)
+        [bitmap.x, bitmap.y] = [x, y]
+        container.addChild(bitmap)
+      }
+
+      x += 36
+      if (x > SIDEBAR_CONTENT_WIDTH - 35) {
+        x = 12
+        y += 40
+      }
+    }
+  }
+
+  displayUnitOverview(unit) { this.unitOverview.display(unit) }
+  displayUnitDetail(unit) { this.unitDetail.display(unit) }
+
+  setupMasterView(master) {
     let container = this.addChild(new createjs.Container())
     this.masterContainer = container
 
-    let face = container.addChild(this.player.faceBitmap)
+    let face = container.addChild(master.faceBitmap)
     face.scaleX = face.scaleY = 1
     face.y = 5
 
     let contentY = 0
-    let flag = container.addChild(this.player.flagBitmap)
+    let flag = container.addChild(master.flagBitmap)
     flag.x = 110
     flag.y = 7
 
@@ -36,7 +91,7 @@ class StrategyView extends createjs.Container {
     revenue.x = 100
     revenue.y = contentY += 20
 
-    let name = container.addChild(new createjs.Text(this.player.name, "15px arial", "white"))
+    let name = container.addChild(new createjs.Text(master.name, "15px arial", "white"))
     name.textAlign = "center"
     name.x = 50
     name.y = 105
@@ -54,7 +109,7 @@ class StrategyView extends createjs.Container {
     const buttonSize = 45
     let war = container.addChild(new Button("⚔", buttonSize, buttonSize))
     war.x = contentX += 4
-    war.on("click", () => this.switchWarMode())
+    war.on("click", () => this.vmodel.handleWar())
 
     let alliance = container.addChild(new Button("🤝", buttonSize, buttonSize))
     alliance.x = contentX += buttonSize + 4
@@ -64,7 +119,7 @@ class StrategyView extends createjs.Container {
 
     let turnEnd = container.addChild(new Button("😴", buttonSize, buttonSize))
     turnEnd.x = contentX += buttonSize + 4
-    turnEnd.on("click", () => { this.resetMode(); this.mainStage.nextMasterTurn(this.player) })
+    turnEnd.on("click", () => this.vmodel.handleTurnEnd())
 
     for (let button of container.children) {
       button.font = "40px arial"
@@ -72,7 +127,7 @@ class StrategyView extends createjs.Container {
     }
   }
 
-  setupAreaInfo() {
+  setupAreaView() {
     let container = this.addChild(new createjs.Container())
     container.y = 190
     this.areaInfoContainer = container
@@ -82,7 +137,7 @@ class StrategyView extends createjs.Container {
     let contentY = 0
 
     let rect = container.addChild(new createjs.Shape())
-    rect.graphics.beginStroke("white").drawRoundRect(5, contentY += 18, SIDEBAR_WIDTH - 10, 80, 5)
+    rect.graphics.beginStroke("white").drawRoundRect(5, contentY += 18, SIDEBAR_CONTENT_WIDTH - 10, 80, 5)
 
     let income = container.addChild(new createjs.Text("収入  0", "15px arial", "white"))
     income.x = 20
@@ -112,7 +167,6 @@ class StrategyView extends createjs.Container {
       name: name, income: income, nFamily: nFamily,
       transportation: transportation, wall: wall, city: city, road: road
     }
-    this.areaCallbacks = { click: "displayArea" }
   }
 
   setupAreaCommands() {
@@ -151,7 +205,8 @@ class StrategyView extends createjs.Container {
       developing: developing, training: training, searching: searching,
       laying: laying, building: building
     }
-    for (let key in this.areaCommands) this.areaCommands[key].on("click", () => this.selectAreaCommand(key))
+    for (let key in this.areaCommands)
+      this.areaCommands[key].on("click", () => this.vmodel.handleAreaCommand(key))
   }
 
   setupUnitsView() {
@@ -159,12 +214,6 @@ class StrategyView extends createjs.Container {
     this.stayingUnitsContainer.y = 400
     this.destinationUnitsContainer = this.addChild(new createjs.Container())
     this.destinationUnitsContainer.y = 600
-    
-    this.unitCallbacks = {
-      click: "displayUnitDetail",
-      mouseover: "displayUnitOverview",
-      mouseout: "undisplayUnitOverview"
-    }
   }
 
   setupMoveCommands() {
@@ -177,16 +226,15 @@ class StrategyView extends createjs.Container {
     const buttonSize = 60
     let under = container.addChild(new Button("全て下へ", buttonSize + 10, 20))
     under.x = contentX
-    under.on("click", () => this.warTargetArea ?
-      this.commandAllMoveTo(this.binsSet[this.displayingArea.name]) : this.commandAllMoveTo(this.moveFromUnits))
+    under.on("click", () => this.vmodel.handleAllMove("toUnder"))
 
     let submit = container.addChild(new Button("確定", buttonSize - 20, 20))
     submit.x = contentX += buttonSize + 15
-    submit.on("click", () => this.warTargetArea ? this.commandWarfare() : this.commandMoveSubmit())
+    submit.on("click", () => this.vmodel.handleMoveSubmit())
 
     let above = container.addChild(new Button("全て上へ", buttonSize + 10, 20))
     above.x = contentX += buttonSize - 15
-    above.on("click", () => this.commandAllMoveTo(this.moveToUnits))
+    above.on("click", () => this.vmodel.handleAllMove("toAbove"))
   }
 
   setupUnitCommands() {
@@ -198,19 +246,19 @@ class StrategyView extends createjs.Container {
     const buttonSize = 25
     let move = container.addChild(new Button("🚶", buttonSize, buttonSize))
     move.x = contentX += 4
-    move.on("click", () => this.switchMoveMode())
+    move.on("click", () => this.vmodel.handleMove())
 
     let employ = container.addChild(new Button("📥", buttonSize, buttonSize))
     employ.x = contentX += buttonSize + 4
-    employ.on("click", () => this.switchEmployMode())
+    employ.on("click", () => this.vmodel.handleEmploy())
 
     let unemploy = container.addChild(new Button("📤", buttonSize, buttonSize))
     unemploy.x = contentX += buttonSize + 4
-    unemploy.on("click", () => this.switchUnemployMode())
+    unemploy.on("click", () => this.vmodel.handleUnemploy())
 
     let cancel = container.addChild(new Button("🏸", buttonSize, buttonSize))
     cancel.x = contentX += buttonSize + 16
-    cancel.on("click", () => this.resetMode())
+    cancel.on("click", () => this.vmodel.handleReset())
 
     for (let button of container.children) button.font = "20px arial"
   }

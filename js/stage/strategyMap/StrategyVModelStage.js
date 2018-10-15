@@ -1,85 +1,10 @@
 class StrategyVModelStage extends createjs.Stage {
-  constructor(playerMaster, mainStage, assets) {
+  constructor(canvas, playerMaster, mainStage, assets) {
+    super(canvas)
     this.player = playerMaster
     this.mainStage = mainStage
     this.assets = assets
-
     this.setup()
-  }
-
-  setup() {
-    this.setupMasterContainer()
-    this.setupTurnCommandsContainer()
-    this.setupAreaInfoContainer()
-    this.setupAreaCommandsContainer()
-    this.setupUnitCommandsContainer()
-    this.setupUnitsContainer()
-    super.setupUnitOverviewContainer()
-    super.setupUnitDetailContainer()
-  }
-
-  displayMaster() {
-    this.masterData.income.text = "収入 " + this.player.income + "Ley"
-    this.masterData.salary.text = "人材費 " + this.player.outgo + "Ley"
-    this.masterData.fund.text = "軍資金 " + this.player.fund + "Ley"
-    this.masterData.revenue.text = "( +" + (this.player.income - this.player.outgo) + "Ley )"
-  }
-
-  displayArea(area) {
-    this.displayingArea = area
-    this.areaData.name.text = area.name
-    this.areaData.income.text = "収入  " + area.income
-    this.areaData.nFamily.text = "同種族  " + area.nFamily + "人"
-    this.areaData.transportation.text = "交通  " + (area.isBestTransport ? "〇" : "×")
-    this.areaData.wall.text = "城壁 " + area.wall + "/" + area.maxWall
-    this.areaData.city.text = "街 " + area.city + "/" + area.maxCity
-    this.areaData.road.text = "道路 " + area.road + "/" + area.maxRoad
-    this.selectAreaCommand(this.displayingArea.command)
-
-    this.unitCallbacks.click = "displayUnitDetail"
-    this.displayUnits(area.stayingUnits, this.unitCallbacks, "white", area.owner === this.player ? "end" : null)
-    this.areaCommandsContainer.visible = this.unitCommandsContainer.visible = area.owner === this.player
-  }
-
-  displayUnits(units, callbacks, color = "white", badge = "end", target = "staying") {
-    let container = this[target + "UnitsContainer"]
-    container.removeAllChildren()
-    let rect = container.addChild(new createjs.Shape())
-    rect.graphics.beginStroke(color).setStrokeStyle(color === "white" ? 1 : 4).drawRoundRect(5, 0, SIDEBAR_WIDTH - 10, 175, 5)
-
-    this.areaCallbacks.click = "displayArea"
-    this.destinationUnitsContainer.visible = target === "destination"
-
-    if (units === null) return
-    let x = 12
-    let y = 10
-    for (let unit of units) {
-      if (unit !== 0) {
-        let bitmap = unit.getUnitBitmap(this, callbacks, badge)
-        bitmap.x = x
-        bitmap.y = y
-        container.addChild(bitmap)
-      }
-
-      x += 36
-      if (x > SIDEBAR_WIDTH - 35) {
-        x = 12
-        y += 40
-      }
-    }
-  }
-
-  displayUnitsBoth({ unitClick, areaClick, unitsFrom, colorFrom, badgeFrom,
-    unitsTo = unitsFrom, colorTo = colorFrom, badgeTo = badgeFrom } = {}) {
-    this.unitCallbacks.click = unitClick
-    this.displayUnits(unitsFrom, this.unitCallbacks, colorFrom, badgeFrom)
-    this.displayUnits(unitsTo, this.unitCallbacks, colorTo, badgeTo, "destination")
-    this.areaCallbacks.click = areaClick
-  }
-
-  displayUnitOverview(unit) {
-    if (this.moveToUnits) if (this.moveToUnits.includes(unit)) return super.displayUnitOverview(unit, 400)
-    super.displayUnitOverview(unit, 600)
   }
 
   selectAreaCommand(selected) {
