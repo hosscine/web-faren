@@ -49,10 +49,11 @@ class Unit {
     return new createjs.Bitmap(this.faceImage.canvas)
   }
 
-  getUnitBitmap(displayer, callbacks, badge) {
-    this.displayer = displayer
+  getUnitBitmap(handler, badge) {
+    this.handler = handler
     let bitmap = new createjs.Bitmap(this.unitImage.canvas)
-    for (let key in callbacks) bitmap.on(key, () => this.sendCallback(callbacks[key]))
+    for (let Type in ["Click", "Mouseover", "Mouseout"])
+     bitmap.on(Type, () => this.sendCallback(Type))
 
     let badgeText
     if (badge === "end" && !this.active) badgeText = new OutlineText("End")
@@ -71,8 +72,8 @@ class Unit {
     return container
   }
 
-  sendCallback(methodName) {
-    this.displayer[methodName](this)
+  sendCallback(Type) {
+    this.handler["handleUnit" + Type](this)
   }
 
   get stayingArea() { return this._stayingArea }

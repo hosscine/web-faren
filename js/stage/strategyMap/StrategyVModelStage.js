@@ -4,12 +4,65 @@ class StrategyVModelStage extends createjs.Stage {
     this.player = playerMaster
     this.mainStage = mainStage
     this.assets = assets
-    this.setup()
+    this.model = new StrategyModel()
+    this.view = new StrategyView()
+
+    this.areaCallbacks = { click: "displayArea" }
   }
 
-  selectAreaCommand(selected) {
-    for (let key in this.areaCommands) this.areaCommands[key].selected = key === selected ? true : false
-    this.displayingArea.command = selected
+  handleUnitClick() {
+
+  }
+
+  handleUnitMouseover() {
+
+  }
+
+  handleUnitMouseout() {
+
+  }
+
+  handleWar() {
+
+  }
+
+  handleTurnEnd() {
+
+  }
+
+  handleAreaCommand(command) {
+    this.model.areaCommand = command
+    this.view.selectAreaCommand(this.model.areaCommand)
+  }
+
+  handleAllMove(moveto) {
+
+  }
+
+  handleMoveSubmit() {
+
+  }
+
+  handleMove() {
+
+  }
+
+  handleEmploy() {
+    this.model.employ()
+    if (this.model.state !== STRATEGY_STATE.awaitEmployer) return
+    this.view.displayUnits(this.model.employerUnits, this.model.unitCallbacks, "limegreen")
+  }
+
+  handleEmployer() {
+
+  }
+
+  handleUnemploy() {
+
+  }
+
+  handleReset() {
+
   }
 
   resetMode() {

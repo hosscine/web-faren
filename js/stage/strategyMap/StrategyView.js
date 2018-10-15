@@ -16,6 +16,11 @@ class StrategyView extends createjs.Container {
     this.setupUnitsView()
   }
 
+  selectAreaCommand(key) {
+    for (let key in this.areaCommands)
+      this.areaCommands[key].selected = key === selected ? true : false
+  }
+
   displayMaster(master) {
     this.masterData.income.text = "収入 " + master.income + "Ley"
     this.masterData.salary.text = "人材費 " + master.outgo + "Ley"
@@ -33,7 +38,7 @@ class StrategyView extends createjs.Container {
     this.areaData.road.text = "道路 " + area.road + "/" + area.maxRoad
   }
 
-  displayUnits(units, callbacks, color = "white", badge = "end", target = "staying") {
+  displayUnits(units, color = "white", badge = "end", target = "staying") {
     let container = this[target + "UnitsContainer"]
     this.destinationUnitsContainer.visible = target === "destination"
     container.removeAllChildren()
@@ -46,7 +51,7 @@ class StrategyView extends createjs.Container {
     let [x, y] = [12, 10]
     for (let unit of units) {
       if (unit !== 0) {
-        let bitmap = unit.getUnitBitmap(vmodel, callbacks, badge)
+        let bitmap = unit.getUnitBitmap(this.vmodel, badge)
         [bitmap.x, bitmap.y] = [x, y]
         container.addChild(bitmap)
       }
