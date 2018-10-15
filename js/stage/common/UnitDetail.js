@@ -5,71 +5,71 @@ class UnitDetail extends createjs.Container {
   }
 
   undisplay() {
-    this.unitDetailContainer.removeChild(this.unitDetailContainer.faceBitmap)
-    this.detailContentsContainer.removeChild(this.detailContentsContainer.unitBitmap)
-    this.unitDetailContainer.visible = false
+    this.container.removeChild(this.container.faceBitmap)
+    this.subContainer.removeChild(this.subContainer.unitBitmap)
+    this.container.visible = false
   }
 
   display(unit) {
-    if (unit.faceImageID > 0) { // 顔画像があれば全体の位置を下にずらして表示する
-      let faceBitmap = this.unitDetailContainer.addChild(new createjs.Bitmap(unit.faceImage.canvas))
+    if (unit.faceImageID > 0) { // 顔画像があればsubContainerの位置を下にずらして表示する
+      let faceBitmap = this.container.addChild(new createjs.Bitmap(unit.faceImage.canvas))
       faceBitmap.x = 50
       faceBitmap.y = 5
-      this.unitDetailContainer.faceBitmap = faceBitmap
-      this.detailContentsContainer.y = 100
+      this.container.faceBitmap = faceBitmap
+      this.subContainer.y = 100
     }
-    else this.detailContentsContainer.y = 0
+    else this.subContainer.y = 0
 
-    let unitBitmap = this.detailContentsContainer.addChild(new createjs.Bitmap(unit.unitImage.canvas))
+    let unitBitmap = this.subContainer.addChild(new createjs.Bitmap(unit.unitImage.canvas))
     unitBitmap.x = 10
     unitBitmap.y = 17
-    this.detailContentsContainer.unitBitmap = unitBitmap
+    this.subContainer.unitBitmap = unitBitmap
 
-    this.detailData.name.text = unit.name
-    this.detailData.species.text = unit.strSpecies
-    this.detailData.named.text = unit.isMaster || unit.characterType.named > 0 ? "（人材）" : ""
-    this.detailData.rank.text = "Rank " + unit.strRank
-    this.detailData.experience.text = "Exp " + unit.earnedExperience
+    this.data.name.text = unit.name
+    this.data.species.text = unit.strSpecies
+    this.data.named.text = unit.isMaster || unit.characterType.named > 0 ? "（人材）" : ""
+    this.data.rank.text = "Rank " + unit.strRank
+    this.data.experience.text = "Exp " + unit.earnedExperience
 
-    this.detailData.HP.text = this._format(unit.HP) + "/" + this._format(unit.basic.HP)
-    this.detailData.MP.text = this._format(unit.MP) + "/" + this._format(unit.basic.MP)
-    this.detailData.physicalStrength.text = this._format(unit.physicalStrength) + "/" + this._format(unit.basic.physicalStrength)
-    this.detailData.physicalResistance.text = this._format(unit.physicalResistance) + "/" + this._format(unit.basic.physicalResistance)
-    this.detailData.technique.text = this._format(unit.technique) + "/" + this._format(unit.basic.technique)
-    this.detailData.agility.text = this._format(unit.agility) + "/" + this._format(unit.basic.agility)
-    this.detailData.magicalStrength.text = this._format(unit.magicalStrength) + "/" + this._format(unit.basic.magicalStrength)
-    this.detailData.magicalResistance.text = this._format(unit.magicalResistance) + "/" + this._format(unit.basic.magicalResistance)
-    this.detailData.HPrecover.text = this._format(unit.HPrecover) + "/" + this._format(unit.basic.HPrecover)
-    this.detailData.MPrecover.text = this._format(unit.MPrecover) + "/" + this._format(unit.basic.MPrecover)
+    this.data.HP.text = this._combine(unit.HP, unit.basic.HP)
+    this.data.MP.text = this._combine(unit.MP, unit.basic.MP)
+    this.data.physicalStrength.text = this._combine(unit.physicalStrength, unit.basic.physicalStrength)
+    this.data.physicalResistance.text = this._combine(unit.physicalResistance, unit.basic.physicalResistance)
+    this.data.technique.text = this._combine(unit.technique, unit.basic.technique)
+    this.data.agility.text = this._combine(unit.agility, unit.basic.agility)
+    this.data.magicalStrength.text = this._combine(unit.magicalStrength, unit.basic.magicalStrength)
+    this.data.magicalResistance.text = this._combine(unit.magicalResistance, unit.basic.magicalResistance)
+    this.data.HPrecover.text = this._combine(unit.HPrecover, unit.basic.HPrecover)
+    this.data.MPrecover.text = this._combine(unit.MPrecover, unit.basic.MPrecover)
 
-    this.detailData.magicFire.text = "火\n" + STRING_MAP_MAGIC[unit.magic.fire]
-    this.detailData.magicAqua.text = "水\n" + STRING_MAP_MAGIC[unit.magic.aqua]
-    this.detailData.magicWind.text = "風\n" + STRING_MAP_MAGIC[unit.magic.wind]
-    this.detailData.magicEarth.text = "土\n" + STRING_MAP_MAGIC[unit.magic.earth]
-    this.detailData.magicLight.text = "光\n" + STRING_MAP_MAGIC[unit.magic.light]
-    this.detailData.magicDark.text = "闇\n" + STRING_MAP_MAGIC[unit.magic.dark]
+    this.data.magicFire.text = "火\n" + STRING_MAP_MAGIC[unit.magic.fire]
+    this.data.magicAqua.text = "水\n" + STRING_MAP_MAGIC[unit.magic.aqua]
+    this.data.magicWind.text = "風\n" + STRING_MAP_MAGIC[unit.magic.wind]
+    this.data.magicEarth.text = "土\n" + STRING_MAP_MAGIC[unit.magic.earth]
+    this.data.magicLight.text = "光\n" + STRING_MAP_MAGIC[unit.magic.light]
+    this.data.magicDark.text = "闇\n" + STRING_MAP_MAGIC[unit.magic.dark]
 
-    this.detailData.attackTimes.text = "攻撃 × " + unit.attackTypes.reduce((a, x) => a + (x !== 0), 0)
-    this.detailData.attackTypes.text = "（" + unit.attackTypes.reduce((a, x) => a + (x !== 0 ? STRING_MAP_ATTACK[x] + " " : ""), "") + "）"
-    // this.detailData.uniqueSkil.text = ""
+    this.data.attackTimes.text = "攻撃 × " + unit.attackTypes.reduce((a, x) => a + (x !== 0), 0)
+    this.data.attackTypes.text = "（" + unit.attackTypes.reduce((a, x) => a + (x !== 0 ? STRING_MAP_ATTACK[x] + " " : ""), "") + "）"
+    // this.data.uniqueSkil.text = ""
 
-    this.detailData.moveType.text = "移動タイプ：" + STRING_MAP_MOVE[unit.moveType] + "タイプ"
-    this.detailData.moveRange.text = "　　移動力：" + unit.base.moveRange
+    this.data.moveType.text = "移動タイプ：" + STRING_MAP_MOVE[unit.moveType] + "タイプ"
+    this.data.moveRange.text = "　　移動力：" + unit.base.moveRange
 
     const effect = ["", "弱い", "強い", "吸収"]
-    this.detailData.resist.text = Object.keys(unit.resist).reduce((a, x) =>
+    this.data.resist.text = Object.keys(unit.resist).reduce((a, x) =>
       a + (unit.resist[x] === 0 ? "" : STRING_MAP_RESIST[x] + "攻撃に" + effect[parseInt(unit.resist[x])] + "\n"), "")
 
-    this.detailFoot.y = this.detailFoot.offset + this.detailData.resist.getMeasuredHeight() + 5
-    this.detailData.killStats.text = this._format(unit.killStats)
-    this.detailData.cost.text = unit.isMaster || unit.characterType.named > 0 ? this._format(unit.cost) : this._format(0)
+    this.detailFoot.y = this.detailFoot.offset + this.data.resist.getMeasuredHeight() + 5
+    this.data.killStats.text = this._format3digits(unit.killStats)
+    this.data.cost.text = unit.isMaster || unit.characterType.named > 0 ? this._format3digits(unit.cost) : this._format3digits(0)
 
-    this.unitDetailContainer.visible = true
+    this.container.visible = true
   }
 
   setup() {
     let unitDetailContainer = this.addChild(new createjs.Container())
-    this.unitDetailContainer = unitDetailContainer
+    this.container = unitDetailContainer
     unitDetailContainer.visible = false
 
     let background = unitDetailContainer.addChild(new createjs.Shape())
@@ -77,7 +77,7 @@ class UnitDetail extends createjs.Container {
     background.graphics.beginStroke("white").drawRect(5, 5, SIDEBAR_WIDTH - 10, 750)
 
     let detailContentsContainer = unitDetailContainer.addChild(new createjs.Container())
-    this.detailContentsContainer = detailContentsContainer
+    this.subContainer = detailContentsContainer
 
     let contentY = 0
     let name = detailContentsContainer.addChild(new createjs.Text("ファイアジャイアント", "15px arial", "white"))
@@ -236,7 +236,7 @@ class UnitDetail extends createjs.Container {
     unitDetailContainer.on("click", () => this.undisplay())
     button.on("click", () => this.undisplay())
 
-    this.detailData = {
+    this.data = {
       name: name, species: species, named: named, rank: rank, experience: experience,
       HP: HP, MP: MP, physicalStrength: physicalStrength, physicalResistance: physicalResistance,
       technique: technique, agility: agility, magicalStrength: magicalStrength,
@@ -248,8 +248,11 @@ class UnitDetail extends createjs.Container {
     }
   }
 
-  _format(value) {
-    return " ".repeat(-(value.toString().length - 3)) + value
+  _combine(value1, value2) {
+    return this._format3digits(value1) + "/" + this._format3digits(value2)
   }
 
+  _format3digits(value) {
+    return " ".repeat(-(value.toString().length - 3)) + value
+  }
 }
