@@ -1,3 +1,5 @@
+const SIDEBAR_CONTENT_WIDTH
+
 class UnitDetail extends createjs.Container {
   constructor() {
     super()
@@ -73,8 +75,8 @@ class UnitDetail extends createjs.Container {
     container.visible = false
 
     let background = container.addChild(new createjs.Shape())
-    background.graphics.beginFill("darkblue").drawRect(0, 0, SIDEBAR_WIDTH, 750)
-    background.graphics.beginStroke("white").drawRect(5, 5, SIDEBAR_WIDTH - 10, 750)
+    background.graphics.beginFill("darkblue").drawRect(0, 0, SIDEBAR_CONTENT_WIDTH, 750)
+    background.graphics.beginStroke("white").drawRect(5, 5, SIDEBAR_CONTENT_WIDTH - 10, 750)
 
     let subContainer = container.addChild(new createjs.Container())
     this.subContainer = subContainer
