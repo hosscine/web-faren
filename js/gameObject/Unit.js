@@ -52,8 +52,8 @@ class Unit {
   getUnitBitmap(handler, badge) {
     this.handler = handler
     let bitmap = new createjs.Bitmap(this.unitImage.canvas)
-    for (let Type in ["Click", "Mouseover", "Mouseout"])
-     bitmap.on(Type, () => this.sendCallback(Type))
+    for (let type of ["click", "mouseover", "mouseout"])
+     bitmap.on(type, () => this.sendCallback(type))
 
     let badgeText
     if (badge === "end" && !this.active) badgeText = new OutlineText("End")
@@ -72,8 +72,11 @@ class Unit {
     return container
   }
 
-  sendCallback(Type) {
-    this.handler["handleUnit" + Type](this)
+  sendCallback(type) {
+    this.handler["handleUnit" + this._capitalizeFirstLetter(type)](this)
+  }
+  _capitalizeFirstLetter(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1)
   }
 
   get stayingArea() { return this._stayingArea }

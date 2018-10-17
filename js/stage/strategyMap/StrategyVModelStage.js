@@ -4,14 +4,22 @@ class StrategyVModelStage extends createjs.Stage {
     this.player = playerMaster
     this.mainStage = mainStage
     this.assets = assets
-    this.model = new StrategyModel()
+    this.model = new StrategyModel(playerMaster, assets)
     this.view = new StrategyView(this, playerMaster)
 
     this.addChild(this.view)
   }
 
-  handleUnitClick() {
-
+  handleUnitClick(unit) {
+    console.log(unit)
+    switch (this.model.state) {
+      case STRATEGY_STATE.awaitEmployer:
+        this.model.setEmployer(unit); break
+      case STRATEGY_STATE.awaitEmployee:
+        this.model.executeEmploy(unit); break
+    }
+    this.displayUnits()
+    this.view.displayMaster(this.player)
   }
 
   handleUnitMouseover() {
@@ -56,7 +64,7 @@ class StrategyVModelStage extends createjs.Stage {
   }
 
   handleEmploy() {
-    if (!this.model.employ()) return
+    if (!this.model.startEmploy()) return
     this.displayUnits()
   }
   

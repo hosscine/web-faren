@@ -1,35 +1,72 @@
 const STRATEGY_STATE = {
-  default: 0,
-  awaitEmployer: 10
+  default: 1,
+  awaitEmployer: 11,
+  awaitEmployee: 12
 }
 
 class StrategyModel {
-  constructor() {
+  constructor(playerMaster, assets) {
+    this.player = playerMaster
+    this.assets = assets
     this.state = STRATEGY_STATE.default
   }
 
-  employ() {
+  startEmploy() {
     this.resetState()
     if (!this.area.hasSpace) return alert("エリアに空きがありません")
     this.employerUnits = this.area.stayingUnits
     return this.state = STRATEGY_STATE.awaitEmployer
   }
 
+  setEmployer(unit) {
+    if (!unit.active) return alert("既に行動済みのユニットです")
+    else if (!unit.isFamily(this.player)) return alert("マスターと同種族でないユニットは雇用に従事できません")
+
+    let employerCandidates = unit.employable.concat()
+    let localCandidates = this.area.employable.concat()
+    for (let i in employerCandidates) employerCandidates[i] = new Unit(employerCandidates[i], this.assets)
+    for (let i in localCandidates) localCandidates[i] = new Unit(localCandidates[i], this.assets)
+    employerCandidates.sort((a, b) => -(a.cost - b.cost))
+    localCandidates.sort((a, b) => -(a.cost - b.cost))
+    this.employees = employerCandidates.concat(localCandidates)
+    this.employer = unit
+    return this.state = STRATEGY_STATE.awaitEmployee
+  }
+
+  executeEmploy(unit) {
+    if (this.player.pay(unit.cost)) {
+      unit.moveToArea(this.area)
+      this.area.sortStayingUnits()
+      unit.active = this.employer.active = false
+    }
+    else alert("ユニットの雇用費を払えません")
+
+    if (this.area.hasSpace) return this.startEmploy()
+    return this.resetState()
+  }
+
   resetState() {
-    this.state = STRATEGY_STATE.default
+    return this.state = STRATEGY_STATE.default
   }
 
   getUnitsImages(handler) {
     let [mainUnits, subUnits, mainImages, subImages] = []
     let [mainBadge, subBadge, mainColor, subColor] = ["end", "end", "white", "white"]
 
-    switch (this.state) {
-      case STRATEGY_STATE.awaitEmployer:
-        [mainUnits, subUnits] = [this.employerUnits]
-        mainColor = "limegreen"; break
-      case STRATEGY_STATE.default:
-        [mainUnits, subUnits] = [this.area.stayingUnits]
-        if (!this.area.owner.isPlayer) mainBadge = null; break
+    if (this.state === STRATEGY_STATE.default) {
+      mainUnits = this.area.stayingUnits
+      if (!this.area.owner.isPlayer) mainBadge = null
+    }
+    else if (this.state === STRATEGY_STATE.awaitEmployer) {
+      mainUnits = this.employerUnits
+      mainColor = "limegreen"
+    }
+    else if (this.state === STRATEGY_STATE.awaitEmployee) {
+      [mainBadge, mainColor] = ["cost", "limegreen"]
+      mainUnits = this.employees
+    }
+    else if (this.state === STRATEGY_STATE.awaitEmployer) {
+
     }
 
     if (mainUnits) mainImages = mainUnits.map(unit => unit.getUnitBitmap(handler, mainBadge))
