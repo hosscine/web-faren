@@ -38,8 +38,8 @@ class ScrollContainer extends createjs.Container {
   }
   
   updateScroll() {
-    let clientWidth = content.clientWidth
-    let clientHeight = content.clientHeight
+    let clientWidth = mainCanvas.clientWidth
+    let clientHeight = mainCanvas.clientHeight
     scroller.setDimensions(clientWidth, clientHeight, contentWidth, contentHeight)
   }
 }

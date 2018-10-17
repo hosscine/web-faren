@@ -1,7 +1,7 @@
 // Canvas and container setting
 let container = document.getElementById("container")
-let content = document.getElementById("mainCanvas")
-let sidebar = document.getElementById("sidebarCanvas")
+let mainCanvas = document.getElementById("mainCanvas")
+let sideCanvas = document.getElementById("sidebarCanvas")
 const contentHeightDefault = 960
 
 // Canvas renderer
@@ -27,26 +27,26 @@ scroller = new Scroller(render, {
 
 // Reflow handling
 var reflow = function() {
-  clientWidth = content.clientWidth
-  clientHeight = content.clientHeight
+  clientWidth = mainCanvas.clientWidth
+  clientHeight = mainCanvas.clientHeight
 
   // canvasのwidthは自動調節されないのでここで手動調節
   if (container.clientWidth * 0.2 < 200) {
-    content.setAttribute("width", container.clientWidth)
-    content.setAttribute("height", container.clientHeight * 0.6)
-    sidebar.setAttribute("width", container.clientWidth)
-    sidebar.setAttribute("height", container.clientHeight * 0.4)
+    mainCanvas.setAttribute("width", container.clientWidth)
+    mainCanvas.setAttribute("height", container.clientHeight * 0.6)
+    sideCanvas.setAttribute("width", container.clientWidth)
+    sideCanvas.setAttribute("height", container.clientHeight * 0.4)
   } else {
-    content.setAttribute("width", container.clientWidth * 0.8)
-    content.setAttribute("height", container.clientHeight)
-    sidebar.setAttribute("width", container.clientWidth * 0.2)
-    sidebar.setAttribute("height", container.clientHeight)
+    mainCanvas.setAttribute("width", container.clientWidth * 0.8)
+    mainCanvas.setAttribute("height", container.clientHeight)
+    sideCanvas.setAttribute("width", container.clientWidth * 0.2)
+    sideCanvas.setAttribute("height", container.clientHeight)
   }
 
   scroller.setDimensions(clientWidth, clientHeight, contentWidth, contentHeight)
 
-  if (stage.reflow) stage.reflow(content.clientWidth, content.clientHeight)
-  if (sidebarStage.reflow) sidebarStage.reflow(sidebar.clientWidth, sidebar.clientHeight)
+  if (stage.reflow) stage.reflow(mainCanvas.clientWidth, mainCanvas.clientHeight)
+  if (sidebarStage.reflow) sidebarStage.reflow(sideCanvas.clientWidth, sideCanvas.clientHeight)
   // for (let s of [stage, sidebarStage]) if (s.reflow) s.reflow()
 }
 window.addEventListener("resize", reflow, false)
