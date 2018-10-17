@@ -43,20 +43,19 @@ class StrategyView extends createjs.Container {
     this.areaData.road.text = "道路 " + area.road + "/" + area.maxRoad
   }
 
-  displayUnits(units, color = "white", badge = "end", target = "staying") {
+  displayUnitBitmaps(bitmaps, borderColor = "white", target = "staying") {
     let container = this[target + "UnitsContainer"]
     this.destinationUnitsContainer.visible = target === "destination"
     container.removeAllChildren()
 
     let borderRect = container.addChild(new createjs.Shape())
-    borderRect.graphics.beginStroke(color).setStrokeStyle(color === "white" ? 1 : 4)
+    borderRect.graphics.beginStroke(borderColor).setStrokeStyle(borderColor === "white" ? 1 : 4)
       .drawRoundRect(5, 0, SIDEBAR_CONTENT_WIDTH - 10, 175, 5)
 
-    if (units === null) return
+    // if (units === null) return
     let [x, y] = [12, 10]
-    for (let unit of units) {
-      if (unit !== 0) {
-        let bitmap = unit.getUnitBitmap(this.vmodel, badge)
+    for (let bitmap of bitmaps) {
+      if (bitmap !== 0) {
         bitmap.x = x
         bitmap.y = y
         container.addChild(bitmap)

@@ -26,8 +26,8 @@ class StrategyVModelStage extends createjs.Stage {
     this.model.area = area
     this.view.displayArea(area)
     this.view.selectAreaCommand(area.command)
-    this.view.displayUnits(area.stayingUnits, "white", area.owner === this.player ? "end" : null)
     this.view.commandsVisible = area.owner === this.player
+    this.displayUnits()
   }
 
   handleWar() {
@@ -56,9 +56,8 @@ class StrategyVModelStage extends createjs.Stage {
   }
 
   handleEmploy() {
-    this.model.employ()
-    if (this.model.state !== STRATEGY_STATE.awaitEmployer) return
-    this.view.displayUnits(this.model.employerUnits, this.model.unitCallbacks, "limegreen")
+    if (!this.model.employ()) return
+    this.displayUnits()
   }
   
   handleUnemploy() {
@@ -67,6 +66,12 @@ class StrategyVModelStage extends createjs.Stage {
 
   handleReset() {
 
+  }
+
+  displayUnits() {
+    let [stayingBitmap, destinationBitmap, stayingColor, destinationColor] = this.model.getUnitsImages(this)
+    if (stayingBitmap) this.view.displayUnitBitmaps(stayingBitmap, stayingColor)
+    if (destinationBitmap) this.view.displayUnitBitmaps(destinationBitmap, destinationColor, "destination")
   }
 
   initializeBinsSet() {
