@@ -11,7 +11,6 @@ class StrategyVModelStage extends createjs.Stage {
   }
 
   handleUnitClick(unit) {
-    console.log(unit)
     switch (this.model.state) {
       case STRATEGY_STATE.awaitEmployer:
         this.model.setEmployer(unit); break
@@ -43,7 +42,8 @@ class StrategyVModelStage extends createjs.Stage {
   }
 
   handleTurnEnd() {
-
+    this.model.resetState()
+    this.mainStage.nextMasterTurn(this.player)
   }
 
   handleAreaCommand(command) {

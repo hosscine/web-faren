@@ -12,6 +12,7 @@ class StrategyMapStage extends createjs.Stage {
   setup(assets) {
     this.strategyMap = this.addChild(new StrategyMap(assets.strategyMap))
     this.sidebar = sidebarStage
+    this.sidebar.mainStage = this
 
     this.neutralMaster = new NeutralMaster(assets.neutralFlag)
 
