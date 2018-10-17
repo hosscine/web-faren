@@ -22,8 +22,12 @@ class StrategyVModelStage extends createjs.Stage {
 
   }
 
-  handleAreaClick() {
-    
+  handleAreaClick(area) {
+    this.model.area = area
+    this.view.displayArea(area)
+    this.view.selectAreaCommand(area.command)
+    this.view.displayUnits(area.stayingUnits, "white", area.owner === this.player ? "end" : null)
+    this.view.commandsVisible = area.owner === this.player
   }
 
   handleWar() {

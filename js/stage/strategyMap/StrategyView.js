@@ -16,10 +16,15 @@ class StrategyView extends createjs.Container {
     this.setupUnitsView()
   }
 
-  selectAreaCommand(key) {
+  selectAreaCommand(choise) {
     for (let key in this.areaCommands)
-      this.areaCommands[key].selected = key === selected ? true : false
+      this.areaCommands[key].selected = key === choise ? true : false
   }
+
+  set commandsVisible(bool) {
+    this.areaCommandsContainer.visible = this.unitCommandsContainer.visible = bool
+  }
+  get commandsVisible() { return this.areaCommandsContainer.visible }
 
   displayMaster(master) {
     this.masterData.income.text = "収入 " + master.income + "Ley"
@@ -42,7 +47,7 @@ class StrategyView extends createjs.Container {
     let container = this[target + "UnitsContainer"]
     this.destinationUnitsContainer.visible = target === "destination"
     container.removeAllChildren()
-                    
+
     let borderRect = container.addChild(new createjs.Shape())
     borderRect.graphics.beginStroke(color).setStrokeStyle(color === "white" ? 1 : 4)
       .drawRoundRect(5, 0, SIDEBAR_CONTENT_WIDTH - 10, 175, 5)
@@ -52,7 +57,8 @@ class StrategyView extends createjs.Container {
     for (let unit of units) {
       if (unit !== 0) {
         let bitmap = unit.getUnitBitmap(this.vmodel, badge)
-        [bitmap.x, bitmap.y] = [x, y]
+        bitmap.x = x
+        bitmap.y = y
         container.addChild(bitmap)
       }
 
