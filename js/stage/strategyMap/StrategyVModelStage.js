@@ -7,7 +7,7 @@ class StrategyVModelStage extends createjs.Stage {
     this.model = new StrategyModel()
     this.view = new StrategyView(this, playerMaster)
 
-    this.areaCallbacks = { click: "displayArea" }
+    this.addChild(this.view)
   }
 
   handleUnitClick() {
@@ -20,6 +20,10 @@ class StrategyVModelStage extends createjs.Stage {
 
   handleUnitMouseout() {
 
+  }
+
+  handleAreaClick() {
+    
   }
 
   handleWar() {

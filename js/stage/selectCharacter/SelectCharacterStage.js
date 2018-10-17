@@ -50,11 +50,16 @@ class SelectCharacterStage extends createjs.Stage {
   gotoStrategyMap(playerMaster) {
     playerMaster.isPlayer = true
     this.mastersEnable = false
-    sidebarStage = new StrategyVModelStage(this.canvas, playerMaster, stage, this.assets)
+    sidebarStage = new StrategyVModelStage("sidebarCanvas", playerMaster, stage, this.assets)
     stage = new StrategyMapStage(this.canvas, this.assets, this.masters, this.mastersDic, playerMaster)
-    if (createjs.Touch.isSupported()) createjs.Touch.enable(stage)
+    if (createjs.Touch.isSupported()){
+      createjs.Touch.enable(stage)
+      createjs.Touch.enable(sidebarStage)
+    }
     createjs.Ticker.addEventListener("tick", stage)
+    createjs.Ticker.addEventListener("tick", sidebarStage)
     createjs.Ticker.setFPS(60)
+    reflow()
   }
 
   set mastersEnable(bool) {

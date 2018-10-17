@@ -11,7 +11,7 @@ class StrategyMapStage extends createjs.Stage {
 
   setup(assets) {
     this.strategyMap = this.addChild(new StrategyMap(assets.strategyMap))
-    this.sideBar = sidebarStage
+    this.sidebar = sidebarStage
 
     this.neutralMaster = new NeutralMaster(assets.neutralFlag)
 
@@ -38,9 +38,9 @@ class StrategyMapStage extends createjs.Stage {
       let ownerID = assets.scenario.areaOwner[i]
       const gameLevel = 4
       if (ownerID > 0)
-        this.areas.push(new Area(assets.areaData.data[i], this.masters[ownerID - 1], this.areas, assets, this.sideBar, gameLevel))
+        this.areas.push(new Area(assets.areaData.data[i], this.masters[ownerID - 1], this.areas, assets, this.sidebar, gameLevel))
       else
-        this.areas.push(new Area(assets.areaData.data[i], this.neutralMaster, this.areas, assets, this.sideBar, gameLevel))
+        this.areas.push(new Area(assets.areaData.data[i], this.neutralMaster, this.areas, assets, this.sidebar, gameLevel))
     }
   }
 
@@ -61,8 +61,8 @@ class StrategyMapStage extends createjs.Stage {
     master.activateFollowerUnits()
     if (master.isPlayer) {
       master.stayingArea.sortStayingUnits()
-      this.sideBar.view.displayArea(master.stayingArea)
-      this.sideBar.view.displayMaster(master)
+      this.sidebar.view.displayArea(master.stayingArea)
+      this.sidebar.view.displayMaster(master)
       return 0
     }
     else {
@@ -82,7 +82,7 @@ class StrategyMapStage extends createjs.Stage {
     for (let unit of target.stayingUnits) unit.die()
     target.occupied(attackMaster, attackUnits)
     this.strategyMap.setupAreaFlag(this.areas)
-    this.sideBar.displayMaster()
+    this.sidebar.displayMaster()
   }
 
   reflow(w, h) {

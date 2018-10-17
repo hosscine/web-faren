@@ -60,7 +60,7 @@ class Area {
 
     container.addChild(outlineText, text)
     container.addChild(this.owner.flagBitmap)
-    container.on("click", () => this.sidebar[this.sidebar.areaCallbacks.click](this))
+    container.on("click", () => this.sidebar.handleAreaClick(this))
 
     return container
   }
