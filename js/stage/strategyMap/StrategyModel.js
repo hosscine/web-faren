@@ -1,7 +1,9 @@
 const STRATEGY_STATE = {
   default: 1,
   awaitEmployer: 11,
-  awaitEmployee: 12
+  awaitEmployee: 12,
+  awaitWarTarget: 21,
+  awaitAttackers: 22,
 }
 
 class StrategyModel {
@@ -9,6 +11,39 @@ class StrategyModel {
     this.player = playerMaster
     this.assets = assets
     this.state = STRATEGY_STATE.default
+  }
+
+  startWar() {
+    this.resetState()
+    if (this.area.owner !== this.player) return alert("先に侵攻元の自軍のエリアを選択してください")
+    this.mainBinsDic = this.makeBinsDic()
+    this.subBins = Array(20).fill(0)
+    this.state = STRATEGY_STATE.awaitWarTarget
+  }
+
+  setWarTarget(area) {
+    if (area.owner !== this.player && !this.area.isAdjacent(area))
+      return alert("対象のエリアは侵攻元のエリアと隣接していません")
+
+    // 自軍のエリアが選択されたら 侵攻元のエリアを再設定
+    if (area.owner === this.player) {
+      if (this.targetArea) if (!this.targetArea.isAdjacent(area))
+        return alert("対象のエリアは侵攻先のエリアと隣接していません")
+      this.area = area
+      this.startWar()
+      return area
+    }
+
+    // 敵軍のエリアが選択されたら 侵攻先のエリアを設定
+    this.targetArea = area
+    this.state = STRATEGY_STATE.awaitAttackers
+  }
+
+  makeBinsDic() {
+    let binsDic = {}
+    for (let area of this.area.adjacentAreas) binsDic[area.name] = area.getStayingUnits20Bins()
+    binsDic[this.area.name] = this.area.getStayingUnits20Bins()
+    return binsDic
   }
 
   startEmploy() {
@@ -65,17 +100,22 @@ class StrategyModel {
       [mainBadge, mainColor] = ["cost", "limegreen"]
       mainUnits = this.employees
     }
-    else if (this.state === STRATEGY_STATE.awaitEmployer) {
-
+    else if (this.state === STRATEGY_STATE.awaitWarTarget) {
+      [mainUnits, subUnits] = [this.mainBinsDic[this.area.name], this.subBins]
+      subColor = "red"
+    }
+    else if (this.state === STRATEGY_STATE.awaitAttackers) {
+      [mainUnits, subUnits] = [this.mainBinsDic[this.area.name], this.subBins]
+      mainColor = "red"
     }
 
-    if (mainUnits) mainImages = mainUnits.map(unit => unit.getUnitBitmap(handler, mainBadge))
-    if (subUnits) subImages = subUnits.map(unit => unit.getUnitBitmap(handler, subBadge))
+    if (mainUnits) mainImages = mainUnits.map(unit => unit === 0 ? 0 : unit.getUnitBitmap(handler, mainBadge))
+    if (subUnits) subImages = subUnits.map(unit => unit === 0 ? 0 : unit.getUnitBitmap(handler, subBadge))
     return [mainImages, subImages, mainColor, subColor]
   }
 
   isInMainUnits(unit) { return this.area.stayingUnits.includes(unit) }
 
-  set areaCommand(value) { this.areaCommand = value }
-  get areaCommand() { return this.areaCommand }
+  set areaCommand(value) { this.area.command = value }
+  get areaCommand() { return this.area.command }
 }

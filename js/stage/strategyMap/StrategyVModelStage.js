@@ -28,21 +28,33 @@ class StrategyVModelStage extends createjs.Stage {
     if (isAbove) this.view.unitOverview.y = 600
     this.view.displayUnitOverview(unit)
   }
-  
+
   handleUnitMouseout(unit) {
     this.view.undisplayUnitOverview(unit)
   }
 
   handleAreaClick(area) {
-    this.model.area = area
-    this.view.displayArea(area)
-    this.view.selectAreaCommand(area.command)
-    this.view.commandsVisible = area.owner === this.player
+    let needDisplay = false
+    switch (this.model.state) {
+      case STRATEGY_STATE.awaitWarTarget:
+      case STRATEGY_STATE.awaitAttackers:
+        needDisplay = this.model.setWarTarget(area); break
+      case STRATEGY_STATE.default:
+        needDisplay = true; break
+    }
+
+    if (needDisplay) {
+      this.model.area = area
+      this.view.displayArea(area)
+      this.view.selectAreaCommand(area.command)
+      this.view.commandsVisible = area.owner === this.player
+    }
     this.displayUnits()
   }
 
   handleWar() {
-
+    this.model.startWar()
+    this.displayUnits()
   }
 
   handleTurnEnd() {
@@ -71,7 +83,7 @@ class StrategyVModelStage extends createjs.Stage {
     if (!this.model.startEmploy()) return
     this.displayUnits()
   }
-  
+
   handleUnemploy() {
 
   }
