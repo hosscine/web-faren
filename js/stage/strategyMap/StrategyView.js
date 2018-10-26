@@ -2,9 +2,9 @@ class StrategyView extends createjs.Container {
   constructor(vmodel, playerMaster) {
     super()
     this.vmodel = vmodel
+    this.setup(playerMaster)
     this.unitDetail = this.addChild(new UnitDetail())
     this.unitOverview = this.addChild(new UnitOverview())
-    this.setup(playerMaster)
   }
 
   setup(master) {
@@ -70,6 +70,7 @@ class StrategyView extends createjs.Container {
   }
 
   displayUnitOverview(unit) { this.unitOverview.display(unit) }
+  undisplayUnitOverview(unit) { this.unitOverview.undisplay(unit) }
   displayUnitDetail(unit) { this.unitDetail.display(unit) }
 
   setupMasterView(master) {

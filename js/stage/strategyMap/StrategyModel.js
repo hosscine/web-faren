@@ -74,6 +74,8 @@ class StrategyModel {
     return [mainImages, subImages, mainColor, subColor]
   }
 
+  isInMainUnits(unit) { return this.area.stayingUnits.includes(unit) }
+
   set areaCommand(value) { this.areaCommand = value }
   get areaCommand() { return this.areaCommand }
 }
