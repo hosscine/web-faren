@@ -30,8 +30,9 @@ var reflow = function() {
   clientWidth = mainCanvas.clientWidth
   clientHeight = mainCanvas.clientHeight
 
+  let isSP = container.clientWidth * 0.2 < 200
   // canvasのwidthは自動調節されないのでここで手動調節
-  if (container.clientWidth * 0.2 < 200) {
+  if (isSP) {
     mainCanvas.setAttribute("width", container.clientWidth)
     mainCanvas.setAttribute("height", container.clientHeight * 0.6)
     sideCanvas.setAttribute("width", container.clientWidth)
@@ -45,8 +46,8 @@ var reflow = function() {
 
   scroller.setDimensions(clientWidth, clientHeight, contentWidth, contentHeight)
 
-  if (stage.reflow) stage.reflow(mainCanvas.clientWidth, mainCanvas.clientHeight)
-  if (sidebarStage.reflow) sidebarStage.reflow(sideCanvas.clientWidth, sideCanvas.clientHeight)
+  if (stage.reflow) stage.reflow(mainCanvas.clientWidth, mainCanvas.clientHeight, isSP)
+  if (sidebarStage.reflow) sidebarStage.reflow(sideCanvas.clientWidth, sideCanvas.clientHeight, isSP)
   // for (let s of [stage, sidebarStage]) if (s.reflow) s.reflow()
 }
 window.addEventListener("resize", reflow, false)

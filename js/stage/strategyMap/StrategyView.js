@@ -16,6 +16,12 @@ class StrategyView extends createjs.Container {
     this.setupUnitsView()
   }
 
+  get columnHeight() {
+    let containers = [this.masterContainer, this.areaInfoContainer]
+    return containers.reduce((sum, c) => sum + c.columnHeight, 0)
+  }
+  get height() { return this.getBounds().height }
+
   selectAreaCommand(choise) {
     for (let key in this.areaCommands)
       this.areaCommands[key].selected = key === choise ? true : false
@@ -75,6 +81,7 @@ class StrategyView extends createjs.Container {
 
   setupMasterView(master) {
     let container = this.addChild(new createjs.Container())
+    container.columnHeight = 190
     this.masterContainer = container
 
     let face = container.addChild(master.faceBitmap)
@@ -140,6 +147,7 @@ class StrategyView extends createjs.Container {
 
   setupAreaView() {
     let container = this.addChild(new createjs.Container())
+    container.columnHeight = 100
     container.y = 190
     this.areaInfoContainer = container
 
