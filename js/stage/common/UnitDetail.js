@@ -13,6 +13,7 @@ class UnitDetail extends createjs.Container {
   }
 
   display(unit) {
+    this.undisplay()
     if (unit.faceImageID > 0) { // 顔画像があればsubContainerの位置を下にずらして表示する
       let faceBitmap = this.container.addChild(new createjs.Bitmap(unit.faceImage.canvas))
       faceBitmap.x = 50

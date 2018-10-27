@@ -20,6 +20,9 @@ class StrategyView extends createjs.Container {
     let containers = [this.masterContainer, this.areaInfoContainer]
     return containers.reduce((sum, c) => sum + c.columnHeight, 0)
   }
+  get columnWidth() {
+    return this.masterContainer.getBounds().width
+  }
   get height() { return this.getBounds().height }
 
   selectAreaCommand(choise) {

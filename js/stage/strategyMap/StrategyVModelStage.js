@@ -26,6 +26,7 @@ class StrategyVModelStage extends createjs.Stage {
   handleUnitMouseover(unit) {
     let isAbove = this.model.isInMainUnits(unit)
     if (isAbove) this.view.unitOverview.y = 600
+    if (this.isSP) this.view.unitOverview.y = 0
     this.view.displayUnitOverview(unit)
   }
 
@@ -108,17 +109,22 @@ class StrategyVModelStage extends createjs.Stage {
   reflow(w, h, sp) {
     if (sp) this.reflowSP(w, h)
     else this.reflowPC(w, h)
+    this.isSP = sp
   }
 
   reflowSP(w, h) {
-    if (w >= 400) this.view.scaleX = this.view.scaleY = h / this.view.columnHeight
-    else this.view.scaleX = this.view.scaleY = w / 200
+    let v = this.view
+    let fitMag = w / 2.1 / v.columnWidth
+    // if 縦が見切れる場合  縦にフィット
+    // else 見切れない場合  横にフィット
+    if (fitMag * v.columnHeight > h) v.scaleX = v.scaleY = h / v.columnHeight
+    else v.scaleX = v.scaleY = fitMag
 
-    // this.view.scaleX = this.view.scaleY = 2
-    // let bb = this.view.masterContainer.addChild(new createjs.Shape())
-    // bb.graphics.beginStroke("white").drawRect(0,0,200, 190)
-    // let aa = this.view.areaInfoContainer.addChild(new createjs.Shape())
-    // aa.graphics.beginStroke("red").drawRect(0,0,200, 100)
+    v.stayingUnitsContainer.x = 200
+    v.stayingUnitsContainer.y = v.columnHeight / 2.57
+    v.unitCommandsContainer.x = 200
+    v.unitCommandsContainer.y = v.columnHeight - 210
+    v.unitOverview.x = 200
   }
 
   reflowPC(w, h) {
