@@ -52,7 +52,7 @@ class Unit {
   getUnitBitmap(handler, badge) {
     this.handler = handler
     let bitmap = new createjs.Bitmap(this.unitImage.canvas)
-    for (let type of ["click", "mouseover", "mouseout"])
+    for (let type of ["click", "mouseover", "mouseout", "pressmove", "pressup"])
      bitmap.on(type, () => this.sendCallback(type))
 
     let badgeText

@@ -34,6 +34,9 @@ class StrategyVModelStage extends createjs.Stage {
     this.view.undisplayUnitOverview(unit)
   }
 
+  handleUnitPressmove(unit) { this.handleUnitMouseover(unit) }
+  handleUnitPressup(unit) { this.handleUnitMouseout(unit) }
+
   handleAreaClick(area) {
     let needDisplay = false
     switch (this.model.state) {

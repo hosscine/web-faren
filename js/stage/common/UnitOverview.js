@@ -6,10 +6,11 @@ class UnitOverview extends createjs.Container {
 
   undisplay() {
     this.container.visible = false
-    this.container.removeChildAt(this.container.children.length - 1)
+    this.container.removeChild(this.unitBitmap)
   }
 
   display(unit) {
+    this.undisplay()
     this.data.name.text = unit.name
     this.data.species.text = unit.strSpecies
     this.data.rank.text = "Rank " + unit.strRank
@@ -27,6 +28,7 @@ class UnitOverview extends createjs.Container {
     let unitBitmap = this.container.addChild(new createjs.Bitmap(unit.unitImage.canvas))
     unitBitmap.x = SIDEBAR_CONTENT_WIDTH - 40
     unitBitmap.y = 3
+    this.unitBitmap = unitBitmap
 
     this.container.visible = true
   }
