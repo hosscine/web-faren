@@ -27,30 +27,34 @@ scroller = new Scroller(render, {
 
 // Reflow handling
 var reflow = function() {
-  clientWidth = mainCanvas.clientWidth
-  clientHeight = mainCanvas.clientHeight
-
+  
   let isSP = container.clientWidth * 0.2 < 200
   // canvasのwidthは自動調節されないのでここで手動調節
   if (isSP) {
-    mainCanvas.setAttribute("width", container.clientWidth)
-    mainCanvas.setAttribute("height", container.clientHeight * 0.6)
     sideCanvas.setAttribute("width", container.clientWidth)
     sideCanvas.setAttribute("height", container.clientHeight * 0.4)
+    mainCanvas.setAttribute("width", container.clientWidth)
+    mainCanvas.setAttribute("height", container.clientHeight * 0.6)
   } else {
-    mainCanvas.setAttribute("width", container.clientWidth * 0.8)
-    mainCanvas.setAttribute("height", container.clientHeight)
     sideCanvas.setAttribute("width", container.clientWidth * 0.2)
     sideCanvas.setAttribute("height", container.clientHeight)
+    mainCanvas.setAttribute("width", container.clientWidth * 0.8)
+    mainCanvas.setAttribute("height", container.clientHeight)
   }
-
+  
+  clientWidth = mainCanvas.clientWidth
+  clientHeight = mainCanvas.clientHeight
   scroller.setDimensions(clientWidth, clientHeight, contentWidth, contentHeight)
-
   if (stage.reflow) stage.reflow(mainCanvas.clientWidth, mainCanvas.clientHeight, isSP)
   if (sidebarStage.reflow) sidebarStage.reflow(sideCanvas.clientWidth, sideCanvas.clientHeight, isSP)
-  // for (let s of [stage, sidebarStage]) if (s.reflow) s.reflow()
 }
-window.addEventListener("resize", reflow, false)
+
+let resizeTimer
+let handleResize = function() {
+  if (resizeTimer) clearTimeout(resizeTimer)
+  resizeTimer = setTimeout(() => reflow(), 20)
+}
+window.addEventListener("resize", handleResize)
 reflow()
 
 // Ivent setting
