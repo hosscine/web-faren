@@ -63,7 +63,7 @@ class StrategyMapStage extends createjs.Stage {
     if (master.isPlayer) {
       master.stayingArea.sortStayingUnits()
       this.sidebar.handleAreaClick(master.stayingArea)
-      this.sidebar.view.displayMaster(master)
+      this.sidebar.displayMaster(master)
       return 0
     }
     else {
@@ -83,7 +83,7 @@ class StrategyMapStage extends createjs.Stage {
     for (let unit of target.stayingUnits) unit.die()
     target.occupied(attackMaster, attackUnits)
     this.strategyMap.setupAreaFlag(this.areas)
-    this.sidebar.displayMaster()
+    this.sidebar.displayMaster(this.playerMaster)
   }
 
   reflow(w, h) {

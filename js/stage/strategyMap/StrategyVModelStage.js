@@ -79,7 +79,10 @@ class StrategyVModelStage extends createjs.Stage {
   }
 
   handleMoveSubmit() {
+    let attackers = this.model.getAttackers()
+    if (attackers) this.mainStage.gotoBattleMap(this.model.targetArea, this.player, attackers)
 
+    this.displayUnits()
   }
 
   handleMove() {
@@ -104,6 +107,10 @@ class StrategyVModelStage extends createjs.Stage {
     let [stayingBitmap, destinationBitmap, stayingColor, destinationColor] = this.model.getUnitsImages(this)
     if (stayingBitmap) this.view.displayUnitBitmaps(stayingBitmap, stayingColor)
     if (destinationBitmap) this.view.displayUnitBitmaps(destinationBitmap, destinationColor, "destination")
+  }
+
+  displayMaster(master) {
+    this.view.displayMaster(master)
   }
 
   initializeBinsSet() {

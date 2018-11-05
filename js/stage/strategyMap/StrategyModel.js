@@ -39,6 +39,16 @@ class StrategyModel {
     this.state = STRATEGY_STATE.awaitAttackers
   }
 
+  getAttackers() {
+    if (this.subBins.every(unit => unit === 0)) return alert("侵攻するユニットが一体もいません")
+    let go = window.confirm(this.targetArea.name + "に侵攻します")
+    if (!go) return
+
+    let attackers = this.subBins.filter(unit => unit !== 0)
+    this.resetState()
+    return attackers
+  }
+
   makeBinsDic() {
     let binsDic = {}
     for (let area of this.area.adjacentAreas) binsDic[area.name] = area.getStayingUnits20Bins()
@@ -53,7 +63,7 @@ class StrategyModel {
   }
 
   allMoveTo(moveto) {
-    if (this.state === STRATEGY_STATE.awaitAttackers) { 
+    if (this.state === STRATEGY_STATE.awaitAttackers) {
       let units = moveto === "toMain" ? this.subBins : this.mainBinsDic[this.area.name]
       for (let unit of units) if (unit !== 0) if (!this.moveBins2Bins(unit)) return
     }
@@ -113,6 +123,8 @@ class StrategyModel {
   }
 
   resetState() {
+    if (this.subBins) for (let unit of this.subBins) if (unit !== 0) unit.onMove = false
+    if (this.mainBins) for (let unit of this.mainBins) if (unit !== 0) unit.onMove = false
     return this.state = STRATEGY_STATE.default
   }
 
