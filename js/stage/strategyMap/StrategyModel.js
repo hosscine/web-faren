@@ -46,6 +46,28 @@ class StrategyModel {
     return binsDic
   }
 
+  getUnitBins(unit) {
+    if (this.subBins.includes(unit)) return unit
+    for (let bins in Object.value(this.binsDic)) if (bins.includes(unit)) return bins
+    Error("unit not found in bins")
+  }
+
+  moveBins2Bins(unit) {
+    if (!unit.active) return
+
+    let isInMain = !this.subBins.includes(unit)
+    let areaName = unit.stayingArea.name
+    let from = isInMain ? this.mainBinsDic[areaName] : this.subBins
+    let to = isInMain ? this.subBins : this.mainBinsDic[areaName]
+
+    if (!to.includes(0)) return
+
+    to[to.indexOf(0)] = unit
+    from[from.indexOf(unit)] = 0
+    unit.onMove = !unit.onMove
+    return true
+  }
+
   startEmploy() {
     this.resetState()
     if (!this.area.hasSpace) return alert("エリアに空きがありません")

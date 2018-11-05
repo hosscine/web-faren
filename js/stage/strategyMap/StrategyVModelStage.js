@@ -16,6 +16,8 @@ class StrategyVModelStage extends createjs.Stage {
         this.model.setEmployer(unit); break
       case STRATEGY_STATE.awaitEmployee:
         this.model.executeEmploy(unit); break
+      case STRATEGY_STATE.awaitAttackers:
+        this.model.moveBins2Bins(unit); break
       case STRATEGY_STATE.default:
         this.view.displayUnitDetail(unit); break
     }
