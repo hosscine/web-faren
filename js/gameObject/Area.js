@@ -101,10 +101,17 @@ class Area {
   }
   setStayingUnits20Bins(bins) {
     let units = bins.filter(unit => unit !== 0)
+<<<<<<< HEAD:js/gameObject/Area.js
     for (let unit of units){
       if (unit.onMove) unit.onMove = unit.active = false
       unit.moveToArea(this)
     } 
+=======
+    for (let unit of units) {
+      if (unit.onMove) unit.onMove = unit.active = false
+      unit.moveToArea(this)
+    }
+>>>>>>> master:js/bitmap/Area.js
     this.sortStayingUnits()
   }
 
