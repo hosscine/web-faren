@@ -23,14 +23,19 @@ class StrategyView extends createjs.Container {
   get unitGroup() { return [this.stayingUnitsContainer, this.unitCommandsContainer] }
   set unitGroupVisible(bool) { this.unitGroup.forEach(c => c.visible = bool) }
   get destinationGroup() { return [this.destinationUnitsContainer, this.moveCommandsContainer] }
-  set destinationGroupVisible(bool) { this.destinationGroup.forEach(c => c.visible = bool) }
-
+  set destinationGroupVisible(bool) {
+    this.destinationGroup.forEach(c => c.visible = bool)
+    this.viewCommandsContainer.visible = !bool
+  }
+  get commandsVisible() { return this.areaCommandsContainer.visible }
+  set commandsVisible(bool) {
+    this.areaCommandsContainer.visible = this.unitCommandsContainer.visible = bool
+  }
+  
+  get columnWidth() { return this.masterContainer.getBounds().width }
   get columnHeight() {
     let containers = [this.masterContainer, this.viewCommandsContainer]
     return containers.reduce((sum, c) => sum + c.columnHeight, 0)
-  }
-  get columnWidth() {
-    return this.masterContainer.getBounds().width
   }
   get height() { return this.getBounds().height }
 
@@ -38,11 +43,6 @@ class StrategyView extends createjs.Container {
     for (let key in this.areaCommands)
       this.areaCommands[key].selected = key === choise ? true : false
   }
-
-  set commandsVisible(bool) {
-    this.areaCommandsContainer.visible = this.unitCommandsContainer.visible = bool
-  }
-  get commandsVisible() { return this.areaCommandsContainer.visible }
 
   displayMaster(master) {
     this.masterData.income.text = "収入 " + master.income + "Ley"
@@ -63,7 +63,7 @@ class StrategyView extends createjs.Container {
 
   displayUnitBitmaps(bitmaps, borderColor = "white", target = "staying") {
     let container = this[target + "UnitsContainer"]
-    this.destinationUnitsContainer.visible = this.moveCommandsContainer.visible = target === "destination"
+    this.destinationGroupVisible = target === "destination"
     container.removeAllChildren()
 
     let borderRect = container.addChild(new createjs.Shape())
@@ -252,7 +252,7 @@ class StrategyView extends createjs.Container {
   setupMoveCommands() {
     let container = this.addChild(new createjs.Container())
     container.y = 577
-    container.visible = false
+    container.columnHeight = 20
     this.moveCommandsContainer = container
 
     let contentX = 5

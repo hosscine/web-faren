@@ -91,8 +91,8 @@ class StrategyModel {
 
   allMoveUnit(fromIsMain) {
     let [main, sub] = this.getBothBins(this.area)
-    if (fromIsMain) for(let unit of main) this.transferBins(unit, main, sub)
-    else for(let unit of sub) this.transferBins(unit, sub, main)
+    if (fromIsMain) for (let unit of main) this.transferBins(unit, main, sub)
+    else for (let unit of sub) this.transferBins(unit, sub, main)
   }
 
   moveUnit(unit) {
@@ -188,7 +188,7 @@ class StrategyModel {
     }
     else if (this.state === STRATEGY_STATE.awaitAttackers) {
       [mainUnits, subUnits] = [this.mainBinsDic[this.area.name], this.subBins];
-      [mainBadge, subBadge, mainColor] = ["move", "move", "red"]
+      [mainBadge, subBadge, mainColor, subColor] = ["move", "move", "red", "red"]
     }
     else if (this.state === STRATEGY_STATE.awaitMoveTarget) {
       [mainUnits, subUnits] = [this.area.stayingUnits, this.subBins]
@@ -198,13 +198,15 @@ class StrategyModel {
       [mainUnits, subUnits] = [this.mainBins, this.subBins];
       [mainBadge, subBadge, mainColor, subColor] = ["move", "move", "cyan", "cyan"]
     }
-    
+
     if (mainUnits) mainImages = mainUnits.map(unit => unit === 0 ? 0 : unit.getUnitBitmap(handler, mainBadge))
     if (subUnits) subImages = subUnits.map(unit => unit === 0 ? 0 : unit.getUnitBitmap(handler, subBadge))
     return [mainImages, subImages, mainColor, subColor]
   }
 
-  isInMainUnits(unit) { return this.area.stayingUnits.includes(unit) }
+  isInMainUnits(unit) {
+    return this.state >= STRATEGY_STATE.awaitWarTarget ? !this.subBins.includes(unit) : true
+  }
 
   set areaCommand(value) { this.area.command = value }
   get areaCommand() { return this.area.command }

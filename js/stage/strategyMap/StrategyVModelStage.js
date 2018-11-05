@@ -30,8 +30,14 @@ class StrategyVModelStage extends createjs.Stage {
 
   handleUnitMouseover(unit) {
     let isAbove = this.model.isInMainUnits(unit)
-    if (isAbove) this.view.unitOverview.y = 600
-    if (this.isSP) this.view.unitOverview.y = 0
+    if (isAbove) {
+      if (this.isSP) this.view.unitOverview.x = 0
+      else this.view.unitOverview.y = 600
+    } 
+    else {
+      if (this.isSP) this.view.unitOverview.x = 200
+      else this.view.unitOverview.y = 800
+    } 
     this.view.displayUnitOverview(unit)
   }
 
@@ -160,7 +166,6 @@ class StrategyVModelStage extends createjs.Stage {
     v.stayingUnitsContainer.y = 5
     v.unitCommandsContainer.x = 200
     v.unitCommandsContainer.y = v.columnHeight - v.unitCommandsContainer.columnHeight
-    v.destinationUnitsContainer.y = 5
 
     // View Area モード
     v.areaInfoContainer.x = 200
@@ -168,7 +173,10 @@ class StrategyVModelStage extends createjs.Stage {
     v.areaCommandsContainer.x = 200
     v.areaCommandsContainer.y = v.columnHeight - v.areaCommandsContainer.columnHeight - 5
 
-    v.unitOverview.y = 15
+    // 基本隠れてる奴ら
+    v.destinationUnitsContainer.y = 5
+    v.moveCommandsContainer.y = v.columnHeight - v.moveCommandsContainer.columnHeight - 5
+    v.unitOverview.y = 5
   }
 
   reflowPC(w, h) {
