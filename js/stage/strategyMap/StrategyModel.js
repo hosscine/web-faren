@@ -143,6 +143,19 @@ class StrategyModel {
     return this.resetState()
   }
 
+  startUnemploy() {
+    this.resetState()
+    return this.state = STRATEGY_STATE.awaitUnemployee
+  }
+
+  executeUnemploy(unit) {
+    if (!unit.active) return alert("既に行動済みのユニットです")
+    else if (unit.isMaster) return alert("マスターは解雇できません")
+
+    let go = window.confirm("この部隊を解雇してよろしいですか？")
+    if (go) this.area.unemployUnit(unit)
+  }
+
   resetState() {
     if (this.subBins) for (let unit of this.subBins) if (unit !== 0) unit.onMove = false
     if (this.mainBins) for (let unit of this.mainBins) if (unit !== 0) unit.onMove = false
@@ -164,6 +177,10 @@ class StrategyModel {
     else if (this.state === STRATEGY_STATE.awaitEmployee) {
       mainUnits = this.employees;
       [mainBadge, mainColor] = ["cost", "limegreen"]
+    }
+    else if (this.state === STRATEGY_STATE.awaitUnemployee) {
+      mainUnits = this.area.stayingUnits
+      mainColor = "yellow"
     }
     else if (this.state === STRATEGY_STATE.awaitWarTarget) {
       [mainUnits, subUnits] = [this.mainBinsDic[this.area.name], this.subBins]

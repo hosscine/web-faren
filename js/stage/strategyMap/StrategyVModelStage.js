@@ -16,6 +16,8 @@ class StrategyVModelStage extends createjs.Stage {
         this.model.setEmployer(unit); break
       case STRATEGY_STATE.awaitEmployee:
         this.model.executeEmploy(unit); break
+      case STRATEGY_STATE.awaitUnemployee:
+        this.model.executeUnemploy(unit); break
       case STRATEGY_STATE.awaitAttackers:
       case STRATEGY_STATE.awaitMovers:
         this.model.moveUnit(unit); break
@@ -104,7 +106,8 @@ class StrategyVModelStage extends createjs.Stage {
   }
 
   handleUnemploy() {
-
+    this.model.startUnemploy()
+    this.displayUnits()
   }
 
   handleReset() {
