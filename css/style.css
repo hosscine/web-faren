@@ -1,6 +1,9 @@
-canvas{
-    width: 100%;
-    height: 100%;
+* {
+    box-sizing: border-box;
+}
+
+body {
+    overflow-y:hidden;
 }
 
 #headerCanvas{
@@ -9,7 +12,7 @@ canvas{
 }
 
 #container{
-    background: blue;
+    background: darkblue;
 }
 
 #mainCanvas{
@@ -18,11 +21,12 @@ canvas{
 
 #sidebarCanvas{
     background: darkblue;
-    flex-basis: 200px;
 }
 
 #main{
     display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     height: 90%;
 }
 

@@ -60,7 +60,7 @@ class Area {
 
     container.addChild(outlineText, text)
     container.addChild(this.owner.flagBitmap)
-    container.on("click", () => this.sidebar[this.sidebar.areaCallbacks.click](this))
+    container.on("click", () => this.sidebar.handleAreaClick(this))
 
     return container
   }
@@ -101,10 +101,10 @@ class Area {
   }
   setStayingUnits20Bins(bins) {
     let units = bins.filter(unit => unit !== 0)
-    for (let unit of units) {
+    for (let unit of units){
       if (unit.onMove) unit.onMove = unit.active = false
       unit.moveToArea(this)
-    }
+    } 
     this.sortStayingUnits()
   }
 

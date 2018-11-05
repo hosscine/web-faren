@@ -1,10 +1,8 @@
 // Canvas and container setting
 let container = document.getElementById("container")
-let header = document.getElementById("headerCanvas")
-let content = document.getElementById("mainCanvas")
-let sidebar = document.getElementById("sidebarCanvas")
-let contentWidthDefault = 1280
-let contentHeightDefault = 720
+let mainCanvas = document.getElementById("mainCanvas")
+let sideCanvas = document.getElementById("sidebarCanvas")
+const contentHeightDefault = 960
 
 // Canvas renderer
 let render = function(left, top, zoom) {
@@ -29,19 +27,34 @@ scroller = new Scroller(render, {
 
 // Reflow handling
 var reflow = function() {
-  clientWidth = content.clientWidth
-  clientHeight = content.clientHeight
-
+  
+  let isSP = container.clientWidth * 0.2 < 200
   // canvasのwidthは自動調節されないのでここで手動調節
-  header.setAttribute("width", container.clientWidth)
-  header.setAttribute("height", container.clientHeight * 0.1)
-  content.setAttribute("width", container.clientWidth - 200)
-  content.setAttribute("height", container.clientHeight * 0.9)
-  sidebar.setAttribute("height", container.clientHeight * 0.9)
-
+  if (isSP) {
+    sideCanvas.setAttribute("width", container.clientWidth)
+    sideCanvas.setAttribute("height", container.clientHeight * 0.4)
+    mainCanvas.setAttribute("width", container.clientWidth)
+    mainCanvas.setAttribute("height", container.clientHeight * 0.6)
+  } else {
+    sideCanvas.setAttribute("width", container.clientWidth * 0.2)
+    sideCanvas.setAttribute("height", container.clientHeight)
+    mainCanvas.setAttribute("width", container.clientWidth * 0.8)
+    mainCanvas.setAttribute("height", container.clientHeight)
+  }
+  
+  clientWidth = mainCanvas.clientWidth
+  clientHeight = mainCanvas.clientHeight
   scroller.setDimensions(clientWidth, clientHeight, contentWidth, contentHeight)
+  if (stage.reflow) stage.reflow(mainCanvas.clientWidth, mainCanvas.clientHeight, isSP)
+  if (sidebarStage.reflow) sidebarStage.reflow(sideCanvas.clientWidth, sideCanvas.clientHeight, isSP)
 }
-window.addEventListener("resize", reflow, false)
+
+let resizeTimer
+let handleResize = function() {
+  if (resizeTimer) clearTimeout(resizeTimer)
+  resizeTimer = setTimeout(() => reflow(), 20)
+}
+window.addEventListener("resize", handleResize)
 reflow()
 
 // Ivent setting

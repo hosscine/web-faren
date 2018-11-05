@@ -8,6 +8,9 @@
   <script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
   <!-- <script src="https://code.createjs.com/1.0.0/createjs.js"></script> -->
 
+  <!-- preloadAssets -->
+  <script src="js/PreloadAssets.js"></script>
+
   <!-- reader -->
   <script src="js/reader/TaggedTextReader.js"></script>
   <script src="js/reader/TaggedScenarioReader.js"></script>
@@ -19,29 +22,32 @@
 
   <!-- bitmap -->
   <script src="js/bitmap/BitmapData.js"></script>
-  <script src="js/bitmap/Unit.js"></script>
-  <script src="js/bitmap/Area.js"></script>
-  <script src="js/bitmap/MasterUnit.js"></script>
-  <script src="js/bitmap/NeutralMaster.js"></script>
   <script src="js/bitmap/MotionBitmap.js"></script>
   <script src="js/bitmap/AlphalizeBitmap.js"></script>
 
-  <!-- stage -->
-  <script src="js/stage/SelectCharacterStage.js"></script>
-  <script src="js/stage/StrategyMapStage.js"></script>
-  <script src="js/stage/SidebarStage.js"></script>
-  <script src="js/stage/PreloadAssets.js"></script>
-
   <!-- UI -->
   <script src="js/UI/ScrollContainer.js"></script>
-  <script src="js/UI/ExplanationArea.js"></script>
-  <script src="js/UI/StrategyHeaderBar.js"></script>
-  <script src="js/UI/SideBar.js"></script>
-  <script src="js/UI/StrategySideBar.js"></script>
-  <script src="js/UI/StrategyMap.js"></script>
   <script src="js/UI/BBText.js"></script>
   <script src="js/UI/OutlineText.js"></script>
   <script src="js/UI/Button.js"></script>
+
+  <!-- stage -->
+  <script src="js/stage/SidebarStage.js"></script>
+  <script src="js/stage/selectCharacter/SelectCharacterStage.js"></script>
+  <script src="js/stage/selectCharacter/ExplanationArea.js"></script>
+  <script src="js/stage/strategyMap/StrategyMapStage.js"></script>
+  <script src="js/stage/strategyMap/StrategyVModelStage.js"></script>
+  <script src="js/stage/strategyMap/StrategyMap.js"></script>
+  <script src="js/stage/strategyMap/StrategyView.js"></script>
+  <script src="js/stage/strategyMap/StrategyModel.js"></script>
+  <script src="js/stage/common/UnitDetail.js"></script>
+  <script src="js/stage/common/UnitOverview.js"></script>
+  
+  <!-- gameObject -->
+  <script src="js/gameObject/Unit.js"></script>
+  <script src="js/gameObject/Area.js"></script>
+  <script src="js/gameObject/MasterUnit.js"></script>
+  <script src="js/gameObject/NeutralMaster.js"></script>
 
   <!-- scroller -->
   <script src="js/scroller/Scroller.js"></script>
@@ -53,11 +59,9 @@
 
 <body>
   <div id="container">
-    <canvas id="headerCanvas">hoge</canvas>
-    <div id="main">
-      <canvas id="mainCanvas" width="1280" height="720">hoge</canvas>
-      <canvas id="sidebarCanvas" width="200">hoge</canvas>
-    </div>
+    <canvas id="mainCanvas">hoge</canvas>
+    <canvas id="sidebarCanvas">hoge</canvas>
+  </div>
   </div>
 
 </body>
@@ -68,10 +72,10 @@
     stage = new SelectCharacterStage("mainCanvas")
     sidebarStage = new SidebarStage("sidebarCanvas")
 
-    if (createjs.Touch.isSupported()){
+    if (createjs.Touch.isSupported()) {
       createjs.Touch.enable(stage)
       createjs.Touch.enable(sidebarStage)
-    } 
+    }
     stage.enableMouseOver()
     sidebarStage.enableMouseOver()
     createjs.Ticker.addEventListener("tick", headerStage)
