@@ -45,6 +45,9 @@ class StrategyVModelStage extends createjs.Stage {
       case STRATEGY_STATE.awaitWarTarget:
       case STRATEGY_STATE.awaitAttackers:
         needDisplay = this.model.setWarTarget(area); break
+      case STRATEGY_STATE.awaitMoveTarget:
+      case STRATEGY_STATE.awaitMovers:
+        needDisplay = this.model.setMoveTarget(area); break
       case STRATEGY_STATE.default:
         needDisplay = true; break
     }
@@ -86,7 +89,8 @@ class StrategyVModelStage extends createjs.Stage {
   }
 
   handleMove() {
-
+    this.model.startMove()
+    this.displayUnits()
   }
 
   handleEmploy() {

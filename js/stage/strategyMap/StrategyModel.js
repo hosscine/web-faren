@@ -2,8 +2,11 @@ const STRATEGY_STATE = {
   default: 1,
   awaitEmployer: 11,
   awaitEmployee: 12,
+  awaitUnemployee: 13,
   awaitWarTarget: 21,
   awaitAttackers: 22,
+  awaitMoveTarget: 31,
+  awaitMovers: 32,
 }
 
 class StrategyModel {
@@ -38,7 +41,7 @@ class StrategyModel {
     this.state = STRATEGY_STATE.awaitAttackers
   }
 
-  getAttackers() {
+  getAttackers() { // warの実行メソッド
     if (this.subBins.every(unit => unit === 0)) return alert("侵攻するユニットが一体もいません")
     let go = window.confirm(this.targetArea.name + "に侵攻します")
     if (!go) return
@@ -46,6 +49,30 @@ class StrategyModel {
     let attackers = this.subBins.filter(unit => unit !== 0)
     this.resetState()
     return attackers
+  }
+
+  startMove() {
+    this.resetState()
+    this.subBins = Array(20).fill(0)
+    return this.state = STRATEGY_STATE.awaitMoveTarget
+  }
+
+  setMoveTarget(area) {
+    if (area === this.area) return alert("移動元と同じエリアです")
+    else if (area.owner !== this.player) return alert("移動先は自軍のエリアを選択してください")
+    if (this.targetArea) this.executeMove() // 移動先エリアを切り替える前に移動を確定
+
+    this.targetArea = area
+    this.mainBins = this.area.getStayingUnits20Bins()
+    this.subBins = this.targetArea.getStayingUnits20Bins()
+    return this.state = STRATEGY_STATE.awaitMovers
+  }
+
+  executeMove() {
+    if (this.state !== STRATEGY_STATE.awaitMovers) return
+    this.area.setStayingUnits20Bins(this.mainBins)
+    this.targetArea.setStayingUnits20Bins(this.moveToUnits)
+    this.resetState()
   }
 
   makeBinsDic() {
@@ -140,8 +167,8 @@ class StrategyModel {
       mainColor = "limegreen"
     }
     else if (this.state === STRATEGY_STATE.awaitEmployee) {
+      mainUnits = this.employees;
       [mainBadge, mainColor] = ["cost", "limegreen"]
-      mainUnits = this.employees
     }
     else if (this.state === STRATEGY_STATE.awaitWarTarget) {
       [mainUnits, subUnits] = [this.mainBinsDic[this.area.name], this.subBins]
@@ -151,7 +178,15 @@ class StrategyModel {
       [mainUnits, subUnits] = [this.mainBinsDic[this.area.name], this.subBins];
       [mainBadge, subBadge, mainColor] = ["move", "move", "red"]
     }
-
+    else if (this.state === STRATEGY_STATE.awaitMoveTarget) {
+      [mainUnits, subUnits] = [this.area.stayingUnits, this.subBins]
+      subColor = "cyan"
+    }
+    else if (this.state === STRATEGY_STATE.awaitMovers) {
+      [mainUnits, subUnits] = [this.mainBins, this.subBins];
+      [mainBadge, subBadge, mainColor, subColor] = ["move", "move", "cyan", "cyan"]
+    }
+    
     if (mainUnits) mainImages = mainUnits.map(unit => unit === 0 ? 0 : unit.getUnitBitmap(handler, mainBadge))
     if (subUnits) subImages = subUnits.map(unit => unit === 0 ? 0 : unit.getUnitBitmap(handler, subBadge))
     return [mainImages, subImages, mainColor, subColor]
