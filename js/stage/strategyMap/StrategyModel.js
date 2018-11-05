@@ -52,6 +52,16 @@ class StrategyModel {
     Error("unit not found in bins")
   }
 
+  allMoveTo(moveto) {
+    if (this.state === STRATEGY_STATE.awaitAttackers) { 
+      let units = moveto === "toMain" ? this.subBins : this.mainBinsDic[this.area.name]
+      for (let unit of units) if (unit !== 0) if (!this.moveBins2Bins(unit)) return
+    }
+    else if (this.state === STRATEGY_STATE.awaitMovers) {
+      let units = moveto === "toMain" ? this.subBins : this.mainBins
+    }
+  }
+
   moveBins2Bins(unit) {
     if (!unit.active) return
 
@@ -65,7 +75,7 @@ class StrategyModel {
     to[to.indexOf(0)] = unit
     from[from.indexOf(unit)] = 0
     unit.onMove = !unit.onMove
-    return true
+    return this.state = STRATEGY_STATE.awaitAttackers
   }
 
   startEmploy() {
@@ -127,8 +137,8 @@ class StrategyModel {
       subColor = "red"
     }
     else if (this.state === STRATEGY_STATE.awaitAttackers) {
-      [mainUnits, subUnits] = [this.mainBinsDic[this.area.name], this.subBins]
-      mainColor = "red"
+      [mainUnits, subUnits] = [this.mainBinsDic[this.area.name], this.subBins];
+      [mainBadge, subBadge, mainColor] = ["move", "move", "red"]
     }
 
     if (mainUnits) mainImages = mainUnits.map(unit => unit === 0 ? 0 : unit.getUnitBitmap(handler, mainBadge))

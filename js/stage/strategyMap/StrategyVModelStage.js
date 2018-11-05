@@ -74,7 +74,8 @@ class StrategyVModelStage extends createjs.Stage {
   }
 
   handleAllMove(moveto) {
-
+    this.model.allMoveTo(moveto === "toUnder" ? "toSub" : "toMain")
+    this.displayUnits()
   }
 
   handleMoveSubmit() {

@@ -14,6 +14,7 @@ class StrategyView extends createjs.Container {
     this.setupAreaCommands()
     this.setupUnitCommands()
     this.setupUnitsView()
+    this.setupMoveCommands()
   }
 
   get columnHeight() {
@@ -54,7 +55,7 @@ class StrategyView extends createjs.Container {
 
   displayUnitBitmaps(bitmaps, borderColor = "white", target = "staying") {
     let container = this[target + "UnitsContainer"]
-    this.destinationUnitsContainer.visible = target === "destination"
+    this.destinationUnitsContainer.visible = this.moveCommandsContainer.visible = target === "destination"
     container.removeAllChildren()
 
     let borderRect = container.addChild(new createjs.Shape())
