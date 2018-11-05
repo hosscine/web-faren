@@ -115,6 +115,14 @@ class StrategyVModelStage extends createjs.Stage {
     this.displayUnits()
   }
 
+  handleViewArea() {
+
+  }
+
+  handleViewUnit() {
+
+  }
+
   displayUnits() {
     let [stayingBitmap, destinationBitmap, stayingColor, destinationColor] = this.model.getUnitsImages(this)
     if (stayingBitmap) this.view.displayUnitBitmaps(stayingBitmap, stayingColor)
@@ -139,17 +147,28 @@ class StrategyVModelStage extends createjs.Stage {
 
   reflowSP(w, h) {
     let v = this.view
-    let fitMag = w / 2.1 / v.columnWidth
+    let fitWidthCoef = w / 2.1 / v.columnWidth
     // if 縦が見切れる場合  縦にフィット
     // else 見切れない場合  横にフィット
-    if (fitMag * v.columnHeight > h) v.scaleX = v.scaleY = h / v.columnHeight
-    else v.scaleX = v.scaleY = fitMag
+    if (fitWidthCoef * v.columnHeight > h) v.scaleX = v.scaleY = h / v.columnHeight
+    else v.scaleX = v.scaleY = fitWidthCoef
 
+    v.viewCommandsContainer.visible = true
+
+    // View Unit モード
     v.stayingUnitsContainer.x = 200
-    v.stayingUnitsContainer.y = v.columnHeight / 2.57
+    v.stayingUnitsContainer.y = 5
     v.unitCommandsContainer.x = 200
-    v.unitCommandsContainer.y = v.columnHeight - 210
-    v.unitOverview.x = 200
+    v.unitCommandsContainer.y = v.columnHeight - v.unitCommandsContainer.columnHeight
+    v.destinationUnitsContainer.y = 5
+
+    // View Area モード
+    v.areaInfoContainer.x = 200
+    v.areaInfoContainer.y = 5
+    v.areaCommandsContainer.x = 200
+    v.areaCommandsContainer.y = v.columnHeight - v.areaCommandsContainer.columnHeight - 5
+
+    v.unitOverview.y = 15
   }
 
   reflowPC(w, h) {

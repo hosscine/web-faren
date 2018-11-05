@@ -59,6 +59,7 @@ class SelectCharacterStage extends createjs.Stage {
     createjs.Ticker.addEventListener("tick", stage)
     createjs.Ticker.addEventListener("tick", sidebarStage)
     createjs.Ticker.setFPS(60)
+    reflow()
   }
 
   set mastersEnable(bool) {

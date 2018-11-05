@@ -15,10 +15,18 @@ class StrategyView extends createjs.Container {
     this.setupUnitCommands()
     this.setupUnitsView()
     this.setupMoveCommands()
+    this.setupViewCommands()
   }
 
+  get areaGroup() { return [this.areaInfoContainer, this.areaCommandsContainer] }
+  set areaGroupVisible(bool) { this.areaGroup.forEach(c => c.visible = bool) }
+  get unitGroup() { return [this.stayingUnitsContainer, this.unitCommandsContainer] }
+  set unitGroupVisible(bool) { this.unitGroup.forEach(c => c.visible = bool) }
+  get destinationGroup() { return [this.destinationUnitsContainer, this.moveCommandsContainer] }
+  set destinationGroupVisible(bool) { this.destinationGroup.forEach(c => c.visible = bool) }
+
   get columnHeight() {
-    let containers = [this.masterContainer, this.areaInfoContainer]
+    let containers = [this.masterContainer, this.viewCommandsContainer]
     return containers.reduce((sum, c) => sum + c.columnHeight, 0)
   }
   get columnWidth() {
@@ -59,6 +67,7 @@ class StrategyView extends createjs.Container {
     container.removeAllChildren()
 
     let borderRect = container.addChild(new createjs.Shape())
+    borderRect.graphics.beginFill("darkblue").drawRoundRect(5, 0, SIDEBAR_CONTENT_WIDTH - 10, 175, 5)
     borderRect.graphics.beginStroke(borderColor).setStrokeStyle(borderColor === "white" ? 1 : 4)
       .drawRoundRect(5, 0, SIDEBAR_CONTENT_WIDTH - 10, 175, 5)
 
@@ -195,6 +204,7 @@ class StrategyView extends createjs.Container {
   setupAreaCommands() {
     let container = this.addChild(new createjs.Container())
     container.y = 300
+    container.columnHeight = 95
     this.areaCommandsContainer = container
 
     const BUTTON_WIDTH = 85
@@ -261,28 +271,47 @@ class StrategyView extends createjs.Container {
   }
 
   setupUnitCommands() {
+    const BUTTON_SIZE = 25
     let container = this.addChild(new createjs.Container())
     container.y = 370
+    container.columnHeight = BUTTON_SIZE
     this.unitCommandsContainer = container
 
     let contentX = 7
-    const buttonSize = 25
-    let move = container.addChild(new Button("🚶", buttonSize, buttonSize))
+    let move = container.addChild(new Button("🚶", BUTTON_SIZE, BUTTON_SIZE))
     move.x = contentX += 4
     move.on("click", () => this.vmodel.handleMove())
 
-    let employ = container.addChild(new Button("📥", buttonSize, buttonSize))
-    employ.x = contentX += buttonSize + 4
+    let employ = container.addChild(new Button("📥", BUTTON_SIZE, BUTTON_SIZE))
+    employ.x = contentX += BUTTON_SIZE + 4
     employ.on("click", () => this.vmodel.handleEmploy())
 
-    let unemploy = container.addChild(new Button("📤", buttonSize, buttonSize))
-    unemploy.x = contentX += buttonSize + 4
+    let unemploy = container.addChild(new Button("📤", BUTTON_SIZE, BUTTON_SIZE))
+    unemploy.x = contentX += BUTTON_SIZE + 4
     unemploy.on("click", () => this.vmodel.handleUnemploy())
 
-    let cancel = container.addChild(new Button("🏸", buttonSize, buttonSize))
-    cancel.x = contentX += buttonSize + 16
+    let cancel = container.addChild(new Button("🏸", BUTTON_SIZE, BUTTON_SIZE))
+    cancel.x = contentX += BUTTON_SIZE + 16
     cancel.on("click", () => this.vmodel.handleReset())
 
     for (let button of container.children) button.font = "20px arial"
+  }
+
+  setupViewCommands() {
+    let container = this.addChild(new createjs.Container())
+    container.y = 185
+    container.columnHeight = 20
+    container.visible = false
+    this.viewCommandsContainer = container
+
+    const BUTTON_WIDTH = 85
+    let contentX = 5
+    let area = container.addChild(new Button("エリア", BUTTON_WIDTH, 20))
+    area.x = contentX += 7
+    area.on("click", () => this.vmodel.handleViewArea())
+
+    let unit = container.addChild(new Button("ユニット", BUTTON_WIDTH, 20))
+    unit.x = contentX += BUTTON_WIDTH + 7
+    unit.on("click", () => this.vmodel.handleViewUnit())
   }
 }
