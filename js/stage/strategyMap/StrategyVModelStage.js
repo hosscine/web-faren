@@ -17,8 +17,9 @@ class StrategyVModelStage extends createjs.Stage {
       case STRATEGY_STATE.awaitEmployee:
         this.model.executeEmploy(unit); break
       case STRATEGY_STATE.awaitAttackers:
-        this.model.moveBins2Bins(unit); break
-      case STRATEGY_STATE.default:
+      case STRATEGY_STATE.awaitMovers:
+        this.model.moveUnit(unit); break
+      default:
         this.view.displayUnitDetail(unit); break
     }
     this.displayUnits()
@@ -47,7 +48,7 @@ class StrategyVModelStage extends createjs.Stage {
         needDisplay = this.model.setWarTarget(area); break
       case STRATEGY_STATE.awaitMoveTarget:
       case STRATEGY_STATE.awaitMovers:
-        needDisplay = this.model.setMoveTarget(area); break
+        this.model.setMoveTarget(area); break
       case STRATEGY_STATE.default:
         needDisplay = true; break
     }
@@ -77,14 +78,18 @@ class StrategyVModelStage extends createjs.Stage {
   }
 
   handleAllMove(moveto) {
-    this.model.allMoveTo(moveto === "toUnder" ? "toSub" : "toMain")
+    this.model.allMoveUnit(moveto === "toUnder")
     this.displayUnits()
   }
 
   handleMoveSubmit() {
-    let attackers = this.model.getAttackers()
-    if (attackers) this.mainStage.gotoBattleMap(this.model.targetArea, this.player, attackers)
-
+    if (this.model.state === STRATEGY_STATE.awaitAttackers) {
+      let attackers = this.model.getAttackers()
+      if (attackers) this.mainStage.gotoBattleMap(this.model.targetArea, this.player, attackers)
+    }
+    else if (this.model.state === STRATEGY_STATE.awaitMovers) {
+      this.model.executeMove()
+    }
     this.displayUnits()
   }
 

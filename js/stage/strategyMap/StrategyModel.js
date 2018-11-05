@@ -71,7 +71,7 @@ class StrategyModel {
   executeMove() {
     if (this.state !== STRATEGY_STATE.awaitMovers) return
     this.area.setStayingUnits20Bins(this.mainBins)
-    this.targetArea.setStayingUnits20Bins(this.moveToUnits)
+    this.targetArea.setStayingUnits20Bins(this.subBins)
     this.resetState()
   }
 
@@ -82,36 +82,31 @@ class StrategyModel {
     return binsDic
   }
 
-  getUnitBins(unit) {
-    if (this.subBins.includes(unit)) return unit
-    for (let bins in Object.value(this.binsDic)) if (bins.includes(unit)) return bins
-    Error("unit not found in bins")
+  getBothBins(mainArea) {
+    let main = this.state === STRATEGY_STATE.awaitAttackers ?
+      this.mainBinsDic[mainArea.name] : this.mainBins
+    let sub = this.subBins
+    return [main, sub]
   }
 
-  allMoveTo(moveto) {
-    if (this.state === STRATEGY_STATE.awaitAttackers) {
-      let units = moveto === "toMain" ? this.subBins : this.mainBinsDic[this.area.name]
-      for (let unit of units) if (unit !== 0) if (!this.moveBins2Bins(unit)) return
-    }
-    else if (this.state === STRATEGY_STATE.awaitMovers) {
-      let units = moveto === "toMain" ? this.subBins : this.mainBins
-    }
+  allMoveUnit(fromIsMain) {
+    let [main, sub] = this.getBothBins(this.area)
+    if (fromIsMain) for(let unit of main) this.transferBins(unit, main, sub)
+    else for(let unit of sub) this.transferBins(unit, sub, main)
   }
 
-  moveBins2Bins(unit) {
-    if (!unit.active) return
+  moveUnit(unit) {
+    let [main, sub] = this.getBothBins(unit.stayingArea)
+    let fromIsMain = !this.subBins.includes(unit)
+    if (fromIsMain) this.transferBins(unit, main, sub)
+    else this.transferBins(unit, sub, main)
+  }
 
-    let isInMain = !this.subBins.includes(unit)
-    let areaName = unit.stayingArea.name
-    let from = isInMain ? this.mainBinsDic[areaName] : this.subBins
-    let to = isInMain ? this.subBins : this.mainBinsDic[areaName]
-
-    if (!to.includes(0)) return
-
+  transferBins(unit, from, to) {
+    if (!unit.active || unit === 0 || !to.includes(0)) return
     to[to.indexOf(0)] = unit
     from[from.indexOf(unit)] = 0
     unit.onMove = !unit.onMove
-    return this.state = STRATEGY_STATE.awaitAttackers
   }
 
   startEmploy() {
