@@ -33,11 +33,11 @@ class StrategyVModelStage extends createjs.Stage {
     if (isAbove) {
       if (this.isSP) this.view.unitOverview.x = 0
       else this.view.unitOverview.y = 600
-    } 
+    }
     else {
       if (this.isSP) this.view.unitOverview.x = 200
       else this.view.unitOverview.y = 800
-    } 
+    }
     this.view.displayUnitOverview(unit)
   }
 
@@ -71,6 +71,7 @@ class StrategyVModelStage extends createjs.Stage {
   }
 
   handleWar() {
+    if (this.isSP) this.handleViewUnit()
     this.model.startWar()
     this.displayUnits()
   }
@@ -122,17 +123,20 @@ class StrategyVModelStage extends createjs.Stage {
   }
 
   handleViewArea() {
-
+    this.view.areaGroupVisible = this.view.viewCommandsContainer.area.selected = true
+    this.view.unitGroupVisible = this.view.viewCommandsContainer.unit.selected = false
   }
 
   handleViewUnit() {
-
+    this.view.areaGroupVisible = this.view.viewCommandsContainer.area.selected = false
+    this.view.unitGroupVisible = this.view.viewCommandsContainer.unit.selected = true
   }
 
   displayUnits() {
     let [stayingBitmap, destinationBitmap, stayingColor, destinationColor] = this.model.getUnitsImages(this)
     if (stayingBitmap) this.view.displayUnitBitmaps(stayingBitmap, stayingColor)
     if (destinationBitmap) this.view.displayUnitBitmaps(destinationBitmap, destinationColor, "destination")
+    if (this.isSP) this.view.viewCommandsContainer.visible = destinationBitmap === undefined
   }
 
   displayMaster(master) {
@@ -160,6 +164,7 @@ class StrategyVModelStage extends createjs.Stage {
     else v.scaleX = v.scaleY = fitWidthCoef
 
     v.viewCommandsContainer.visible = true
+    this.handleViewUnit()
 
     // View Unit モード
     v.stayingUnitsContainer.x = 200
@@ -171,15 +176,16 @@ class StrategyVModelStage extends createjs.Stage {
     v.areaInfoContainer.x = 200
     v.areaInfoContainer.y = 5
     v.areaCommandsContainer.x = 200
-    v.areaCommandsContainer.y = v.columnHeight - v.areaCommandsContainer.columnHeight - 5
+    v.areaCommandsContainer.y = v.columnHeight - v.areaCommandsContainer.columnHeight
 
     // 基本隠れてる奴ら
     v.destinationUnitsContainer.y = 5
-    v.moveCommandsContainer.y = v.columnHeight - v.moveCommandsContainer.columnHeight - 5
+    v.moveCommandsContainer.y = v.columnHeight - v.moveCommandsContainer.columnHeight
     v.unitOverview.y = 5
   }
 
   reflowPC(w, h) {
     console.log("reflowPC called")
+    this.view.viewCommandsContainer.visible = false
   }
 }

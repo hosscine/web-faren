@@ -23,15 +23,12 @@ class StrategyView extends createjs.Container {
   get unitGroup() { return [this.stayingUnitsContainer, this.unitCommandsContainer] }
   set unitGroupVisible(bool) { this.unitGroup.forEach(c => c.visible = bool) }
   get destinationGroup() { return [this.destinationUnitsContainer, this.moveCommandsContainer] }
-  set destinationGroupVisible(bool) {
-    this.destinationGroup.forEach(c => c.visible = bool)
-    this.viewCommandsContainer.visible = !bool
-  }
+  set destinationGroupVisible(bool) { this.destinationGroup.forEach(c => c.visible = bool) }
   get commandsVisible() { return this.areaCommandsContainer.visible }
   set commandsVisible(bool) {
     this.areaCommandsContainer.visible = this.unitCommandsContainer.visible = bool
   }
-  
+
   get columnWidth() { return this.masterContainer.getBounds().width }
   get columnHeight() {
     let containers = [this.masterContainer, this.viewCommandsContainer]
@@ -309,9 +306,11 @@ class StrategyView extends createjs.Container {
     let area = container.addChild(new Button("エリア", BUTTON_WIDTH, 20))
     area.x = contentX += 7
     area.on("click", () => this.vmodel.handleViewArea())
+    container.area = area
 
     let unit = container.addChild(new Button("ユニット", BUTTON_WIDTH, 20))
     unit.x = contentX += BUTTON_WIDTH + 7
     unit.on("click", () => this.vmodel.handleViewUnit())
+    container.unit = unit
   }
 }
