@@ -30,7 +30,6 @@ class StrategyModel {
       if (this.targetArea) if (!this.targetArea.isAdjacent(area))
         return alert("対象のエリアは侵攻先のエリアと隣接していません")
       this.area = area
-      this.startWar()
       return area
     }
 
