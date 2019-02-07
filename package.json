@@ -20,6 +20,7 @@
   "homepage": "https://github.com/hosscine/web-faren#readme",
   "dependencies": {
     "browser-sync": "^2.24.6",
-    "createjs": "^1.0.1"
+    "createjs": "^1.0.1",
+    "npm": "^6.7.0"
   }
 }

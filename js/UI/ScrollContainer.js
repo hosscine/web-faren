@@ -15,9 +15,11 @@ class ScrollContainer extends createjs.Container {
     this.contentHeight = 0
   }
 
-  handleScroll(left, top) {
+  handleScroll(left, top, zoom) {
     scroller.scrollTarget.x = -left
     scroller.scrollTarget.y = -top
+    scroller.scrollTarget.scaleX = zoom
+    scroller.scrollTarget.scaleY = zoom
   }
 
   setContentBounds(width, height) {
