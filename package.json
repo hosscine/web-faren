@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "browser-sync start --server --files='./'",
-    "debug": "browser-sync start --server --index='debug.html' --files='./'"
+    "start": "browser-sync start --server --watch --files='./*'"
   },
   "repository": {
     "type": "git",
