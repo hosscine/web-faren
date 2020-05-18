@@ -10,7 +10,7 @@ class BattleMapReader extends BinaryReader {
     this.frontChipMap = []
     this.strategyChipMap = []
     this.heightMap = []
-    this.escapeZoneMap = []
+    this.deployArmyLocation = []
 
     this.setup()
   }
@@ -57,7 +57,7 @@ class BattleMapReader extends BinaryReader {
     this.increseOffset10(BATTLE_MAP_SIZE**2)
   }
   readEscapeZoneMap() {
-    for (let i = 0; i < MAP_MAX_ADJACENCY; i ++) this.escapeZoneMap.push(this.readZoneMapLine(i))
+    for (let i = 0; i < MAP_MAX_ADJACENCY; i ++) this.deployArmyLocation.push(this.readZoneMapLine(i))
     this.increseOffset10(AREA_PLACEABLE_UNITS * 2 * MAP_MAX_ADJACENCY)
   }
 }
