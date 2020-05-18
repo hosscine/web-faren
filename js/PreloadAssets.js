@@ -27,6 +27,11 @@ function preloadAssets() {
       src: DATA_DIR + "AreaData"
     },
     {
+      id: "battlemap",
+      src: DATA_DIR + "BMap_No1",
+      type: createjs.LoadQueue.BINARY
+    },
+    {
       id: "callable",
       src: DATA_DIR + "CallAble"
     }
@@ -39,6 +44,7 @@ function preloadAssets() {
     }
     else if (event.item.id === "scenario") assets.scenario = new TaggedScenarioReader(event.result)
     else if (event.item.id === "areadata") assets.areaData = new AreaDataReader(event.result)
+    else if (event.item.id === "battlemap") assets.battleMap = new BattleMapReader(event.result)
     else if (event.item.id === "callable") assets.callable = new TaggedCallableReader(event.result)
   }
 
