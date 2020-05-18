@@ -3,6 +3,10 @@ const IMAGE_DIR = "assets/Default/DefChar/"
 const PICTURE_DIR = "assets/Default/Picture/"
 const ELEMENT_DIR = "assets/Default/Elements/"
 
+// エリア数　なんとか取得する形にしたい
+const NUM_AREAS = 61
+
+const BMAP_PATTERN = /battlemap\d+/
 const UNIT_PATTERN = /unit\d+/
 const FACE_PATTERN = /face\d+/
 const FLAG_PATTERN = /flag\d+/
@@ -10,7 +14,7 @@ const FLAG_PATTERN = /flag\d+/
 function preloadAssets() {
   console.time("preload")
 
-  assets = {}
+  assets = { battleMap: new Array(NUM_AREAS) }
 
   assets.scriptManifest = [
     {
@@ -27,15 +31,17 @@ function preloadAssets() {
       src: DATA_DIR + "AreaData"
     },
     {
-      id: "battlemap",
-      src: DATA_DIR + "BMap_No1",
-      type: createjs.LoadQueue.BINARY
-    },
-    {
       id: "callable",
       src: DATA_DIR + "CallAble"
     }
   ]
+
+  for (let i = 1; i <= NUM_AREAS; i++) assets.scriptManifest.push({
+    id: "battlemap" + i,
+    src: DATA_DIR + "BMap_No" + i,
+    type: createjs.LoadQueue.BINARY,
+    areaNo: i
+  })
 
   let handleScriptLoad = function (event) {
     if (event.item.id === "charadata") {
@@ -44,8 +50,8 @@ function preloadAssets() {
     }
     else if (event.item.id === "scenario") assets.scenario = new TaggedScenarioReader(event.result)
     else if (event.item.id === "areadata") assets.areaData = new AreaDataReader(event.result)
-    else if (event.item.id === "battlemap") assets.battleMap = new BattleMapReader(event.result)
     else if (event.item.id === "callable") assets.callable = new TaggedCallableReader(event.result)
+    else if (BMAP_PATTERN.test(event.item.id)) assets.battleMap[event.item.areaNo] = new BattleMapReader(event.result)
   }
 
   // スクリプト読み込み完了時に画像読み込みを開始
