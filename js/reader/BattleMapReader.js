@@ -21,6 +21,13 @@ class BattleMapReader extends BinaryReader {
     this.readStrategyChipMap()
     this.readHeightMap()
     this.readEscapeZoneMap()
+
+    // // 一応下記で街、壁、道を取り出せる
+    // console.log(this.getBitNumeric10(0, 3))
+    // this.increseOffset10(4)
+    // console.log(this.getBitNumeric10(0, 3))
+    // this.increseOffset10(4)
+    // console.log(this.getBitNumeric10(0, 3))
   }
   
   readMapLine(i) {
@@ -32,24 +39,25 @@ class BattleMapReader extends BinaryReader {
     for (let j = 0; j < AREA_PLACEABLE_UNITS; j++) zones.push({x: mixedLine[j * 2], y: mixedLine[j * 2 + 1]})
     return(zones)
   }
-
+  
   readBackgroundChipMap() {
     for (let i = 0; i < BATTLE_MAP_SIZE; i++) this.backgroundChipMap.push(this.readMapLine(i))
+    this.increseOffset10(BATTLE_MAP_SIZE**2)
   }
   readFrontChipMap() {
-    this.increseOffset10(32**2)
     for (let i = 0; i < BATTLE_MAP_SIZE; i++) this.frontChipMap.push(this.readMapLine(i))
+    this.increseOffset10(BATTLE_MAP_SIZE**2)
   }
   readStrategyChipMap() {
-    this.increseOffset10(32**2)
     for (let i = 0; i < BATTLE_MAP_SIZE; i++) this.strategyChipMap.push(this.readMapLine(i))
+    this.increseOffset10(BATTLE_MAP_SIZE**2)
   }
   readHeightMap() {
-    this.increseOffset10(32**2)
     for (let i = 0; i < BATTLE_MAP_SIZE; i++) this.heightMap.push(this.readMapLine(i))
+    this.increseOffset10(BATTLE_MAP_SIZE**2)
   }
   readEscapeZoneMap() {
-    this.increseOffset10(32**2)
     for (let i = 0; i < MAP_MAX_ADJACENCY; i ++) this.escapeZoneMap.push(this.readZoneMapLine(i))
+    this.increseOffset10(AREA_PLACEABLE_UNITS * 2 * MAP_MAX_ADJACENCY)
   }
 }
