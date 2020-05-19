@@ -77,13 +77,21 @@ class StrategyMapStage extends createjs.Stage {
     if (order === this.masters.length - 1) this.initializeTurn()
     else this.turnRoutine(this.masters[order + 1])
   }
-
+  
   gotoBattleMap(target, attackMaster, attackUnits) {
     for (let unit of attackUnits) unit.active = false
-    for (let unit of target.stayingUnits) unit.die()
-    target.occupied(attackMaster, attackUnits)
-    this.strategyMap.setupAreaFlag(this.areas)
-    this.sidebar.displayMaster(this.playerMaster)
+    // for (let unit of target.stayingUnits) unit.die()
+    // target.occupied(attackMaster, attackUnits)
+    // this.strategyMap.setupAreaFlag(this.areas)
+    // this.sidebar.displayMaster(this.playerMaster)
+
+    this.battleStage = new BattleMapStage(this.canvas, target, attackUnits)
+    this.visible = false
+    if (createjs.Touch.isSupported()){
+      createjs.Touch.enable(this.battleStage)
+    }
+    createjs.Ticker.addEventListener("tick", this.battleStage)
+    createjs.Ticker.setFPS(60)
   }
 
   reflow(w, h) {
