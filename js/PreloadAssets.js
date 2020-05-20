@@ -6,6 +6,9 @@ const ELEMENT_DIR = "assets/Default/Elements/"
 // エリア数　なんとか取得する形にしたい
 const NUM_AREAS = 61
 
+// Bitmap Chipのサイズ
+const MINI_CHIP_SIZE = 32
+
 const BMAP_PATTERN = /battlemap\d+/
 const UNIT_PATTERN = /unit\d+/
 const FACE_PATTERN = /face\d+/
@@ -72,6 +75,10 @@ function preloadAssets() {
     {
       id: "neutralFlag",
       src: PICTURE_DIR + "Flag0.png"
+    },
+    {
+      id: "backgroundChips",
+      src: PICTURE_DIR + "BMAPCHAR.png"
     }
   ]
 
@@ -83,6 +90,7 @@ function preloadAssets() {
     let i = event.item
     if (i.id === "map") assets.strategyMap = new createjs.Bitmap(event.result)
     else if (i.id === "neutralFlag") assets.neutralFlag = new AlphalizeBitmap(event.result)
+    else if (i.id === "backgroundChips") assets.backgroundChips = new BitmapChips(event.result, MINI_CHIP_SIZE)
     else if (UNIT_PATTERN.test(i.id))
       for (let id of i.unitID) assets.charadata.characters[id].unitImage = new AlphalizeBitmap(event.result)
     else if (FACE_PATTERN.test(i.id))
