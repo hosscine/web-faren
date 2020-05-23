@@ -22,11 +22,13 @@ class BattleMap extends ScrollContainer {
 
   setupMap(mapData, mapChips) {
     this.mapContainer = this.addChild(new createjs.Container())
-
+    const HALF_CHIP_SIZE = MINI_CHIP_SIZE / 2
+    
     for (let i = 0; i < mapData.length; i++) {
       for (let j = 0; j < mapData[i].length; j++) {
         let chip = this.mapContainer.addChild(mapChips.getChip(mapData[i][j]))
-        chip.x = i * MINI_CHIP_SIZE
+        // 奇数行は半マスずらして疑似ヘックスマップにする
+        chip.x = i * MINI_CHIP_SIZE + (j%2 ? HALF_CHIP_SIZE : 0)
         chip.y = j * MINI_CHIP_SIZE
       }
     }
