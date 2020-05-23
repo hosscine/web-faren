@@ -1,6 +1,6 @@
 class BitmapChips {
   constructor(imageOrUri, chipSize) {
-    this.vastBitmap = new createjs.Bitmap(imageOrUri)
+    this.sourceImageOrUri = imageOrUri
     this.chipSize = chipSize
     this.setup()
   }
@@ -9,16 +9,12 @@ class BitmapChips {
     this.maskPresets = []
     this.numChips = 0
     // maskPresetsとnumChipsを計算
-    this.analyzeBitmap(this.vastBitmap, this.chipSize)
-
-    this.bitmapChips = []
-    this.splitBitmapChips()
+    this.analyzeBitmap(this.sourceBitmap, this.chipSize)
   }
 
   analyzeBitmap(bitmap, chipSize) {
-    let bounds = bitmap.getBounds()
-    let hFrames = bounds.width / chipSize
-    let vFrames = bounds.height / chipSize
+    let hFrames = this.sourceImageOrUri.width / chipSize
+    let vFrames = this.sourceImageOrUri.height / chipSize
     let maskPresets = []
 
     for (let v = 0; v < vFrames; v++)
@@ -32,23 +28,18 @@ class BitmapChips {
     this.numChips = hFrames * vFrames
   }
 
-  splitBitmapChips() {
-    for (let i = 0; i < this.numChips; i++) {
-      let chip = this.vastBitmap.clone()
-      chip.mask = new createjs.Shape()
-
-      chip.mask.graphics
-        .beginStroke("#000")
-        .drawRect(0, 0, this.chipSize, this.chipSize)    
-
-      chip.regX = this.maskPresets[i].x
-      chip.regY = this.maskPresets[i].y
-      this.bitmapChips.push(chip)
-    }
-  }
-
   getChip(id) {
-    console.log(this.maskPresets[id])
-    return this.bitmapChips[id]
+    let container = new createjs.Container()
+    let chip = container.addChild(new createjs.Bitmap(this.sourceImageOrUri))
+    chip.mask = new createjs.Shape()
+
+    chip.mask.graphics
+      .beginStroke("#000")
+      .drawRect(0, 0, this.chipSize, this.chipSize)    
+
+    chip.regX = this.maskPresets[id].x
+    chip.regY = this.maskPresets[id].y
+
+    return container
   }
 }
