@@ -24,6 +24,15 @@ class StrategyMapStage extends createjs.Stage {
     this.initializeTurn()
   }
 
+  focusOn() {
+    stage.visible = true
+    this.strategyMap.setupScroll()
+
+    // このtickをかけるのが重要みたい
+    createjs.Ticker.addEventListener("tick", stage)
+    createjs.Ticker.setFPS(60)
+  }
+
   placeUniqueUnits(assets) {
     for (let locate of assets.scenario.initialLocation) {
       let id = locate.unitID

@@ -16,13 +16,8 @@ class BattleMapStage extends createjs.Stage {
   }
 
   gotoStrategyMap() {
-    console.log("lets back to strategy")
     this.visible = false
-    stage.visible = true
-
-    // このtickをかけるのがクソ重要みたい
-    createjs.Ticker.addEventListener("tick", stage)
-    createjs.Ticker.setFPS(60)
+    stage.focusOn()
   }
 
 }
