@@ -1,3 +1,5 @@
+const HALF_CHIP_SIZE = MINI_CHIP_SIZE / 2
+
 class BattleMap extends ScrollContainer {
   constructor(data) {
     super()
@@ -22,7 +24,6 @@ class BattleMap extends ScrollContainer {
 
   setupMap(mapData, mapChips) {
     this.mapContainer = this.addChild(new createjs.Container())
-    const HALF_CHIP_SIZE = MINI_CHIP_SIZE / 2
     
     for (let i = 0; i < mapData.length; i++) {
       for (let j = 0; j < mapData[i].length; j++) {
@@ -32,6 +33,18 @@ class BattleMap extends ScrollContainer {
         chip.y = j * MINI_CHIP_SIZE
       }
     }
+  }
+
+  getChipBounds(i, j) {
+    let bounds = {x: i * MINI_CHIP_SIZE + (j%2 ? HALF_CHIP_SIZE / 2 : 0), y: j * MINI_CHIP_SIZE}
+    return(bounds)
+  }
+
+  putChipSelector(i, j, size) { 
+    let c = this.addChild(new MapChipSelector(size))
+    let bounds = this.getChipBounds(i, j)
+    c.x = bounds.x
+    c.y = bounds.y
   }
 
 }
